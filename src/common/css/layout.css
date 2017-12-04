@@ -1,0 +1,43 @@
+:root {
+    @custom-media --for-fablet (min-width: 481px);
+    @custom-media --for-tablet (min-width: 769px);
+    @custom-media --for-under-tablet (max-width: 768px);
+    @custom-media --for-desktop (min-width: 1025px);
+    @custom-media --for-only-mobile (max-width: var(--max-fablet-width));
+    
+    --loading-overlay {
+        position: relative;
+        &:before {
+            position: absolute;
+            display: block;
+            content: '';
+            width: 100%;
+            height: 100%;
+            z-index: 998;
+            top:0;
+            left:0;
+            background: rgba(255,255,255,0.3);
+            cursor: wait;
+        }
+        &:after {
+            position: absolute;            
+            display: block;
+            content: '';
+            margin: auto;
+            top: 45%;
+            left: 45%;
+            border: 7px solid #f3f3f3;
+            border-top: 7px solid var(--primary-color);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            z-index: 999;            
+        }
+    }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}

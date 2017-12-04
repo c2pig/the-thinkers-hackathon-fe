@@ -1,0 +1,8 @@
+:root {
+    --primary-color: #3ca597;
+    --secondary-color: #ff5a5f;
+
+    --danger-color: var(--secondary-color);
+    --dark-danger-color: #d9534f;
+
+}

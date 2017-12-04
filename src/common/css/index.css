@@ -1,0 +1,10 @@
+@import './type.css';
+@import './color.css';
+@import './helpers/index.css';
+@import './layout.css';
+
+:root {
+    --button {
+        cursor: pointer;
+    }
+}

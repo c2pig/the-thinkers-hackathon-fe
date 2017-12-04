@@ -1,0 +1,28 @@
+.footerContainer {
+    padding: 0;
+    margin: 48px 0px;
+    background-color: #ffffff;
+    border-top: 1px solid #dbdbdb;
+}
+
+.sectionContainer {
+    padding: 48px 24px;
+    margin: 0 auto;
+    position: relative;
+    max-width: 1080px;
+}
+
+.contentInfo {
+    font-weight: normal;
+    margin: 0px;
+    word-wrap: break-word;
+    font-size: 15px;
+    line-height: 18px;
+    letter-spacing: 0.2px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+.responsiveCol {
+    padding: 0px;
+}
