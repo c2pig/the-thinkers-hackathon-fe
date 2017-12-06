@@ -19,7 +19,7 @@ class App extends Component {
                 <main>
                     <div>
                       <Switch>
-                        <Route path="/" component={Home}/>
+                        <Route exact path="/" component={Home}/>
                         <Route exact path="/loop" component={Loop}/>
                       </Switch>
                     </div>
