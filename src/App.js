@@ -6,6 +6,7 @@ import Header from 'components/Header/Header';
 import Footer from 'components/Footer/Footer';
 
 import Home from 'pages/Home/Home';
+import Loop from 'pages/Loop/Loop';
 
 class App extends Component {
     render() {
@@ -17,9 +18,10 @@ class App extends Component {
                 <Header />
                 <main>
                     <div>
-                        <Switch>
-                            <Route component={Home}/>
-                        </Switch>
+                      <Switch>
+                        <Route path="/" component={Home}/>
+                        <Route exact path="/loop" component={Loop}/>
+                      </Switch>
                     </div>
                 </main>
                 <Footer />
