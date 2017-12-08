@@ -4,6 +4,11 @@
     position: relative
 }
 
+.headerWithSearchBarContainer {
+    height: 100px;
+    padding: 0 10px;
+}
+
 .headerContainer {
     display: flex;
     justify-content: space-between;
@@ -23,3 +28,9 @@
     .inputButtonContainer {
         flex: 0 0 auto;
     }
+
+.cardsContainer {
+    padding: 10px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+}

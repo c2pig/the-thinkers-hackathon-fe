@@ -82,35 +82,37 @@ class Home extends React.Component {
     const { topics } = this.state;
     return (
       <div className={styles.rootContainer}>
-        <Container>
-          <div className={styles.headerContainer}>
-            <h1>Loop List</h1>
-            <Checkbox toggle label="My topic" />
-          </div>
-          <Form onSubmit={this.handleOnSearch}>
-            <div className={styles.searchContainer}>
-              <div className={styles.inputContainer}>
-                <Form.Input
-                  placeholder="Search or add a title here"
-                  type="text"
-                  fluid
-                  onChange={this.handleOnSearchChange}
-                />
-              </div>
-              <div className={styles.inputButtonContainer}>
-                <Button
-                  icon="search"
-                  type="submit"
-                  onClick={this.handleOnSearch}
-                />
-                <Button icon="plus" />
-              </div>
+          <div className={styles.headerWithSearchBarContainer}>
+            <div className={styles.headerContainer}>
+              <h1>Loop List</h1>
+              <Checkbox toggle label="My topic" />
             </div>
-          </Form>
-          {topics.map(topic => (
-            <Topic key={topic.title} title={topic.title} tags={topic.tags} />
-          ))}
-        </Container>
+            <Form onSubmit={this.handleOnSearch}>
+              <div className={styles.searchContainer}>
+                <div className={styles.inputContainer}>
+                  <Form.Input
+                    placeholder="Search or add a title here"
+                    type="text"
+                    fluid
+                    onChange={this.handleOnSearchChange}
+                  />
+                </div>
+                <div className={styles.inputButtonContainer}>
+                  <Button
+                    icon="search"
+                    type="submit"
+                    onClick={this.handleOnSearch}
+                  />
+                  <Button icon="plus" />
+                </div>
+              </div>
+            </Form>
+          </div>
+          <div className={styles.cardsContainer}>
+            {topics.map(topic => (
+              <Topic key={topic.title} title={topic.title} tags={topic.tags} />
+            ))}
+          </div>
       </div>
     );
   }
