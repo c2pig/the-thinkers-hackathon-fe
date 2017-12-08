@@ -1,48 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Checkbox,
   Button,
   Label,
-  Container,
   Card,
   Form,
 } from 'semantic-ui-react';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getLoopsData } from 'store/modules';
+import { searchLoops, updateSearchKeywords } from 'store/loops';
+
 import styles from './Home.css';
 
-const topics = [
-  {
-    title: 'Software Engineer',
-    tags: ['javascript', 'react', 'jsx'],
-  },
-  {
-    title: 'Senior Massager',
-    tags: ['massage', 'back', 'shoulder', '5years'],
-  },
-  {
-    title: 'Drain Cleaner (Expert)',
-    tags: ['drain', 'cleaner', 'expert'],
-  },
-  {
-    title: 'Drain Cleaner 1 (Expert)',
-    tags: ['drain', 'cleaner', 'expert'],
-  },
-  {
-    title: 'Drain Cleaner 2 (Expert)',
-    tags: ['drain', 'cleaner', 'expert'],
-  },
-  {
-    title: 'Drain Cleaner 3 (Expert)',
-    tags: ['drain', 'cleaner', 'expert'],
-  },
-  {
-    title: 'Drain Cleaner 4 (Expert)',
-    tags: ['drain', 'cleaner', 'expert'],
-  },
-  {
-    title: 'Drain Cleaner 5 (Expert)',
-    tags: ['drain', 'cleaner', 'expert'],
-  },
-];
 const Topic = ({ title, tags }) => {
   return (
     <Card fluid>
@@ -56,66 +27,52 @@ const Topic = ({ title, tags }) => {
   );
 };
 
-class Home extends React.Component {
-  state = {
-    topics,
-    searchKeyword: '',
-  };
-
-  handleOnSearchChange = event => {
-    this.setState({ searchKeyword: event.target.value });
-  };
-
-  handleOnSearch = () => {
-    const { searchKeyword } = this.state;
-    this.setState({
-      topics: searchKeyword
-        ? topics.filter(
-            topic =>
-              topic.title.toLowerCase().indexOf(searchKeyword.toLowerCase()) >
-              -1
-          )
-        : topics,
-    });
-  };
-  render() {
-    const { topics } = this.state;
-    return (
-      <div className={styles.rootContainer}>
-          <div className={styles.headerWithSearchBarContainer}>
-            <div className={styles.headerContainer}>
-              <h1>Loop List</h1>
-              <Checkbox toggle label="My topic" />
-            </div>
-            <Form onSubmit={this.handleOnSearch}>
-              <div className={styles.searchContainer}>
-                <div className={styles.inputContainer}>
-                  <Form.Input
-                    placeholder="Search or add a title here"
-                    type="text"
-                    fluid
-                    onChange={this.handleOnSearchChange}
-                  />
-                </div>
-                <div className={styles.inputButtonContainer}>
-                  <Button
-                    icon="search"
-                    type="submit"
-                    onClick={this.handleOnSearch}
-                  />
-                  <Button icon="plus" />
-                </div>
-              </div>
-            </Form>
-          </div>
-          <div className={styles.cardsContainer}>
-            {topics.map(topic => (
-              <Topic key={topic.title} title={topic.title} tags={topic.tags} />
-            ))}
-          </div>
+const Home = ({ loops, searchLoops, updateSearchKeywords }) => (
+  <div className={styles.rootContainer}>
+    <div className={styles.headerWithSearchBarContainer}>
+      <div className={styles.headerContainer}>
+        <h1>Loop List</h1>
+        <Checkbox toggle label="My topic" />
       </div>
-    );
-  }
-}
+      <Form onSubmit={searchLoops}>
+        <div className={styles.searchContainer}>
+          <div className={styles.inputContainer}>
+            <Form.Input
+              placeholder="Search or add a loop title here"
+              type="text"
+              fluid
+              onChange={event => updateSearchKeywords(event.target.value)}
+            />
+          </div>
+          <div className={styles.inputButtonContainer}>
+            <Button icon="search" type="submit" onClick={searchLoops} />
+            <Button icon="plus" />
+          </div>
+        </div>
+      </Form>
+    </div>
+    <div className={styles.cardsContainer}>
+      {loops.map(topic => (
+        <Topic key={topic.title} title={topic.title} tags={topic.tags} />
+      ))}
+    </div>
+  </div>
+);
 
-export default Home;
+Home.propTypes = {
+  loops: PropTypes.array.isRequired,
+  searchLoops: PropTypes.func.isRequired,
+  updateSearchKeywords: PropTypes.func.isRequired,
+};
+
+export default withRouter(
+  connect(
+    state => ({
+      loops: getLoopsData(state),
+    }),
+    {
+      searchLoops,
+      updateSearchKeywords,
+    }
+  )(Home)
+);
