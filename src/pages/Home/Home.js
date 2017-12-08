@@ -10,7 +10,7 @@ import {
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getLoopsData } from 'store/modules';
-import { searchLoops, updateSearchKeywords } from 'store/loops';
+import { searchLoops, updateSearchKeywords, addLoop } from 'store/loops';
 
 import styles from './Home.css';
 
@@ -27,14 +27,14 @@ const Topic = ({ title, tags }) => {
   );
 };
 
-const Home = ({ loops, searchLoops, updateSearchKeywords }) => (
+const Home = ({ loops, searchLoops, updateSearchKeywords, addLoop }) => (
   <div className={styles.rootContainer}>
     <div className={styles.headerWithSearchBarContainer}>
       <div className={styles.headerContainer}>
         <h1>Loop List</h1>
         <Checkbox toggle label="My topic" />
       </div>
-      <Form onSubmit={searchLoops}>
+      <Form onSubmit={() => searchLoops()}>
         <div className={styles.searchContainer}>
           <div className={styles.inputContainer}>
             <Form.Input
@@ -45,8 +45,8 @@ const Home = ({ loops, searchLoops, updateSearchKeywords }) => (
             />
           </div>
           <div className={styles.inputButtonContainer}>
-            <Button icon="search" type="submit" onClick={searchLoops} />
-            <Button icon="plus" />
+            <Button icon="search" type="submit" onClick={() => searchLoops()} />
+            <Button icon="plus" onClick={(e)=> { addLoop(); e.preventDefault();} }/>
           </div>
         </div>
       </Form>
@@ -73,6 +73,7 @@ export default withRouter(
     {
       searchLoops,
       updateSearchKeywords,
+      addLoop,
     }
   )(Home)
 );
