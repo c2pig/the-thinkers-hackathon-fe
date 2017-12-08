@@ -5,7 +5,6 @@ import localForage from 'localforage';
 const persistConfig = {
     key: 'root',
     storage: localForage,
-    whitelist: ['user'],
 };
 
 export default persistCombineReducers(persistConfig, {
