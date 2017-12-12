@@ -33,9 +33,11 @@ const data = (state = loopsData, action) => {
         ...action.payload
       };
       loop.comments.push(comment);
-      console.log(loop);
 
-      return { ...state, [action.payload.loopId]: loop };
+      return {
+        ...state,
+        [action.payload.loopId]: { ...loop, comments: [...loop.comments] }
+      };
     default:
       return state;
   }

@@ -4,22 +4,6 @@ import { Field, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import { DROP_MESSAGE } from 'store/loops';
 
-const mapDispatchToProps = dispatch => {
-  return {
-    dropMessage: data => {
-      dispatch({
-        type: DROP_MESSAGE,
-        payload: {
-          loopId: 1,
-          message: data.message,
-          postType: 'drop-message'
-        }
-      });
-      dispatch(reset('dropMessageForm'));
-    }
-  };
-};
-
 let MessageForm = props => {
   const { handleSubmit } = props;
   return (
@@ -46,6 +30,22 @@ const ReplyPanel = ({ dropMessage }) => {
       </Button.Group>
     </Segment>
   );
+};
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    dropMessage: data => {
+      dispatch({
+        type: DROP_MESSAGE,
+        payload: {
+          loopId: props.loopId,
+          message: data.message,
+          postType: 'drop-message'
+        }
+      });
+      dispatch(reset('dropMessageForm'));
+    }
+  };
 };
 
 export default connect(null, mapDispatchToProps)(ReplyPanel);
