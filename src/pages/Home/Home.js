@@ -5,6 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getLoopsData } from 'store/modules';
 import { searchLoops, updateSearchKeywords, addLoop } from 'store/loops';
+import CreateLoopModal from 'components/CreateLoopModal/CreateLoopModal';
 
 import styles from './Home.css';
 
@@ -45,13 +46,15 @@ const Home = ({ loops, searchLoops, updateSearchKeywords, addLoop }) => (
           </div>
           <div className={styles.inputButtonContainer}>
             <Button icon="search" type="submit" onClick={() => searchLoops()} />
-            <Button
-              icon="plus"
-              onClick={e => {
-                addLoop();
-                e.preventDefault();
-              }}
-            />
+            <CreateLoopModal>
+              <Button
+                icon="plus"
+                onClick={e => {
+                  addLoop();
+                  e.preventDefault();
+                }}
+              />
+            </CreateLoopModal>
           </div>
         </div>
       </Form>
