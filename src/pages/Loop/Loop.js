@@ -12,7 +12,13 @@ import {
   Button,
   Divider
 } from 'semantic-ui-react';
+
 import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
+
+import { withRouter, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { getLoopsData } from 'store/modules';
+
 
 const Profile = ({ description, profilePicture, headline }) => {
   return (
@@ -110,7 +116,7 @@ const Reply = ({ posts }) => {
         ) => {
           return (
             <Comment key={'comment-i' + i}>
-              <Comment.Avatar as="a" src="kong.jpg" />
+              <Comment.Avatar as="a" src="/kong.jpg" />
               <Comment.Content>
                 <Comment.Author as="a">{userName}</Comment.Author>
                 <Comment.Metadata>
@@ -156,7 +162,6 @@ class Loop extends React.Component {
   close = () => this.setState({ open: false });
 
   render() {
-    const tags = ['Honey Massage', 'Royale Massage', 'FireWind Wheel Massage'];
     const posts = [
       {
         postType: 'drop-message',
@@ -194,21 +199,23 @@ class Loop extends React.Component {
       }
     ];
 
+    const { id, tags, title } = this.props.loop;
+
     const profileCover = {
       description:
-        'Hi, I am Jeannie, a sexy and hot lady.  I offer honey massage service...',
-      profilePicture: 'jeannie.jpg',
-      headline: 'Honey Massage'
+        'Message to be provider',
+      profilePicture: '/jeannie.jpg',
+      title
     };
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Container
-          style={{ overflowY: 'auto', flexBasis: 'calc(100vh - 160px)' }}
-        >
+        <Container style={{ overflowY: 'auto', flexBasis: 'calc(100vh - 160px)' }}>
           <Divider hidden />
           <Segment>
-            <Label attached="top right" icon="close" />
+            <Link to='/'>
+            <Label attached='top right' icon='close' />
+            </Link>
             <Tags tags={tags} />
           </Segment>
           <Segment vertical>
@@ -224,4 +231,14 @@ class Loop extends React.Component {
   }
 }
 
-export default Loop;
+const getData = (state, props) => {
+  const id = props.match.params.loopId;
+  return getLoopsData(state)[id];
+}
+
+export default withRouter(
+  connect(
+    (state, props) => ({
+      loop: getData(state, props)
+    }))(Loop)
+);
