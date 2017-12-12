@@ -9,18 +9,20 @@ import CreateLoopModal from 'components/CreateLoopModal/CreateLoopModal';
 
 import styles from './Home.css';
 
-const Topic = ({ title, tags, id }) => {
+const Topic = ({ topic, tags, id }) => {
   const url = `/loop/${id}`;
-  return (<Link to={url}>
-    <Card fluid>
-      <Card.Content>
-        <h3>{title}</h3>
-        <Label.Group>
-          {tags.map(tag => <Label key={tag}>{tag}</Label>)}
-        </Label.Group>
-      </Card.Content>
-    </Card>
-    </Link>);
+  return (
+    <Link to={url}>
+      <Card fluid>
+        <Card.Content>
+          <h3>{topic}</h3>
+          <Label.Group>
+            {tags.map(tag => <Label key={tag}>{tag}</Label>)}
+          </Label.Group>
+        </Card.Content>
+      </Card>
+    </Link>
+  );
 };
 
 const Home = ({ loops, searchLoops, updateSearchKeywords, addLoop }) => (
@@ -31,7 +33,9 @@ const Home = ({ loops, searchLoops, updateSearchKeywords, addLoop }) => (
     </div>
     <div className={styles.cardsContainer}>
       {loops.map(topic => (
-        <Topic key={topic.title} {...topic} />
+        <Link to={`/loop/${topic.id}`}>
+          <Topic key={topic.title} {...topic} />
+        </Link>
       ))}
     </div>
     <div className={styles.footerContainer}>
