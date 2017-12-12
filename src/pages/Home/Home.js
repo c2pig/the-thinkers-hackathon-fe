@@ -46,13 +46,15 @@ const Home = ({ loops, searchLoops, updateSearchKeywords, addLoop }) => (
           </div>
           <div className={styles.inputButtonContainer}>
             <Button icon="search" type="submit" onClick={() => searchLoops()} />
-            <CreateLoopModal>
+            <CreateLoopModal
+              onSubmit={addLoop}
+            >
               <Button
                 icon="plus"
-                onClick={e => {
-                  addLoop();
-                  e.preventDefault();
-                }}
+                // onClick={e => {
+                //   // addLoop();
+                //   e.preventDefault();
+                // }}
               />
             </CreateLoopModal>
           </div>
