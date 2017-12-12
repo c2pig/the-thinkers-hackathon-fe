@@ -86,10 +86,10 @@ export default {
     ],
     quote: 'Coding is my life. I eat, live, and breathe codes.',
     rank: {
-      title: 'IT Apprentice',
-      votesCount: 10,
+      title: 'IT Maniac',
+      votesCount: 104,
     },
-    peopleHired: 12,
+    peopleHired: 4,
     events: [
       {
         type: 'work',
