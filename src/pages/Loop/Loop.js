@@ -1,16 +1,14 @@
 import React from 'react'
-import { Message, Image, Feed, Card, Icon, Rating, Label, Comment, Form, Header, Item, Segment, Button, Divider } from 'semantic-ui-react'
-import jeannie from './assets/jeannie.jpg'
-import kong from './assets/kong.jpg'
+import { Input, Modal, Container, Message, Image, Feed, Card, Icon, Rating, Label, Comment, Form, Header, Item, Segment, Button, Divider } from 'semantic-ui-react'
+import ReplyPanel from '../../components/ReplyPanel';
 
-const Profile = ({desc}) => {
 
-  const description = "Hi, I am Jeannie, a sexy and hot lady.  I offer honey massage service..."
+const Profile = ({description, profilePicture, headline}) => {
 
   return <Item.Group><Item>
-    <Item.Image size='small' src={jeannie} />
+    <Item.Image size='small' src={profilePicture} />
     <Item.Content>
-      <Item.Header as='a'>Honey Massage</Item.Header>
+      <Item.Header as='a'>{headline}</Item.Header>
       <Item.Description>
         <p>{description}</p>
       </Item.Description>
@@ -22,7 +20,7 @@ const TextPost = () => {
   const text = "Hello...You are so beautiful.  May i be your friend?"
   return  <Item.Group relaxed>
     <Item>
-      <Item.Image size='small' src={kong} />
+      <Item.Image size='small' src='/kong.jpg' />
       <Item.Content verticalAlign='middle'>
         <Item.Header>Content A</Item.Header>
         <Item.Description>{text}</Item.Description>
@@ -58,27 +56,22 @@ const PostJD = ({jobTitle, company, tags}) => {
    <Card.Content>
      <Card.Header>{jobTitle}</Card.Header>
      <Card.Meta>{company}</Card.Meta>
-     {tags.map(tag => {
-      return <Label>{tag}</Label>
+     {tags.map((tag,i) => {
+      return <Label key={"label-" + i}>{tag}</Label>
      })}
    </Card.Content>
  </Card>
 }
 
 const Tags = ({tags}) => {
-  return <Label.Group>{tags.map(x => <Label>{x}</Label>)}</Label.Group>
+  return <Label.Group >{tags.map((x,i) => <Label key={i}>{x}</Label>)}</Label.Group>
 }
 
-const Reply = () => {
-  const posts = [
-    { postType: 'drop-message', userName: 'Kong', date: 'Today at 5:42PM', message: 'Hello', rating: 1, totalHired: 10, headline:'i am kong', phone:'123', email:'kong@gmail.com' },
-    { postType: 'contact-me', cuserName: 'Kong1', date: 'Today at 5:42PM', message: 'Hello', rating: 2, totalHired: 99, headline:'i am king kong', phone:'123', email:'kong1@gmail.com' },
-    { postType: 'post-jd', userName: 'Kong2', date: 'Today at 5:42PM', message: 'Hello', rating: 4, totalHired: 5, headline:'i am kong king', phone:'123', email:'kong2@gmail.com', tags:['Java', 'NodeJs', 'FrontEnd'] }
-  ];
+const Reply = ({posts}) => {
   return <Comment.Group size='small'>
-    {posts.map(({postType, userName, date, message, rating, totalHired, headline, phone, email, tags }) => {
-      return <Comment>
-            <Comment.Avatar as='a' src={kong} />
+    {posts.map(({postType, userName, date, message, rating, totalHired, headline, phone, email, tags }, i) => {
+      return <Comment key={"comment-i"+i}>
+            <Comment.Avatar as='a' src='kong.jpg' />
             <Comment.Content>
               <Comment.Author as='a'>{userName}</Comment.Author>
               <Comment.Metadata>
@@ -97,25 +90,60 @@ const Reply = () => {
 
     })}
   </Comment.Group>
-
 }
 
-const Loop = () => {
-  const tags = ['Honey Massage', 'Royale Massage', 'FireWind Wheel Massage'];
-  return <div>
-  <Segment>
-    <Tags tags={tags} />
-  </Segment>
-  <Segment>
-    <Profile />
-  </Segment>
-  <Segment>
-    <Reply />
-  </Segment>
-  <Segment>
-    <div>Reply..</div>
-  </Segment>
-  </div>
+class Loop extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { open: false }
+  }
+
+  close = () => this.setState({ open: false })
+
+  render() {
+    const tags = ['Honey Massage', 'Royale Massage', 'FireWind Wheel Massage'];
+    const posts = [
+      { postType: 'drop-message', userName: 'Kong', date: 'Today at 5:42PM', message: 'Hello', rating: 1, totalHired: 10, headline:'i am kong', phone:'123', email:'kong@gmail.com' },
+      { postType: 'contact-me', cuserName: 'Kong1', date: 'Today at 5:42PM', message: 'Hello', rating: 2, totalHired: 99, headline:'i am king kong', phone:'123', email:'kong1@gmail.com' },
+      { postType: 'post-jd', userName: 'Kong2', date: 'Today at 5:42PM', message: 'Hello', rating: 4, totalHired: 5, headline:'i am kong king', phone:'123', email:'kong2@gmail.com', tags:['Java', 'NodeJs', 'FrontEnd'] }
+    ];
+
+     const profileCover = {
+       description : 'Hi, I am Jeannie, a sexy and hot lady.  I offer honey massage service...',
+       profilePicture: 'jeannie.jpg',
+       headline: "Honey Massage"
+     };
+
+    return <Container>
+      <Divider hidden />
+      <Segment >
+        <Label attached='top right' icon='close' />
+        <Tags tags={tags} />
+      </Segment>
+      <Segment vertical>
+        <Profile {...profileCover} />
+      </Segment>
+        <Reply posts={posts} />
+      <Segment vertical textAlign='center'>
+        <Modal trigger={<Button fluid content='Reply' icon='reply' />} closeIcon>
+
+            <Modal.Content>
+            <Segment textAlign='center'>
+              <Input action={{ color: 'teal', icon: 'arrow right' }} />
+              <Divider center />
+              <Button.Group >
+                <Button>Attach a Job</Button>
+                <Button.Or />
+                <Button positive>Contact Me</Button>
+              </Button.Group>
+            </Segment>
+            </Modal.Content>
+          </Modal>
+        <Divider hidden />
+      </Segment>
+      </Container>
+  }
 }
 
 
