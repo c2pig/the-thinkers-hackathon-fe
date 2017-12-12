@@ -13,6 +13,8 @@ import {
   Divider
 } from 'semantic-ui-react';
 import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
+import { connect } from 'react-redux';
+import mockComments from 'common/mocks/comments';
 
 const Profile = ({ description, profilePicture, headline }) => {
   return (
@@ -110,7 +112,7 @@ const Reply = ({ posts }) => {
         ) => {
           return (
             <Comment key={'comment-i' + i}>
-              <Comment.Avatar as="a" src="kong.jpg" />
+              <Comment.Avatar as="a" src="/kong.jpg" />
               <Comment.Content>
                 <Comment.Author as="a">{userName}</Comment.Author>
                 <Comment.Metadata>
@@ -157,48 +159,12 @@ class Loop extends React.Component {
 
   render() {
     const tags = ['Honey Massage', 'Royale Massage', 'FireWind Wheel Massage'];
-    const posts = [
-      {
-        postType: 'drop-message',
-        userName: 'Kong',
-        date: 'Today at 5:42PM',
-        message: 'Hello',
-        rating: 1,
-        totalHired: 10,
-        headline: 'i am kong',
-        phone: '123',
-        email: 'kong@gmail.com'
-      },
-      {
-        postType: 'contact-me',
-        cuserName: 'Kong1',
-        date: 'Today at 5:42PM',
-        message: 'Hello',
-        rating: 2,
-        totalHired: 99,
-        headline: 'i am king kong',
-        phone: '123',
-        email: 'kong1@gmail.com'
-      },
-      {
-        postType: 'post-jd',
-        userName: 'Kong2',
-        date: 'Today at 5:42PM',
-        message: 'Hello',
-        rating: 4,
-        totalHired: 5,
-        headline: 'i am kong king',
-        phone: '123',
-        email: 'kong2@gmail.com',
-        tags: ['Java', 'NodeJs', 'FrontEnd']
-      }
-    ];
+    const comments = [...this.props.loop.comments, ...mockComments];
 
     const profileCover = {
-      description:
-        'Hi, I am Jeannie, a sexy and hot lady.  I offer honey massage service...',
-      profilePicture: 'jeannie.jpg',
-      headline: 'Honey Massage'
+      description: this.props.loop.description,
+      profilePicture: '/jeannie.jpg',
+      headline: this.props.loop.topic
     };
 
     return (
@@ -214,7 +180,7 @@ class Loop extends React.Component {
           <Segment vertical>
             <Profile {...profileCover} />
           </Segment>
-          <Reply posts={posts} />
+          <Reply posts={comments} />
         </Container>
         <Container style={{ flex: '0 0 auto' }}>
           <ReplyPanel />
@@ -224,4 +190,10 @@ class Loop extends React.Component {
   }
 }
 
-export default Loop;
+const mapStateToProps = (states, props) => {
+  return {
+    loop: states.loops.data[props.match.params.loopId]
+  };
+};
+
+export default connect(mapStateToProps)(Loop);

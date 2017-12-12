@@ -18,7 +18,7 @@ class App extends Component {
         <Container>
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route exact path="/loop" component={Loop} />
+            <Route exact path="/loop/:loopId" component={Loop} />
             <Route exact path="/close" component={CloseLoopModal} />
             <Route exact path="/login" component={Login} />
           </Switch>
