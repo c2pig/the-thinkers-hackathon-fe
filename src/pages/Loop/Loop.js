@@ -14,6 +14,8 @@ import {
 } from 'semantic-ui-react';
 
 import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
+import { connect } from 'react-redux';
+import mockComments from 'common/mocks/comments';
 
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -162,55 +164,22 @@ class Loop extends React.Component {
   close = () => this.setState({ open: false });
 
   render() {
-    const posts = [
-      {
-        postType: 'drop-message',
-        userName: 'Kong',
-        date: 'Today at 5:42PM',
-        message: 'Hello',
-        rating: 1,
-        totalHired: 10,
-        headline: 'i am kong',
-        phone: '123',
-        email: 'kong@gmail.com'
-      },
-      {
-        postType: 'contact-me',
-        cuserName: 'Kong1',
-        date: 'Today at 5:42PM',
-        message: 'Hello',
-        rating: 2,
-        totalHired: 99,
-        headline: 'i am king kong',
-        phone: '123',
-        email: 'kong1@gmail.com'
-      },
-      {
-        postType: 'post-jd',
-        userName: 'Kong2',
-        date: 'Today at 5:42PM',
-        message: 'Hello',
-        rating: 4,
-        totalHired: 5,
-        headline: 'i am kong king',
-        phone: '123',
-        email: 'kong2@gmail.com',
-        tags: ['Java', 'NodeJs', 'FrontEnd']
-      }
-    ];
+    const comments = [...mockComments, ...this.props.loop.comments];
 
     const { id, tags, title } = this.props.loop;
 
     const profileCover = {
-      description:
-        'Message to be provider',
+      description: this.props.loop.description,
       profilePicture: '/jeannie.jpg',
-      title
+      headline: this.props.loop.topic
     };
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Container style={{ overflowY: 'auto', flexBasis: 'calc(100vh - 160px)' }}>
+        <Container
+          style={{ overflowY: 'auto', flexBasis: 'calc(100vh - 160px)' }}
+        >
           <Divider hidden />
           <Segment>
             <Link to='/'>
@@ -221,23 +190,23 @@ class Loop extends React.Component {
           <Segment vertical>
             <Profile {...profileCover} />
           </Segment>
-          <Reply posts={posts} />
+          <Reply posts={comments} />
         </Container>
         <Container style={{ flex: '0 0 auto' }}>
-          <ReplyPanel />
+          <ReplyPanel loopId={this.props.loop.id} />
         </Container>
       </div>
     );
   }
 }
 
-const getData = (state, props) => {
-  const id = props.match.params.loopId;
-  return getLoopsData(state)[id];
-}
+const mapStateToProps = (states, props) => {
+  return {
+    loop: states.loops.data[props.match.params.loopId]
+  };
+};
 
-export default withRouter(
-  connect(
+export default connect(mapStateToProps)(Loop);
     (state, props) => ({
       loop: getData(state, props)
     }))(Loop)
