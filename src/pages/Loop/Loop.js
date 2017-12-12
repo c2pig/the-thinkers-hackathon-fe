@@ -1,24 +1,18 @@
 import React from 'react';
 import {
-  Input,
-  Modal,
   Container,
   Message,
-  Image,
-  Feed,
   Card,
   Icon,
   Rating,
   Label,
   Comment,
-  Form,
-  Header,
   Item,
   Segment,
   Button,
-  Divider,
-  Sticky
+  Divider
 } from 'semantic-ui-react';
+import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
 
 const Profile = ({ description, profilePicture, headline }) => {
   return (
@@ -210,7 +204,7 @@ class Loop extends React.Component {
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <Container
-          style={{ overflowY: 'auto', flexBasis: 'calc(90vh - 140px)' }}
+          style={{ overflowY: 'auto', flexBasis: 'calc(100vh - 160px)' }}
         >
           <Divider hidden />
           <Segment>
@@ -223,19 +217,7 @@ class Loop extends React.Component {
           <Reply posts={posts} />
         </Container>
         <Container style={{ flex: '0 0 auto' }}>
-          <Segment vertical textAlign="center">
-            <Input
-              fluid
-              action={{ color: 'teal', icon: 'arrow right' }}
-              placeholder="leave a message"
-            />
-            <Divider horizontal>Or</Divider>
-            <Button.Group fluid>
-              <Button>Attach a Job</Button>
-              {/* <Button.Or /> */}
-              <Button positive>Left my contact</Button>
-            </Button.Group>
-          </Segment>
+          <ReplyPanel />
         </Container>
       </div>
     );

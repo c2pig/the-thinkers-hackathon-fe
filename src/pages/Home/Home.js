@@ -46,9 +46,7 @@ const Home = ({ loops, searchLoops, updateSearchKeywords, addLoop }) => (
           </div>
           <div className={styles.inputButtonContainer}>
             <Button icon="search" type="submit" onClick={() => searchLoops()} />
-            <CreateLoopModal
-              onSubmit={addLoop}
-            >
+            <CreateLoopModal onSubmit={addLoop}>
               <Button
                 icon="plus"
                 // onClick={e => {
@@ -67,18 +65,18 @@ const Home = ({ loops, searchLoops, updateSearchKeywords, addLoop }) => (
 Home.propTypes = {
   loops: PropTypes.array.isRequired,
   searchLoops: PropTypes.func.isRequired,
-  updateSearchKeywords: PropTypes.func.isRequired,
+  updateSearchKeywords: PropTypes.func.isRequired
 };
 
 export default withRouter(
   connect(
     state => ({
-      loops: getLoopListData(state),
+      loops: getLoopListData(state)
     }),
     {
       searchLoops,
       updateSearchKeywords,
-      addLoop,
+      addLoop
     }
   )(Home)
 );
