@@ -1,16 +1,5 @@
 export default [
   {
-    postType: 'drop-message',
-    userName: 'Kong',
-    date: 'Today at 5:42PM',
-    message: 'Hello',
-    rating: 1,
-    totalHired: 10,
-    headline: 'i am kong',
-    phone: '123',
-    email: 'kong@gmail.com'
-  },
-  {
     postType: 'contact-me',
     cuserName: 'Kong1',
     date: 'Today at 5:42PM',

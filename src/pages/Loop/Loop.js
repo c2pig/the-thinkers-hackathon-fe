@@ -159,7 +159,7 @@ class Loop extends React.Component {
 
   render() {
     const tags = ['Honey Massage', 'Royale Massage', 'FireWind Wheel Massage'];
-    const comments = [...this.props.loop.comments, ...mockComments];
+    const comments = [...mockComments, ...this.props.loop.comments];
 
     const profileCover = {
       description: this.props.loop.description,
@@ -183,7 +183,7 @@ class Loop extends React.Component {
           <Reply posts={comments} />
         </Container>
         <Container style={{ flex: '0 0 auto' }}>
-          <ReplyPanel />
+          <ReplyPanel loopId={this.props.loop.id} />
         </Container>
       </div>
     );
