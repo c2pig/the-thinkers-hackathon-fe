@@ -7,6 +7,7 @@ import Footer from 'components/Footer/Footer';
 
 import Home from 'pages/Home/Home';
 import Loop from 'pages/Loop/Loop';
+import CloseLoopModal from 'pages/CloseLoopModal/CloseLoopModal';
 
 class App extends Component {
     render() {
@@ -21,6 +22,7 @@ class App extends Component {
                       <Switch>
                         <Route exact path="/" component={Home}/>
                         <Route exact path="/loop" component={Loop}/>
+                        <Route exact path="/close" component={CloseLoopModal}/>
                       </Switch>
                     </div>
                 </main>

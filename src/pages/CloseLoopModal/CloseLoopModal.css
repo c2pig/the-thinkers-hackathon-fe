@@ -1,0 +1,9 @@
+.scrollDesc {
+    max-height: calc(70vh - 150px);
+    overflow: auto;
+}
+
+.miniFont {
+    font-size: 0.75em;
+    color: rgba(0,0,0,.3);
+}
