@@ -5,14 +5,14 @@ import loopsMockData from 'common/mocks/loops';
 
 let loopsData = loopsMockData;
 
+export const DROP_MESSAGE = 'drop message';
+
 // Reducer
 const data = (state = loopsData, action) => {
   switch (action.type) {
     case REHYDRATE:
       const rehydratedData =
-        action.payload &&
-        action.payload.loops &&
-        action.payload.loops.data
+        action.payload && action.payload.loops && action.payload.loops.data
           ? action.payload.loops.data
           : state;
       loopsData = rehydratedData;
@@ -20,13 +20,31 @@ const data = (state = loopsData, action) => {
     case ADD_LOOP:
       loopsData = { ...loopsData, [action.data.id]: action.data };
       return loopsData;
+    case DROP_MESSAGE:
+      let loop = state[action.payload.loopId];
+      const comment = {
+        userName: 'Kong',
+        date: new Date().toString(),
+        rating: 1,
+        totalHired: 10,
+        headline: 'i am kong',
+        phone: '123',
+        email: 'kong@gmail.com',
+        ...action.payload
+      };
+      loop.comments.push(comment);
+
+      return {
+        ...state,
+        [action.payload.loopId]: { ...loop, comments: [...loop.comments] }
+      };
     default:
       return state;
   }
 };
 
 export default combineReducers({
-  data,
+  data
 });
 
 // Getter

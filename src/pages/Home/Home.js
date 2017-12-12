@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox, Button, Label, Card, Form } from 'semantic-ui-react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getLoopListData } from 'store/modules';
 import { searchLoops, updateSearchKeywords, addLoop } from 'store/loopList';
@@ -9,16 +9,19 @@ import CreateLoopModal from 'components/CreateLoopModal/CreateLoopModal';
 
 import styles from './Home.css';
 
-const Topic = ({ title, tags }) => {
+const Topic = ({ topic, tags, id }) => {
+  const url = `/loop/${id}`;
   return (
-    <Card fluid>
-      <Card.Content>
-        <h3>{title}</h3>
-        <Label.Group>
-          {tags.map(tag => <Label key={tag}>{tag}</Label>)}
-        </Label.Group>
-      </Card.Content>
-    </Card>
+    <Link to={url}>
+      <Card fluid>
+        <Card.Content>
+          <h3>{topic}</h3>
+          <Label.Group>
+            {tags.map(tag => <Label key={tag}>{tag}</Label>)}
+          </Label.Group>
+        </Card.Content>
+      </Card>
+    </Link>
   );
 };
 
@@ -69,7 +72,9 @@ class Home extends React.Component {
         </div>
         <div className={styles.cardsContainer}>
           {loops.map(topic => (
-            <Topic key={topic.title} title={topic.title} tags={topic.tags} />
+            <Link to={`/loop/${topic.id}`}>
+              <Topic key={topic.title} {...topic} />
+            </Link>
           ))}
         </div>
         <div className={styles.footerContainer}>
@@ -108,12 +113,12 @@ class Home extends React.Component {
 export default withRouter(
   connect(
     state => ({
-      loops: getLoopListData(state),
+      loops: getLoopListData(state)
     }),
     {
       searchLoops,
       updateSearchKeywords,
-      addLoop,
+      addLoop
     }
   )(Home)
 );

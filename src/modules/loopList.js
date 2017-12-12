@@ -42,13 +42,13 @@ const ids = (state = loopsData, action) => {
 
 export default combineReducers({
   searchKeywords,
-  ids,
+  ids
 });
 
 // Action Creators
 export const updateSearchKeywords = keywords => ({
   type: UPDATE_SEARCH_KEYWORDS,
-  keywords,
+  keywords
 });
 export const searchLoops = () => (dispatch, getState) => {
   const state = getState();
@@ -56,13 +56,14 @@ export const searchLoops = () => (dispatch, getState) => {
   const loopsData = getLoopsData(state);
   const filteredLoopKeys = keywords
     ? Object.keys(loopsData).filter(
-        id => loopsData[id].title.toLowerCase().indexOf(keywords.toLowerCase()) > -1
+        id =>
+          loopsData[id].title.toLowerCase().indexOf(keywords.toLowerCase()) > -1
       )
     : Object.keys(loopsData);
-    console.log(filteredLoopKeys);
+  console.log(filteredLoopKeys);
   dispatch({
     type: SEARCH_LOOPS,
-    data: filteredLoopKeys,
+    data: filteredLoopKeys
   });
 };
 
@@ -75,6 +76,7 @@ export const addLoop = ({ title, description, tags }) => (dispatch, getState) =>
       title: title,
       description,
       tags,
+      comments: [],
     },
   });
 };
