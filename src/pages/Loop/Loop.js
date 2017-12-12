@@ -179,14 +179,12 @@ class Loop extends React.Component {
           <Container
             style={{ overflowY: 'auto', flexBasis: 'calc(100vh - 160px)' }}>
             <Divider hidden />
-            <Segment>
+            <Segment vertical>
               <Link to='/'>
               <Label attached='top right' icon='close' />
               </Link>
-              <Tags tags={tags} />
-            </Segment>
-            <Segment vertical>
               <Profile {...profileCover} />
+              <Tags tags={tags} />
             </Segment>
             <Reply posts={comments} />
           </Container>
