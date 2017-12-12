@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Checkbox, Button, Label, Card, Form } from 'semantic-ui-react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getLoopListData } from 'store/modules';
 import { searchLoops, updateSearchKeywords, addLoop } from 'store/loopList';
@@ -30,7 +30,9 @@ const Home = ({ loops, searchLoops, updateSearchKeywords, addLoop }) => (
     </div>
     <div className={styles.cardsContainer}>
       {loops.map(topic => (
-        <Topic key={topic.title} title={topic.title} tags={topic.tags} />
+        <Link to={`/loop/${topic.id}`}>
+          <Topic key={topic.title} title={topic.title} tags={topic.tags} />
+        </Link>
       ))}
     </div>
     <div className={styles.footerContainer}>
