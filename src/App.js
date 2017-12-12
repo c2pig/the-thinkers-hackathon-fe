@@ -22,7 +22,7 @@ class App extends Component {
             <Route exact path="/loop/:loopId" component={Loop} />
             <Route exact path="/close" component={CloseLoopModal} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/profile" component={Profile}/>
+            <Route exact path="/profile/:username" component={Profile}/>
           </Switch>
         </Container>
       </div>

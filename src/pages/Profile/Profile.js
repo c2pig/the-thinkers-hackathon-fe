@@ -63,12 +63,14 @@ export default class Profile extends React.Component {
 
   render() {
     const { currentEventView } = this.state;
-    const profile = profileMockData.jeannie;
+    const { match: { params } } = this.props;
+    console.log(params.username);
+    const profile = profileMockData[params.username];
     return (
       <div>
         <div className={styles.mainContainer}>
           <Image
-            src='/jeannie.jpg'
+            src={profile.avatar}
             size="small"
             circular
             style={{
@@ -183,7 +185,7 @@ export default class Profile extends React.Component {
               {currentEventView === index && (
                 <Card.Group>
                   <Card>
-										{event.image && <Image src={event.image} />}
+                    {event.image && <Image src={event.image} />}
                     <Card.Content>
                       <Card.Header>{event.company}</Card.Header>
                       <Card.Meta>{event.position}</Card.Meta>
