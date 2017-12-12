@@ -8,8 +8,9 @@ import userReducer from './user';
 import loopList, * as fromLoopList from './loopList';
 
 const persistConfig = {
-  key: 'root',
-  storage: localForage
+    key: 'root',
+    storage: localForage,
+    whitelist: ['loops'],
 };
 
 export default persistCombineReducers(persistConfig, {

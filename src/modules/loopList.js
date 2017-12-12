@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import { REHYDRATE } from 'redux-persist';
-import { getLoopsData } from './modules';
 import uuid from 'uuid/v4';
 
 import loopsMockData from 'common/mocks/loops';
 
+import { getLoopsData } from './modules';
+
 let loopsData = Object.keys(loopsMockData);
-console.log(loopsData);
 
 // Actions
 const UPDATE_SEARCH_KEYWORDS = 'UPDATE_SEARCH_KEYWORDS';
@@ -31,13 +31,9 @@ const ids = (state = loopsData, action) => {
       return [...state, action.data.id];
     case REHYDRATE:
       const rehydratedData =
-        action.payload &&
-        action.payload.loopList &&
-        action.payload.loopList.ids &&
-        action.payload.loopList.ids.length > 0
-          ? action.payload.loopList.ids
+        action.payload && action.payload.loops && action.payload.loops.data
+          ? Object.keys(action.payload.loops.data)
           : state;
-      loopsData = rehydratedData;
       return rehydratedData;
     default:
       return state;
@@ -57,15 +53,16 @@ export const updateSearchKeywords = keywords => ({
 export const searchLoops = () => (dispatch, getState) => {
   const state = getState();
   const keywords = getSearchKeywords(state.loopList);
-  const loopsData = getLoopsData(state.loops);
-  const filteredLoops = keywords
-    ? loopsData.filter(
-        loop => loop.title.toLowerCase().indexOf(keywords.toLowerCase()) > -1
+  const loopsData = getLoopsData(state);
+  const filteredLoopKeys = keywords
+    ? Object.keys(loopsData).filter(
+        id => loopsData[id].title.toLowerCase().indexOf(keywords.toLowerCase()) > -1
       )
-    : loopsData;
+    : Object.keys(loopsData);
+    console.log(filteredLoopKeys);
   dispatch({
     type: SEARCH_LOOPS,
-    data: filteredLoops.map(loop => loop.id),
+    data: filteredLoopKeys,
   });
 };
 
