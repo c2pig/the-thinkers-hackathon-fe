@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Checkbox, Button, Label, Card, Form } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getLoopsData } from 'store/modules';
-import { searchLoops, updateSearchKeywords, addLoop } from 'store/loops';
+import { getLoopListData } from 'store/modules';
+import { searchLoops, updateSearchKeywords, addLoop } from 'store/loopList';
 import CreateLoopModal from 'components/CreateLoopModal/CreateLoopModal';
 
 import styles from './Home.css';
@@ -24,11 +24,16 @@ const Topic = ({ title, tags }) => {
 
 const Home = ({ loops, searchLoops, updateSearchKeywords, addLoop }) => (
   <div className={styles.rootContainer}>
-    <div className={styles.headerWithSearchBarContainer}>
-      <div className={styles.headerContainer}>
-        <h1>Loop List</h1>
-        <Checkbox toggle label="My topic" />
-      </div>
+    <div className={styles.headerContainer}>
+      <h1>Loop List</h1>
+      <Checkbox toggle label="My topic" />
+    </div>
+    <div className={styles.cardsContainer}>
+      {loops.map(topic => (
+        <Topic key={topic.title} title={topic.title} tags={topic.tags} />
+      ))}
+    </div>
+    <div className={styles.footerContainer}>
       <Form onSubmit={() => searchLoops()}>
         <div className={styles.searchContainer}>
           <div className={styles.inputContainer}>
@@ -41,17 +46,18 @@ const Home = ({ loops, searchLoops, updateSearchKeywords, addLoop }) => (
           </div>
           <div className={styles.inputButtonContainer}>
             <Button icon="search" type="submit" onClick={() => searchLoops()} />
-            <CreateLoopModal>
-              <Button icon="plus" />
+            <CreateLoopModal onSubmit={addLoop}>
+              <Button
+                icon="plus"
+                // onClick={e => {
+                //   // addLoop();
+                //   e.preventDefault();
+                // }}
+              />
             </CreateLoopModal>
           </div>
         </div>
       </Form>
-    </div>
-    <div className={styles.cardsContainer}>
-      {loops.map(topic => (
-        <Topic key={topic.title} title={topic.title} tags={topic.tags} />
-      ))}
     </div>
   </div>
 );
@@ -65,7 +71,7 @@ Home.propTypes = {
 export default withRouter(
   connect(
     state => ({
-      loops: getLoopsData(state)
+      loops: getLoopListData(state)
     }),
     {
       searchLoops,

@@ -1,11 +1,14 @@
 @import 'css';
 
 .rootContainer {
+    display: flex;
+    flex-direction: column;
     position: relative
 }
 
-.headerWithSearchBarContainer {
-    height: 100px;
+.headerContainer,
+.footerContainer {
+    flex: 1 0 10%;
     padding: 0 10px;
 }
 
@@ -31,6 +34,7 @@
 
 .cardsContainer {
     padding: 10px;
-    max-height: calc(100vh - 100px);
     overflow-y: auto;
+    flex: 0 0 calc(90vh - 140px);
+    margin-bottom: 20px;
 }
