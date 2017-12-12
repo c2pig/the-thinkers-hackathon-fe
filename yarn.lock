@@ -5531,6 +5531,12 @@ react-error-overlay@^1.0.7:
     settle-promise "1.0.0"
     source-map "0.5.6"
 
+react-event-timeline@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/react-event-timeline/-/react-event-timeline-1.4.1.tgz#8c4c058e71e249c65725bdfcff3297fb6e7c14a4"
+  dependencies:
+    prop-types "^15.6.0"
+
 react-helmet@^5.2.0:
   version "5.2.0"
   resolved "https://registry.yarnpkg.com/react-helmet/-/react-helmet-5.2.0.tgz#a81811df21313a6d55c5f058c4aeba5d6f3d97a7"

@@ -6,6 +6,7 @@ import { Container } from 'semantic-ui-react';
 import Home from 'pages/Home/Home';
 import Loop from 'pages/Loop/Loop';
 import CloseLoopModal from 'pages/CloseLoopModal/CloseLoopModal';
+import Profile from 'pages/Profile/Profile';
 
 class App extends Component {
   render() {
@@ -19,6 +20,7 @@ class App extends Component {
             <Route exact path="/" component={Home} />
             <Route exact path="/loop" component={Loop} />
             <Route exact path="/close" component={CloseLoopModal}/>
+            <Route exact path="/profile" component={Profile}/>
           </Switch>
         </Container>
       </div>
