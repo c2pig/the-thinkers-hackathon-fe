@@ -53,24 +53,8 @@ const mapDispatchToProps = (dispatch, reactRouteDom) => {
 
 const Login = ({ onSubmit }) => {
   return (
-    <div className="login-form">
-      {/*
-    Heads up! The styles below are necessary for the correct render of this example.
-    You can do same with CSS, the main idea is that all the elements up to the `Grid`
-    below must have a height of 100%.
-  */}
-      <style>{`
-    body > div,
-    body > div > div,
-    body > div > div > div.login-form {
-      height: 100%;
-    }
-  `}</style>
-      <Grid
-        textAlign="center"
-        style={{ height: '100%', marginTop: '200px' }}
-        verticalAlign="middle"
-      >
+    <div className="login-form" style={{ paddingTop: '200px' }}>
+      <Grid textAlign="center" verticalAlign="middle">
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" color="teal" textAlign="center">
             Log-in to your account
