@@ -1,16 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Checkbox,
-  Button,
-  Label,
-  Card,
-  Form,
-} from 'semantic-ui-react';
+import { Checkbox, Button, Label, Card, Form } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getLoopsData } from 'store/modules';
 import { searchLoops, updateSearchKeywords, addLoop } from 'store/loops';
+import CreateLoopModal from 'components/CreateLoopModal/CreateLoopModal';
 
 import styles from './Home.css';
 
@@ -46,7 +41,9 @@ const Home = ({ loops, searchLoops, updateSearchKeywords, addLoop }) => (
           </div>
           <div className={styles.inputButtonContainer}>
             <Button icon="search" type="submit" onClick={() => searchLoops()} />
-            <Button icon="plus" onClick={(e)=> { addLoop(); e.preventDefault();} }/>
+            <CreateLoopModal>
+              <Button icon="plus" />
+            </CreateLoopModal>
           </div>
         </div>
       </Form>
@@ -62,18 +59,18 @@ const Home = ({ loops, searchLoops, updateSearchKeywords, addLoop }) => (
 Home.propTypes = {
   loops: PropTypes.array.isRequired,
   searchLoops: PropTypes.func.isRequired,
-  updateSearchKeywords: PropTypes.func.isRequired,
+  updateSearchKeywords: PropTypes.func.isRequired
 };
 
 export default withRouter(
   connect(
     state => ({
-      loops: getLoopsData(state),
+      loops: getLoopsData(state)
     }),
     {
       searchLoops,
       updateSearchKeywords,
-      addLoop,
+      addLoop
     }
   )(Home)
 );
