@@ -26,7 +26,7 @@ class CreateLoopModal extends React.Component {
     onClose: () => {},
   };
 
-  state = { options, title: '', description: '', tags: [] };
+  state = { options, topic: '', description: '', tags: [] };
 
   handleAddition = (e, { value }) => {
     this.setState({
@@ -38,9 +38,9 @@ class CreateLoopModal extends React.Component {
     this.setState({ tags: value, error: value.length >= 5 });
   };
 
-  handleOnTitleChange = e => {
+  handleOnTopicChange = e => {
     this.setState({
-      title: e.target.value,
+      topic: e.target.value,
     });
   };
 
@@ -52,10 +52,10 @@ class CreateLoopModal extends React.Component {
 
   handleOnSubmit = e => {
     e.preventDefault();
-    const { title, description, tags } = this.state;
-    this.props.onSubmit({ title, description, tags });
+    const { topic, description, tags } = this.state;
+    this.props.onSubmit({ topic, description, tags });
     this.setState({
-      title: '',
+      topic: '',
       description: '',
       tags: [],
     })
@@ -70,11 +70,11 @@ class CreateLoopModal extends React.Component {
         <Modal.Content>
           <Form onSubmit={this.handleOnSubmit}>
             <Form.Field>
-              <Input placeholder="Title" onChange={this.handleOnTitleChange} />
+              <Input placeholder="Enter your topic here" onChange={this.handleOnTopicChange} />
             </Form.Field>
             <Form.Field>
               <textarea
-                placeholder="Description"
+                placeholder="Describe more about your topic"
                 onChange={this.handleOnDescriptionChange}
               />
             </Form.Field>
