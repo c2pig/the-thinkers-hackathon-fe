@@ -1,7 +1,5 @@
 import React from 'react'
 import { Input, Modal, Container, Message, Image, Feed, Card, Icon, Rating, Label, Comment, Form, Header, Item, Segment, Button, Divider } from 'semantic-ui-react'
-import ReplyPanel from '../../components/ReplyPanel';
-
 
 const Profile = ({description, profilePicture, headline}) => {
 
