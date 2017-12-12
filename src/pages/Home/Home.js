@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Checkbox, Button, Label, Card, Form } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getLoopsData } from 'store/modules';
-import { searchLoops, updateSearchKeywords, addLoop } from 'store/loops';
+import { getLoopListData } from 'store/modules';
+import { searchLoops, updateSearchKeywords, addLoop } from 'store/loopList';
 import CreateLoopModal from 'components/CreateLoopModal/CreateLoopModal';
 
 import styles from './Home.css';
@@ -71,7 +71,7 @@ Home.propTypes = {
 export default withRouter(
   connect(
     state => ({
-      loops: getLoopsData(state),
+      loops: getLoopListData(state),
     }),
     {
       searchLoops,
