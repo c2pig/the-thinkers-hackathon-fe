@@ -41,7 +41,7 @@ const mPeople = [
         username: 'Helen',
         position: 'Quality Expert',
         company: 'Linker Co.',
-    }
+    },
 ];
 
 export default class CloseLoopModal extends React.Component {
@@ -49,13 +49,38 @@ export default class CloseLoopModal extends React.Component {
         super();
         this.state = {
             people: mPeople,
+            isModalOpen: false,
         };
+        this.handleOpen = this.handleOpen.bind(this);
+        this.handleClose = this.handleClose.bind(this);
+    }
+
+    handleOpen() {
+        this.setState({
+            isModalOpen: true,
+        });
+    }
+
+    handleClose() {
+        this.setState({
+            isModalOpen: false,
+        });
+    }
+
+    handlePeopleOnClick(id) {
+        console.log(id);
+        this.handleClose();
     }
 
     render() {
-        const { people } = this.state;
+        const { people, isModalOpen } = this.state;
         return (
-            <Modal trigger={<Button>Show Modal</Button>} closeIcon>
+            <Modal
+                trigger={<Button onClick={this.handleOpen}>Show Modal</Button>}
+                open={isModalOpen}
+                closeIcon
+                onClose={this.handleClose}
+            >
                 <Modal.Header>Which job you accepted ?</Modal.Header>
                 <Modal.Content image>
                     <Image wrapped size="small" src={shakeHand} />
@@ -66,19 +91,25 @@ export default class CloseLoopModal extends React.Component {
                             className={styles.scrollDesc}
                         >
                             {people.map((person, index) => (
-                                <List.Item key={index}>
+                                <List.Item key={index} onClick={() => this.handlePeopleOnClick(index)}>
                                     <Image avatar src={person.avatar} />
                                     <List.Content>
                                         <List.Header>
                                             {person.username}
                                         </List.Header>
-                                        {person.position}<br/><div className={styles.miniFont}>{person.company}</div>
+                                        {person.position}
+                                        <br />
+                                        <div className={styles.miniFont}>
+                                            {person.company}
+                                        </div>
                                     </List.Content>
                                 </List.Item>
                             ))}
                             <br />
                         </List>
-                        <Button fluid>None :(</Button>
+                        <Button fluid onClick={this.handleClose}>
+                            None :(
+                        </Button>
                     </Modal.Description>
                 </Modal.Content>
             </Modal>
