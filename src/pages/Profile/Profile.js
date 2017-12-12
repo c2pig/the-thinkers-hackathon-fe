@@ -10,12 +10,11 @@ import {
 } from 'semantic-ui-react';
 import { Timeline, TimelineEvent } from 'react-event-timeline';
 import styles from './Profile.css';
-import img from '../Loop/assets/jeannie.jpg';
 import grabImg from './assets/grab.jpg';
 import cehImg from './assets/ceh.png';
 
 const profile = {
-  avatar: img,
+  avatar: '/jeannie.jpg',
   username: 'Jeannie',
   position: 'Software Engineer',
   company: 'AXD Company',
@@ -147,7 +146,7 @@ export default class Profile extends React.Component {
       <div>
         <div className={styles.mainContainer}>
           <Image
-            src={img}
+            src='/jeannie.jpg'
             size="small"
             circular
             style={{
