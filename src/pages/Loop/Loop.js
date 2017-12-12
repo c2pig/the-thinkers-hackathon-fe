@@ -125,11 +125,15 @@ const UserComment = ({ posts }) => {
                   <span>{date}</span>
                 </Comment.Metadata>
               </Comment.Content>
-              <Rating icon="star" defaultRating={rating} maxRating={5} />
-              <Label>
+              {/* <Rating icon="star" defaultRating={rating} maxRating={5} /> */}
+              <Label>javascript 
+              <Label.Detail>22</Label.Detail>
+              </Label>
+               <Label>
                 <Icon name="user" />
                 {totalHired} Hired
               </Label>
+              <Icon name="thumbs outline up" />
               {postType === 'contact-me' && (
                 <ContactMe
                   headline={headline}
