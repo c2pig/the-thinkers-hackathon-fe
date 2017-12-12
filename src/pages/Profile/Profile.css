@@ -1,0 +1,46 @@
+.mainContainer {
+  margin: 30px 0px 20px;
+  background-color: rgba(36, 56, 98, 0.95);
+  border-radius: 5px;
+  border: 2px solid #ffffff;
+  padding: 10px;
+}
+
+.titleHeader {
+  margin-top: 0.2rem !important;
+  margin-bottom: 0.4rem !important;
+  color: white !important;
+}
+
+.miniFont {
+  font-size: 0.9rem;
+  color: white;
+  /* color: rgba(0,0,0,.5); */
+  text-align: center;
+}
+
+.quote {
+  font-size: 0.9rem;
+  /* color: white; */
+  border-radius: 2px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 3px;
+  padding-right: 3px;
+  /* background-color: rgba(255,255,255,.5);     */
+  color: rgba(0, 0, 0, 1);
+  text-align: center;
+}
+
+.location {
+  font-size: 0.7rem;
+  color: white;
+  /* color: rgba(0,0,0,.5); */
+  text-align: center;
+}
+
+.tag {
+  background-color: rgba(255, 255, 255, 0.7);
+  border-color: rgba(255, 255, 255, 0.7);
+  color: white;
+}

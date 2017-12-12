@@ -12,16 +12,18 @@ import styles from './Home.css';
 const Topic = ({ topic, tags, id }) => {
   const url = `/loop/${id}`;
   return (
-    <Link to={url}>
-      <Card fluid>
-        <Card.Content>
-          <h3>{topic}</h3>
-          <Label.Group>
-            {tags.map(tag => <Label key={tag}>{tag}</Label>)}
-          </Label.Group>
-        </Card.Content>
-      </Card>
-    </Link>
+    <Card fluid style={{ position: 'relative' }}>
+      <Link
+        to={url}
+        style={{ position: 'absolute', width: '100%', height: '100%' }}
+      />
+      <Card.Content>
+        <h3>{topic}</h3>
+        <Label.Group>
+          {tags.map(tag => <Label key={tag}>{tag}</Label>)}
+        </Label.Group>
+      </Card.Content>
+    </Card>
   );
 };
 
@@ -58,8 +60,7 @@ class Home extends React.Component {
     this.setState({
       isCreateTopicModalOpen: false,
     });
-  }
-
+  };
 
   render() {
     const { loops, updateSearchKeywords } = this.props;
@@ -71,11 +72,7 @@ class Home extends React.Component {
           <Checkbox toggle label="My topic" />
         </div>
         <div className={styles.cardsContainer}>
-          {loops.map(topic => (
-            <Link to={`/loop/${topic.id}`}>
-              <Topic key={topic.title} {...topic} />
-            </Link>
-          ))}
+          {loops.map(loop => <Topic key={loop.topic} {...loop} />)}
         </div>
         <div className={styles.footerContainer}>
           <Form onSubmit={this.handleOnSearch}>
@@ -113,12 +110,12 @@ class Home extends React.Component {
 export default withRouter(
   connect(
     state => ({
-      loops: getLoopListData(state)
+      loops: getLoopListData(state),
     }),
     {
       searchLoops,
       updateSearchKeywords,
-      addLoop
+      addLoop,
     }
   )(Home)
 );

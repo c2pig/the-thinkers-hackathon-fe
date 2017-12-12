@@ -1,43 +1,41 @@
 import React from 'react';
-import { Button, Header, Image, Modal, List } from 'semantic-ui-react';
+import { Button, Image, Modal, List } from 'semantic-ui-react';
 import shakeHand from './assets/shake-hand.jpg';
-import img from '../Loop/assets/jeannie.jpg';
-import img1 from '../Loop/assets/kong.jpg';
 import styles from './CloseLoopModal.css';
 
 const mPeople = [
     {
-        avatar: img,
+        avatar: '/jeannie.jpg',
         username: 'Helen',
         position: 'Graphic Designer',
         company: 'Linker Co.',
     },
     {
-        avatar: img1,
+        avatar: '/kong.jpg',
         username: 'Christian',
         position: 'Graphic Designer',
         company: 'ABD Sdn Bhd',
     },
     {
-        avatar: img,
+        avatar: '/jeannie.jpg',
         username: 'Helen',
         position: 'Developer',
         company: 'Linker Co.',
     },
     {
-        avatar: img,
+        avatar: '/jeannie.jpg',
         username: 'Helen',
         position: 'Architect',
         company: 'Linker Co.',
     },
     {
-        avatar: img,
+        avatar: '/jeannie.jpg',
         username: 'Daniel',
         position: 'HR Manager',
         company: 'Asterine Co.',
     },
     {
-        avatar: img,
+        avatar: '/jeannie.jpg',
         username: 'Helen',
         position: 'Quality Expert',
         company: 'Linker Co.',

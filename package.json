@@ -12,6 +12,7 @@
     "react-addons-css-transition-group": "^15.6.0",
     "react-async-script-loader": "^0.3.0",
     "react-dom": "^15.6.1",
+    "react-event-timeline": "^1.4.1",
     "react-helmet": "^5.2.0",
     "react-notification-system": "^0.2.15",
     "react-redux": "^5.0.5",
