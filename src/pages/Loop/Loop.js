@@ -20,13 +20,15 @@ import mockComments from 'common/mocks/comments';
 import { withRouter, Link } from 'react-router-dom';
 import { getLoopsData } from 'store/modules';
 
-const Profile = ({ description, profilePicture, headline }) => {
+const Profile = ({ description, tags, headline }) => {
   return (
     <Item.Group>
-      <Item>
-        <Item.Image size="small" src={profilePicture} />
+      <Item style={{ margin: '0' }}>
         <Item.Content>
-          <Item.Header as="a">{headline}</Item.Header>
+          <Item.Header as="a" style={{ marginBottom: '10px' }}>
+            {headline}
+          </Item.Header>
+          <Tags tags={tags} />
           <Item.Description>
             <p>{description}</p>
           </Item.Description>
@@ -95,7 +97,7 @@ const Tags = ({ tags }) => {
   );
 };
 
-const Reply = ({ posts }) => {
+const UserComment = ({ posts }) => {
   return (
     <Comment.Group size="small">
       {posts.map(
@@ -166,9 +168,9 @@ class Loop extends React.Component {
 
     const { id, tags, title } = this.props.loop;
 
-    const profileCover = {
+    const topic = {
       description: this.props.loop.description,
-      profilePicture: '/jeannie.jpg',
+      tags: tags,
       headline: this.props.loop.topic
     };
 
@@ -178,16 +180,15 @@ class Loop extends React.Component {
           style={{ overflowY: 'auto', flexBasis: 'calc(100vh - 160px)' }}
         >
           <Divider hidden />
-          <Segment>
-            <Link to="/">
-              <Label attached="top right" icon="close" />
-            </Link>
-            <Tags tags={tags} />
-          </Segment>
+          <Link to="/">
+            <Button color="yellow" fluid>
+              Close Topic
+            </Button>
+          </Link>
           <Segment vertical>
-            <Profile {...profileCover} />
+            <Profile {...topic} />
           </Segment>
-          <Reply posts={comments} />
+          <UserComment posts={comments} />
         </Container>
         <Container style={{ flex: '0 0 auto' }}>
           <ReplyPanel loopId={this.props.loop.id} />
