@@ -1,0 +1,36 @@
+@import 'css';
+
+.rootContainer {
+    position: relative
+}
+
+.headerWithSearchBarContainer {
+    height: 100px;
+    padding: 0 10px;
+}
+
+.headerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.searchContainer {
+    display: flex;
+    width: 100%;
+}
+
+    .inputContainer {
+        flex: 1 0 auto;
+        margin-right: 10px; 
+    }
+
+    .inputButtonContainer {
+        flex: 0 0 auto;
+    }
+
+.cardsContainer {
+    padding: 10px;
+    max-height: calc(100vh - 100px);
+    overflow-y: auto;
+}
