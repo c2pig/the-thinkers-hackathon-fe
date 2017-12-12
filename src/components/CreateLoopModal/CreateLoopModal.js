@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Modal, Button, Form, Input, Dropdown } from 'semantic-ui-react';
 
 const options = [
@@ -14,7 +15,18 @@ const options = [
 ];
 
 class CreateLoopModal extends React.Component {
-  state = { options, title: '', description: '' };
+  propTypes = {
+    children: PropTypes.node.isRequired,
+    open: PropTypes.bool,
+    onClose: PropTypes.func,
+  };
+
+  defaultProps = {
+    open: false,
+    onClose: () => {},
+  };
+
+  state = { options, title: '', description: '', tags: [] };
 
   handleAddition = (e, { value }) => {
     this.setState({
@@ -23,7 +35,7 @@ class CreateLoopModal extends React.Component {
   };
 
   handleChange = (e, { value }) => {
-    this.setState({ currentValues: value, error: value.length >= 5 });
+    this.setState({ tags: value, error: value.length >= 5 });
   };
 
   handleOnTitleChange = e => {
@@ -40,16 +52,20 @@ class CreateLoopModal extends React.Component {
 
   handleOnSubmit = e => {
     e.preventDefault();
-    const { title, description, currentValues } = this.state;
-    console.log(currentValues);
-    // this.props.onSubmit({ title, description, })
+    const { title, description, tags } = this.state;
+    this.props.onSubmit({ title, description, tags });
+    this.setState({
+      title: '',
+      description: '',
+      tags: [],
+    })
   };
 
   render() {
-    const { children } = this.props;
-    const { currentValues, options, error } = this.state;
+    const { children, open, onClose } = this.props;
+    const { tags, options, error } = this.state;
     return (
-      <Modal trigger={children}>
+      <Modal trigger={children} open={open} onClose={onClose}>
         <Modal.Header>New topic</Modal.Header>
         <Modal.Content>
           <Form onSubmit={this.handleOnSubmit}>
@@ -71,7 +87,7 @@ class CreateLoopModal extends React.Component {
                 fluid
                 multiple
                 allowAdditions
-                value={currentValues}
+                value={tags}
                 onAddItem={this.handleAddition}
                 onChange={this.handleChange}
                 error={error}

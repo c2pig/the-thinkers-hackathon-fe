@@ -20,7 +20,6 @@ import mockComments from 'common/mocks/comments';
 import { withRouter, Link } from 'react-router-dom';
 import { getLoopsData } from 'store/modules';
 
-
 const Profile = ({ description, profilePicture, headline }) => {
   return (
     <Item.Group>
@@ -163,7 +162,7 @@ class Loop extends React.Component {
   close = () => this.setState({ open: false });
 
   render() {
-    const comments = [...mockComments, ...this.props.loop.comments || []];
+    const comments = [...mockComments, ...(this.props.loop.comments || [])];
 
     const { id, tags, title } = this.props.loop;
 
@@ -175,22 +174,23 @@ class Loop extends React.Component {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <Container style={{ overflowY: 'auto', flexBasis: 'calc(100vh - 160px)' }}>
-          <Container
-            style={{ overflowY: 'auto', flexBasis: 'calc(100vh - 160px)' }}>
-            <Divider hidden />
-            <Segment vertical>
-              <Link to='/'>
-              <Label attached='top right' icon='close' />
-              </Link>
-              <Profile {...profileCover} />
-              <Tags tags={tags} />
-            </Segment>
-            <Reply posts={comments} />
-          </Container>
-          <Container style={{ flex: '0 0 auto' }}>
-            <ReplyPanel loopId={this.props.loop.id} />
-          </Container>
+        <Container
+          style={{ overflowY: 'auto', flexBasis: 'calc(100vh - 160px)' }}
+        >
+          <Divider hidden />
+          <Segment>
+            <Link to="/">
+              <Label attached="top right" icon="close" />
+            </Link>
+            <Tags tags={tags} />
+          </Segment>
+          <Segment vertical>
+            <Profile {...profileCover} />
+          </Segment>
+          <Reply posts={comments} />
+        </Container>
+        <Container style={{ flex: '0 0 auto' }}>
+          <ReplyPanel loopId={this.props.loop.id} />
         </Container>
       </div>
     );

@@ -67,17 +67,17 @@ export const searchLoops = () => (dispatch, getState) => {
   });
 };
 
-export const addLoop = () => (dispatch, getState) => {
-  const state = getState();
-  const keywords = getSearchKeywords(state.loopList);
+export const addLoop = ({ title, description, tags }) => (dispatch, getState) => {
+  // const keywords = getSearchKeywords(state.loopList);
   dispatch({
     type: ADD_LOOP,
     data: {
       id: uuid(),
-      title: keywords,
-      tags: [keywords],
-      comments: []
-    }
+      title: title,
+      description,
+      tags,
+      comments: [],
+    },
   });
 };
 
