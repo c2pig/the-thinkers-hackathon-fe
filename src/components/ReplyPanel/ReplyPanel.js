@@ -24,6 +24,7 @@ const ReplyPanel = ({
   submitMessage,
   onAttachJobCard,
   onAttachJobLink,
+  onAttachContact,
   jobs
 }) => {
   return (
@@ -37,7 +38,7 @@ const ReplyPanel = ({
           jobs={jobs}
         />
         {/* <Button.Or /> */}
-        <Button positive>Left my contact</Button>
+        <Button positive onClick={onAttachContact}>Left my contact</Button>
       </Button.Group>
     </Segment>
   );

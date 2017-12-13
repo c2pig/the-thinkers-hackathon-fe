@@ -6,22 +6,36 @@ import {
   Icon,
   Label,
   Comment,
-  Divider
+  Divider,
+  Button,
 } from 'semantic-ui-react';
 import JobDescriptionCard from 'components/JobDescriptionCard/JobDescriptionCard';
+import IconWithDescription from 'components/IconWithDescription/IconWithDescription';
 
-const ContactMe = ({ headline, description, phone, email }) => {
+const ContactMe = ({ company, email, fullname, phone, position }) => {
   return (
     <Card fluid>
       <Card.Content>
-        <Card.Meta>I am talent warrior</Card.Meta>
-        <Card.Description>asdfasdfasdf</Card.Description>
+        <Card.Header style={{ textTransform: 'capitalize' }}>
+          {fullname}
+        </Card.Header>
+        <Card.Meta>{`${position}, ${company}`}</Card.Meta>
+        <Card.Description>
+          Hi, please find my contact as follow:
+        </Card.Description>
+        <IconWithDescription description={email} icon="mail" />
+        <IconWithDescription description={phone} icon="phone" />
       </Card.Content>
-      <Card.Content>
-        <Icon name="mail outline" />
-        {email}
-        <Icon name="phone" />
-        {phone}
+      <Card.Content extra>
+        <div className="ui two buttons">
+          <Button as="a" href={`tel:${phone}`} color="blue">
+            Call me
+          </Button>
+          <Button.Or />
+          <Button as="a" href={`mailto:${email}`} basic color="blue">
+            Email me
+          </Button>
+        </div>
       </Card.Content>
     </Card>
   );
@@ -46,7 +60,8 @@ export default ({ comments, topicTags, parentContext }) => {
             phone,
             email,
             tags,
-            job
+            job,
+            contact,
           },
           i
         ) => {
@@ -99,20 +114,9 @@ export default ({ comments, topicTags, parentContext }) => {
                   parentContext.setState({ ...parentContext.state });
                 }}
               />
-              {postType === 'contact-me' && (
-                <ContactMe
-                  headline={headline}
-                  description={message}
-                  phone={phone}
-                  email={email}
-                />
-              )}
+              {postType === 'contact-me' && <ContactMe {...contact} />}
               {postType === 'drop-message' && <DropMessage msg={message} />}
-              {postType === 'post-jd' && (
-                <JobDescriptionCard
-                  {...job}
-                />
-              )}
+              {postType === 'post-jd' && <JobDescriptionCard {...job} />}
               <Divider hidden />
             </Comment>
           );

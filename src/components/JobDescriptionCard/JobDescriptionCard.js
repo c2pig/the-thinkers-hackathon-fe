@@ -1,5 +1,8 @@
 import React from 'react';
-import { Card, Label, Icon } from 'semantic-ui-react';
+import { Card, Label } from 'semantic-ui-react';
+
+import IconWithDescription from 'components/IconWithDescription/IconWithDescription';
+
 import styles from './JobDescriptionCard.css';
 
 const JobDescriptionCard = ({
@@ -14,14 +17,16 @@ const JobDescriptionCard = ({
       <Card.Content className={styles.contentContainer}>
         <Card.Header>{jobTitle}</Card.Header>
         <Card.Meta>{company}</Card.Meta>
-        <div className={styles.descriptionContainer}>
-          <Icon name="briefcase" />
-          <span>{yearsOfExperience}</span>
-        </div>
-        <div className={styles.descriptionContainer}>
-          <Icon name="point" />
-          <span>{location}</span>
-        </div>
+        <IconWithDescription
+          description={yearsOfExperience}
+          icon="briefcase"
+          className={styles.descriptionContainer}
+        />
+        <IconWithDescription
+          description={location}
+          icon="point"
+          className={styles.descriptionContainer}
+        />
         <div className={styles.tagContainer}>
           {tags.map((tag, i) => {
             return <Label key={'label-' + i}>{tag}</Label>;

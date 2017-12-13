@@ -36,5 +36,6 @@ export const getLoopListData = state => {
 };
 
 export const getUsersData = state => fromUsers.getData(state.users);
+export const getUserDetailsWithUsername = state => fromUsers.getDataWithUserName(state.users);
 
 export const getCurrentUser = state => fromUser.getCurrentUser(state.user);

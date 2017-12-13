@@ -3,7 +3,10 @@
 export default {
   jeannie: {
     avatar: '/jeannie.jpg',
-    username: 'Jeannie',
+    username: 'jeannie',
+    fullname: 'Jeannie Ng',
+    phone: '017-1234567',
+    email: 'jeannieng@axd.com',
     position: 'Software Engineer',
     company: 'AXD Company',
     location: 'Setia Alam, Shah Alam, Selangor, Malaysia.',
@@ -77,7 +80,10 @@ export default {
   },
   kong: {
     avatar: '/kong.jpg',
-    username: 'Kong',
+    username: 'kong',
+    fullname: 'Kong Ka Weng',
+    phone: '018-12345678',
+    email: 'kaweng.kong@gdp.com',
     position: 'Full-Stack Engineer',
     company: 'GDD Company',
     location: 'TTDI, Kuala Lumpur, Malaysia.',

@@ -1,14 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, Label, Item, Segment } from 'semantic-ui-react';
-import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
-import CloseLoopModal from 'components/CloseLoopModal/CloseLoopModal';
 import { connect } from 'react-redux';
-import mockComments from 'common/mocks/comments';
-import mockJobs, { mockJobstreetJob } from 'common/mocks/jobs';
-import { STATUS_OPEN } from 'store/loops';
+
+import CloseLoopModal from 'components/CloseLoopModal/CloseLoopModal';
+import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
 import UserComment from 'components/UserComment/UserComment';
-import { attachJobMessage } from 'store/loops';
+import mockJobs, { mockJobstreetJob } from 'common/mocks/jobs';
+import {
+  STATUS_OPEN,
+  attachJobMessage,
+  attachContactMessage,
+} from 'store/loops';
+
 import styles from './Loop.css';
 
 const Topic = ({ description, tags, headline }) => {
@@ -38,8 +42,9 @@ const Tags = ({ tags }) => {
 class Loop extends React.Component {
   static propTypes = {
     attachJobMessage: PropTypes.func.isRequired,
+    attachContactMessage: PropTypes.func.isRequired,
     loop: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
   };
 
   constructor(props) {
@@ -52,7 +57,7 @@ class Loop extends React.Component {
   handleOnAttachJobLink = e => {
     e.preventDefault();
     this.setState({
-      jobs: [...this.state.jobs, mockJobstreetJob]
+      jobs: [...this.state.jobs, mockJobstreetJob],
     });
   };
 
@@ -62,17 +67,21 @@ class Loop extends React.Component {
     this.props.attachJobMessage(loop.id, jobs[id]);
   };
 
+  handleOnAttachContact = () => {
+    this.props.attachContactMessage(this.props.loop.id);
+  }
+
   render() {
     const { user, loop } = this.props;
+    const { comments } = loop;
     const { jobs } = this.state;
     const { tags } = loop;
-    const comments = [...mockComments, ...(this.props.loop.comments || [])];
     const _this = this;
     const responders = comments
       .map(comment => {
         return {
           avatar: `/${comment.username}.jpg`,
-          username: comment.username
+          username: comment.username,
         };
       })
       .filter((obj, pos, arr) => {
@@ -86,7 +95,7 @@ class Loop extends React.Component {
     const topic = {
       description: this.props.loop.description,
       tags: tags,
-      headline: this.props.loop.topic
+      headline: this.props.loop.topic,
     };
 
     return (
@@ -95,14 +104,14 @@ class Loop extends React.Component {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          height: '100%'
+          height: '100%',
         }}
       >
         <Container
           className={styles.loopContainer}
           style={{
             overflowY: 'auto',
-            padding: '0 2px'
+            padding: '0 2px',
           }}
         >
           {user.username &&
@@ -132,6 +141,7 @@ class Loop extends React.Component {
               loopId={this.props.loop.id}
               onAttachJobCard={this.handleOnAttachJobCard}
               onAttachJobLink={this.handleOnAttachJobLink}
+              onAttachContact={this.handleOnAttachContact}
               jobs={jobs}
             />
           </Container>
@@ -144,10 +154,11 @@ class Loop extends React.Component {
 const mapStateToProps = (states, props) => {
   return {
     loop: states.loops.data[props.match.params.loopId],
-    user: states.user
+    user: states.user,
   };
 };
 
 export default connect(mapStateToProps, {
-  attachJobMessage
+  attachJobMessage,
+  attachContactMessage,
 })(Loop);

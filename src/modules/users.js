@@ -25,3 +25,4 @@ export default combineReducers({
 
 // Getter
 export const getData = state => state.data;
+export const getDataWithUserName = state => username => state.data[username] || {};
