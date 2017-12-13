@@ -85,14 +85,6 @@ const data = (state = loopsData, action) => {
     case DROP_JD_MESSAGE: {
       let loop = state[action.payload.loopId];
       const comment = {
-        postType: 'post-jd',
-        date: new Date().toString(),
-        rating: 1,
-        totalHired: 10,
-        headline: 'i am kong',
-        phone: '123',
-        email: 'kong@gmail.com',
-        tags: extractTagsByUserName('Kong'),
         ...action.payload,
       };
       loop.comments.push(comment);
@@ -135,7 +127,13 @@ export default combineReducers({
 
 export const attachJobMessage = (loopId, job) => (dispatch, getState) => {
   const state = getState();
+  const username = getCurrentUser(state);
+  const commentUserDetails = getUserDetailsWithUsername(state)(username);
   const payload = {
+    postType: 'post-jd',
+    date: new Date().toString(),
+    totalHired: commentUserDetails.peopleHired,
+    tags: extractTagsByUserName(username),
     loopId,
     job,
     username: getCurrentUser(state),
