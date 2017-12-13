@@ -29,6 +29,7 @@ export const getLoopListSearchKeywords = state =>
   fromLoopList.getSearchKeywords(state.loopList);
 export const getLoopListIds = state => fromLoopList.getIds(state.loopList);
 export const getLoopListData = state => {
+  console.log(state);
   const loopsData = getLoopsData(state);
   return getLoopListIds(state).map(id => loopsData[id] || {});
 };

@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { getLoopListData } from 'store/modules';
 import { searchLoops, updateSearchKeywords, addLoop } from 'store/loopList';
 import CreateLoopModal from 'components/CreateLoopModal/CreateLoopModal';
-import { STATUS_CLOSED } from 'store/loops';
+import { STATUS_CLOSED, STATUS_OPEN } from 'store/loops';
 
 import styles from './Home.css';
 
@@ -41,7 +41,14 @@ class Home extends React.Component {
   };
 
   state = {
-    isCreateTopicModalOpen: false
+    isCreateTopicModalOpen: false,
+    myTopic: false
+  };
+
+  toggleMyTopic = () => {
+    this.setState({
+      myTopic: !this.state.myTopic
+    });
   };
 
   handleOnSearch = e => {
@@ -69,16 +76,27 @@ class Home extends React.Component {
   };
 
   render() {
-    const { loops, updateSearchKeywords } = this.props;
-    const { isCreateTopicModalOpen } = this.state;
+    const { loops, updateSearchKeywords, user } = this.props;
+    const { isCreateTopicModalOpen, myTopic } = this.state;
     return (
       <div className={styles.rootContainer}>
         <div className={styles.headerContainer}>
           <h1>Loop List</h1>
-          <Checkbox toggle label="My topic" />
+          <Checkbox
+            toggle
+            label="My topic"
+            checked={myTopic}
+            onClick={this.toggleMyTopic}
+          />
         </div>
         <div className={styles.cardsContainer}>
-          {loops.map(loop => <Topic key={loop.topic} {...loop} />)}
+          {loops.map(
+            loop =>
+              loop.status === STATUS_OPEN &&
+              (!myTopic || loop.username === user.username) && (
+                <Topic key={loop.topic} {...loop} />
+              )
+          )}
         </div>
         <div className={styles.footerContainer}>
           <Form onSubmit={this.handleOnSearch}>
@@ -116,7 +134,8 @@ class Home extends React.Component {
 export default withRouter(
   connect(
     state => ({
-      loops: getLoopListData(state)
+      loops: getLoopListData(state),
+      user: state.user
     }),
     {
       searchLoops,
