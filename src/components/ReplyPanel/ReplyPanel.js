@@ -45,7 +45,7 @@ const ReplyPanel = ({
         />
         {/* <Button.Or /> */}
         <Button positive onClick={onAttachContact}>
-          Left my contact
+          Leave my contact
         </Button>
       </Button.Group>
     </Segment>
