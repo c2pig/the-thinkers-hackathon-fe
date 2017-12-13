@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   Container,
   Message,
@@ -8,14 +9,16 @@ import {
   Comment,
   Item,
   Segment,
-  Divider
+  Divider,
 } from 'semantic-ui-react';
 
 import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
 import CloseLoopModal from 'components/CloseLoopModal/CloseLoopModal';
 import { connect } from 'react-redux';
 import mockComments from 'common/mocks/comments';
+import mockJobs, { mockJobstreetJob } from 'common/mocks/jobs';
 import { getHighestRatingTagName, getRelatedTag } from 'common/helpers';
+import { attachJobMessage } from 'store/loops';
 import styles from './Loop.css';
 
 const Topic = ({ description, tags, headline }) => {
@@ -91,12 +94,15 @@ const UserComment = ({ comments, topicTags }) => {
             headline,
             phone,
             email,
-            tags
+            tags,
+            job,
           },
           i
         ) => {
-
-          const { tag, rating } = getHighestRatingTagName(getRelatedTag(...tags, topicTags), topicTags);
+          const { tag, rating } = getHighestRatingTagName(
+            getRelatedTag(...tags, topicTags),
+            topicTags
+          );
           return (
             <Comment key={'comment-i' + i}>
               <Comment.Avatar as="a" src={`/${username}.jpg`} />
@@ -106,11 +112,12 @@ const UserComment = ({ comments, topicTags }) => {
                   <span>{date}</span>
                 </Comment.Metadata>
               </Comment.Content>
-              { tag &&
-                <Label>{tag}
+              {tag && (
+                <Label>
+                  {tag}
                   <Label.Detail>{rating}</Label.Detail>
                 </Label>
-              }
+              )}
               <Label>
                 <Icon name="user" />
                 {totalHired} Hired
@@ -127,9 +134,7 @@ const UserComment = ({ comments, topicTags }) => {
               {postType === 'drop-message' && <DropMessage msg={message} />}
               {postType === 'post-jd' && (
                 <PostJD
-                  jobTitle="Graphic Designer"
-                  company="abc co"
-                  tags={tags}
+                  {...job}
                 />
               )}
               <Divider hidden />
@@ -142,22 +147,42 @@ const UserComment = ({ comments, topicTags }) => {
 };
 
 class Loop extends React.Component {
+  static propTypes = {
+    attachJobMessage: PropTypes.func.isRequired,
+    loop: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired,
+  };
+
   constructor(props) {
     super(props);
-    this.state = { open: false };
+    this.state = { open: false, jobs: mockJobs };
   }
 
   close = () => this.setState({ open: false });
 
+  handleOnAttachJobLink = e => {
+    e.preventDefault();
+    this.setState({
+      jobs: [...this.state.jobs, mockJobstreetJob],
+    });
+  };
+
+  handleOnAttachJobCard = id => {
+    const { loop } = this.props;
+    const { jobs } = this.state;
+    this.props.attachJobMessage(loop.id, jobs[id]);
+  };
+
   render() {
     const { user, loop } = this.props;
+    const { jobs } = this.state;
     const { tags } = loop;
     const comments = [...mockComments, ...(this.props.loop.comments || [])];
     const responders = comments
       .map(comment => {
         return {
           avatar: `/${comment.username}.jpg`,
-          username: comment.username
+          username: comment.username,
         };
       })
       .filter((obj, pos, arr) => {
@@ -171,7 +196,7 @@ class Loop extends React.Component {
     const topic = {
       description: this.props.loop.description,
       tags: tags,
-      headline: this.props.loop.topic
+      headline: this.props.loop.topic,
     };
 
     return (
@@ -180,7 +205,7 @@ class Loop extends React.Component {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          height: '100vh'
+          height: '100vh',
         }}
       >
         {user.username &&
@@ -194,7 +219,7 @@ class Loop extends React.Component {
         <Container
           style={{
             overflowY: 'auto',
-            padding: '0 2px'
+            padding: '0 2px',
           }}
         >
           <Segment vertical>
@@ -203,7 +228,12 @@ class Loop extends React.Component {
           <UserComment comments={comments} topicTags={topic.tags} />
         </Container>
         <Container className={styles.replyPanelContainer}>
-          <ReplyPanel loopId={this.props.loop.id} />
+          <ReplyPanel
+            loopId={this.props.loop.id}
+            onAttachJobCard={this.handleOnAttachJobCard}
+            onAttachJobLink={this.handleOnAttachJobLink}
+            jobs={jobs}
+          />
         </Container>
       </div>
     );
@@ -213,8 +243,10 @@ class Loop extends React.Component {
 const mapStateToProps = (states, props) => {
   return {
     loop: states.loops.data[props.match.params.loopId],
-    user: states.user
+    user: states.user,
   };
 };
 
-export default connect(mapStateToProps)(Loop);
+export default connect(mapStateToProps, {
+  attachJobMessage
+})(Loop);

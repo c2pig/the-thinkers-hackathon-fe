@@ -1,80 +1,41 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Modal, Form, List } from 'semantic-ui-react';
 import JobDescriptionCard from 'components/JobDescriptionCard/JobDescriptionCard';
 import styles from './AttachJobModal.css';
 
-const listOfJobs = [
-  {
-    jobTitle: 'Software Engineer',
-    company: 'A-Z company',
-    tags: ['react', 'javascript'],
-  },
-  {
-    jobTitle: 'Software Engineer',
-    company: 'A-Z company',
-    tags: ['react', 'javascript'],
-  },
-  {
-    jobTitle: 'Software Engineer',
-    company: 'A-Z company',
-    tags: ['react', 'javascript'],
-  },
-  {
-    jobTitle: 'Software Engineer',
-    company: 'A-Z company',
-    tags: ['react', 'javascript'],
-  },
-  {
-    jobTitle: 'Software Engineer',
-    company: 'A-Z company',
-    tags: ['react', 'javascript'],
-  },
-];
-
-const mockJobstreetJob = {
-  jobTitle: 'Front-End Engineer',
-  company: 'SEEK International - Global Delivery Pod',
-  tags: ['react', 'javascript', 'nodeJS', 'ES6'],
-};
-
 class AttachJobModal extends React.Component {
+  static propTypes = {
+    jobs: PropTypes.array.isRequired,
+    onAttachJobCard: PropTypes.func.isRequired,
+    onAttachJobLink: PropTypes.func.isRequired,
+  };
+
   state = {
     isModalOpen: false,
-    jobs: listOfJobs,
-  }
+  };
 
   handleOpen = () => {
     this.setState({
       isModalOpen: true,
     });
-  }
+  };
 
   handleClose = () => {
     this.setState({
       isModalOpen: false,
     });
-  }
-
-  handleOnJob = (id) => {
-    this.handleClose();
-  }
-
-  handleOnAttachJobLink = (e) => {
-    console.log('called');
-    e.preventDefault();
-    this.setState({
-      jobs: [...this.state.jobs, mockJobstreetJob],
-    });
-  }
+  };
 
   render() {
+    const { jobs, onAttachJobCard, onAttachJobLink } = this.props;
     const { isModalOpen } = this.state;
     return (
       <Modal
-        trigger={<Button onClick={this.handleOpen}>Attach a Job</Button>}
-        open={isModalOpen}
         closeIcon
+        open={isModalOpen}
         onClose={this.handleClose}
+        trigger={<Button onClick={this.handleOpen}>Attach a Job</Button>}
       >
         <Modal.Header>Please select a job to attach</Modal.Header>
         <Modal.Content>
@@ -84,10 +45,13 @@ class AttachJobModal extends React.Component {
               verticalAlign="middle"
               className={styles.scrollDesc}
             >
-              {listOfJobs.map((job, index) => (
+              {jobs.map((job, index) => (
                 <List.Item
                   key={index}
-                  onClick={() => this.handlePeopleOnClick(index)}
+                  onClick={() => {
+                    onAttachJobCard(index);
+                    this.handleClose();
+                  }}
                 >
                   <JobDescriptionCard key={index} {...job} />
                 </List.Item>
@@ -95,14 +59,18 @@ class AttachJobModal extends React.Component {
               <br />
             </List>
             <div className={styles.addNewJobContainer}>
-              <Form className={styles.newJobForm} onSubmit={this.handleOnAttachJobLink}>
+              <Form className={styles.newJobForm} onSubmit={onAttachJobLink}>
                 <div className={styles.jobLinkInputContainer}>
                   <Form.Field>
                     <input placeholder="Paste a job link here" />
                   </Form.Field>
                 </div>
                 <div className={styles.addNewJobButtonContainer}>
-                  <Button icon="linkify" type="submit" onClick={this.handleOnAttachJobLink} />
+                  <Button
+                    icon="linkify"
+                    type="submit"
+                    onClick={onAttachJobLink}
+                  />
                   <Button icon="plus" />
                 </div>
               </Form>
