@@ -4,7 +4,6 @@ import {
   Message,
   Card,
   Icon,
-  Rating,
   Label,
   Comment,
   Item,
@@ -16,9 +15,7 @@ import {
 import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
 import { connect } from 'react-redux';
 import mockComments from 'common/mocks/comments';
-
-import { withRouter, Link } from 'react-router-dom';
-import { getLoopsData } from 'store/modules';
+import { Link } from 'react-router-dom';
 
 const Profile = ({ description, tags, headline }) => {
   return (
@@ -32,24 +29,6 @@ const Profile = ({ description, tags, headline }) => {
           <Item.Description>
             <p>{description}</p>
           </Item.Description>
-        </Item.Content>
-      </Item>
-    </Item.Group>
-  );
-};
-
-const TextPost = () => {
-  const text = 'Hello...You are so beautiful.  May i be your friend?';
-  return (
-    <Item.Group relaxed>
-      <Item>
-        <Item.Image size="small" src="/kong.jpg" />
-        <Item.Content verticalAlign="middle">
-          <Item.Header>Content A</Item.Header>
-          <Item.Description>{text}</Item.Description>
-          <Item.Extra>
-            <Button floated="right">Action</Button>
-          </Item.Extra>
         </Item.Content>
       </Item>
     </Item.Group>
@@ -83,7 +62,7 @@ const PostJD = ({ jobTitle, company, tags }) => {
       <Card.Content>
         <Card.Header>{jobTitle}</Card.Header>
         <Card.Meta>{company}</Card.Meta>
-        {tags.map((tag, i) => {
+        {tags.map(({tag}, i) => {
           return <Label key={'label-' + i}>{tag}</Label>;
         })}
       </Card.Content>
@@ -126,7 +105,7 @@ const UserComment = ({ posts }) => {
                 </Comment.Metadata>
               </Comment.Content>
               {/* <Rating icon="star" defaultRating={rating} maxRating={5} /> */}
-              <Label>javascript 
+              <Label>javascript
               <Label.Detail>22</Label.Detail>
               </Label>
                <Label>
@@ -170,7 +149,7 @@ class Loop extends React.Component {
   render() {
     const comments = [...mockComments, ...(this.props.loop.comments || [])];
 
-    const { id, tags, title } = this.props.loop;
+    const { tags } = this.props.loop;
 
     const topic = {
       description: this.props.loop.description,

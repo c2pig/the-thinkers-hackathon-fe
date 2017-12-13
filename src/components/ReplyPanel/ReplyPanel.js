@@ -8,7 +8,7 @@ let MessageForm = props => {
   const { handleSubmit } = props;
   return (
     <Form onSubmit={handleSubmit}>
-      <Form.Input fluid action={{ color: 'teal', icon: 'arrow right' }}>
+      <Form.Input fluid>
         <Field name="message" component="input" placeholder="leave a message" />
         <Button color="teal" icon="arrow right" />
       </Form.Input>

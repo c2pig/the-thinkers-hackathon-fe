@@ -21,8 +21,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const composedEnhancers = compose(applyMiddleware(...middleware), ...enhancers);
-
-const store = createStore(rootReducer, {}, composedEnhancers);
+const store = createStore(rootReducer, window.REDUX_STATE, composedEnhancers);
 
 export let persistor = persistStore(store);
 export default store;
