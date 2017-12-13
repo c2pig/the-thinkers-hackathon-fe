@@ -17,6 +17,8 @@ import CloseLoopModal from 'components/CloseLoopModal/CloseLoopModal';
 import { connect } from 'react-redux';
 import mockComments from 'common/mocks/comments';
 import mockJobs, { mockJobstreetJob } from 'common/mocks/jobs';
+import { Link } from 'react-router-dom';
+import { STATUS_OPEN } from 'store/loops';
 import { getHighestRatingTagName, getRelatedTag } from 'common/helpers';
 import { attachJobMessage } from 'store/loops';
 import styles from './Loop.css';
@@ -204,19 +206,24 @@ class Loop extends React.Component {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between',
-          height: '100vh',
+          // justifyContent: 'space-between',
+          height: '100vh'
         }}
       >
         {user.username &&
           user.username === loop.username && (
-            <Container className={styles.closeLoopContainer}>
+            <Container className={styles.closeLoopContainer} textAlign="center">
               <Segment vertical>
-                <CloseLoopModal responders={responders} loop={loop} />
+                {(loop.status === STATUS_OPEN && (
+                  <CloseLoopModal responders={responders} loop={loop} />
+                )) || <strong>Topic Closed</strong>}
               </Segment>
             </Container>
           )}
+            {/* overflowY: 'auto',
+            padding: '0 2px' */}
         <Container
+          className={styles.loopContainer}
           style={{
             overflowY: 'auto',
             padding: '0 2px',

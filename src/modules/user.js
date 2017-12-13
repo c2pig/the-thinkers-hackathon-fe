@@ -1,10 +1,11 @@
 import { REHYDRATE } from 'redux-persist';
 const initialState = {
-  username: ''
+  username: '',
 };
 
 // Actions
 export const LOGIN = 'login';
+export const LOGOUT = 'logout';
 
 export const getUser = state => {
   return state;
@@ -20,7 +21,15 @@ export default (state = initialState, action) => {
       return rehydratedData;
     case LOGIN:
       return { ...state, username: action.payload.username };
+    case LOGOUT:
+      return initialState;
     default:
       return state;
   }
 };
+
+export const logoutUser = () => ({
+  type: LOGOUT,
+});
+
+export const getCurrentUser = state => state.username;

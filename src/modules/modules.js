@@ -4,7 +4,7 @@ import localForage from 'localforage';
 import { reducer as formReducer } from 'redux-form';
 
 import loops, * as fromLoops from './loops';
-import userReducer from './user';
+import userReducer, * as fromUser from './user';
 import loopList, * as fromLoopList from './loopList';
 import users, * as fromUsers from './users';
 
@@ -26,7 +26,7 @@ export default persistCombineReducers(persistConfig, {
 export const getLoopsData = state => fromLoops.getData(state.loops);
 
 export const getLoopListSearchKeywords = state =>
-fromLoopList.getSearchKeywords(state.loopList);
+  fromLoopList.getSearchKeywords(state.loopList);
 export const getLoopListIds = state => fromLoopList.getIds(state.loopList);
 export const getLoopListData = state => {
   const loopsData = getLoopsData(state);
@@ -34,3 +34,5 @@ export const getLoopListData = state => {
 };
 
 export const getUsersData = state => fromUsers.getData(state.users);
+
+export const getCurrentUser = state => fromUser.getCurrentUser(state.user);

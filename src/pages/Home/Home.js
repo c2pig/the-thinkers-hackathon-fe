@@ -6,10 +6,11 @@ import { connect } from 'react-redux';
 import { getLoopListData } from 'store/modules';
 import { searchLoops, updateSearchKeywords, addLoop } from 'store/loopList';
 import CreateLoopModal from 'components/CreateLoopModal/CreateLoopModal';
+import { STATUS_CLOSED } from 'store/loops';
 
 import styles from './Home.css';
 
-const Topic = ({ topic, tags, id }) => {
+const Topic = ({ topic, tags, id, status }) => {
   const url = `/loop/${id}`;
   return (
     <Card fluid style={{ position: 'relative' }}>
@@ -18,7 +19,12 @@ const Topic = ({ topic, tags, id }) => {
         style={{ position: 'absolute', width: '100%', height: '100%' }}
       />
       <Card.Content>
-        <h3>{topic}</h3>
+        <h3>
+          {status === STATUS_CLOSED && (
+            <Label color="red">{STATUS_CLOSED}</Label>
+          )}
+          {topic}
+        </h3>
         <Label.Group>
           {tags.map(tag => <Label key={tag}>{tag}</Label>)}
         </Label.Group>
@@ -31,11 +37,11 @@ class Home extends React.Component {
   static propTypes = {
     loops: PropTypes.array.isRequired,
     searchLoops: PropTypes.func.isRequired,
-    updateSearchKeywords: PropTypes.func.isRequired,
+    updateSearchKeywords: PropTypes.func.isRequired
   };
 
   state = {
-    isCreateTopicModalOpen: false,
+    isCreateTopicModalOpen: false
   };
 
   handleOnSearch = e => {
@@ -45,20 +51,20 @@ class Home extends React.Component {
 
   handleOnCreateTopicSubmit = payload => {
     this.setState({
-      isCreateTopicModalOpen: false,
+      isCreateTopicModalOpen: false
     });
     this.props.addLoop(payload);
   };
 
   showCreateLoopModal = () => {
     this.setState({
-      isCreateTopicModalOpen: true,
+      isCreateTopicModalOpen: true
     });
   };
 
   hideCreateLoopModal = () => {
     this.setState({
-      isCreateTopicModalOpen: false,
+      isCreateTopicModalOpen: false
     });
   };
 
@@ -110,12 +116,12 @@ class Home extends React.Component {
 export default withRouter(
   connect(
     state => ({
-      loops: getLoopListData(state),
+      loops: getLoopListData(state)
     }),
     {
       searchLoops,
       updateSearchKeywords,
-      addLoop,
+      addLoop
     }
   )(Home)
 );

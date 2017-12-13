@@ -66,18 +66,19 @@ const Login = ({ onSubmit }) => {
     <div className="login-form" style={{ paddingTop: '100px' }}>
       <Image
         size="small"
-        src="/LogoLoop_Transparent.png"
+        src="/LogoLoop.png"
         style={{ margin: 'auto' }}
       />
       <br />
       <Grid textAlign="center" verticalAlign="middle">
         <Grid.Column style={{ maxWidth: 450 }}>
           <Header as="h2" textAlign="center" style={{ color: '#33ccff' }}>
-            Log-in to your account
+            CrowdLoop
           </Header>
+            {/* Log-in to your account */}
           <LoginForm onSubmit={onSubmit} />
           <Message>
-            New to us? <a href="#">Sign Up</a>
+            New to us? <a href="#" style={{ color: '#33ccff' }}>Sign Up</a>
           </Message>
         </Grid.Column>
       </Grid>
