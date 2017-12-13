@@ -1,6 +1,6 @@
 export default [
   {
-    userName: 'Kong',
+    userName: 'kong',
     tags: [
       { tag: 'Java', rating: 98 },
       { tag: 'C++', rating: 57 },
@@ -9,7 +9,7 @@ export default [
     ]
   },
   {
-    userName: 'KaWeng',
+    userName: 'kaweng',
     tags: [
       { tag: 'project mgmt', rating: 145 },
       { tag: 'people skill', rating: 57 },
@@ -17,7 +17,7 @@ export default [
     ]
   },
   {
-    userName: 'Vivien',
+    userName: 'vivien',
     tags: [
       { tag: 'performning arts', rating: 283 },
       { tag: 'yoga', rating: 152 },
@@ -25,7 +25,7 @@ export default [
     ]
   },
   {
-    userName: 'Jeannie',
+    userName: 'jeannie',
     tags: [
       { tag: 'design', rating: 83 },
       { tag: 'ux', rating: 152 },
@@ -33,7 +33,7 @@ export default [
     ]
   },
   {
-    userName: 'ZhenYong',
+    userName: 'zhenyong',
     tags: [
       { tag: 'react', rating: 191 },
       { tag: 'product mgmt', rating: 82 },

@@ -71,7 +71,8 @@ export const addLoop = ({ topic, description, tags, username }) => (
       tags,
       comments: [],
       status: STATUS_OPEN,
-      username
+      username,
+      rating: 0,
     }
   });
 };
