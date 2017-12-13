@@ -194,7 +194,7 @@ class Loop extends React.Component {
               <Segment vertical>
                 {(loop.status === STATUS_OPEN && (
                   <CloseLoopModal responders={responders} loop={loop} />
-                )) || <div center>Topic Closed</div>}
+                )) || <strong>Topic Closed</strong>}
               </Segment>
             </Container>
           )}

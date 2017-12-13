@@ -87,7 +87,12 @@ class CloseLoopModal extends React.Component {
               ))}
               <br />
             </List>
-            <Button fluid onClick={this.handleClose}>
+            <Button
+              fluid
+              onClick={() => {
+                this.handleOnClickResponder();
+              }}
+            >
               None :(
             </Button>
           </Modal.Description>
