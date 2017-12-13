@@ -33,7 +33,7 @@ export default [
     ]
   },
   {
-    userName: 'ZhenYong',
+    userName: 'zhenyong',
     tags: [
       { tag: 'react', rating: 191 },
       { tag: 'product mgmt', rating: 82 },
