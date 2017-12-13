@@ -4,17 +4,17 @@ import { Modal, Header } from 'semantic-ui-react';
 import JobDescriptionCard from 'components/JobDescriptionCard/JobDescriptionCard';
 import DropMessage from 'components/DropMessage/DropMessage';
 
-const ModalTriggerContainer = ({ job, message }) => (
+const ModalTriggerContainer = ({ job, message, onModalOpen }) => (
   <div style={{margin: '1em 0'}}>
     {message && <DropMessage msg={message} />}
-    <JobDescriptionCard onClick={this.handleOpen} {...job} />
+    <JobDescriptionCard onClick={onModalOpen} {...job} />
   </div>
 );
 
 class JobDetailsModal extends React.Component {
   static propTypes = {
     job: PropTypes.object.isRequired,
-    trigger: PropTypes.node.isRequired,
+    message: PropTypes.string,
   };
 
   state = {
@@ -41,7 +41,7 @@ class JobDetailsModal extends React.Component {
         closeIcon
         open={isModalOpen}
         onClose={this.handleClose}
-        trigger={<ModalTriggerContainer job={job} message={message} />}
+        trigger={<ModalTriggerContainer job={job} message={message} onModalOpen={this.handleOpen} />}
       >
         <Modal.Header>{job.jobTitle}</Modal.Header>
         <Modal.Content>
