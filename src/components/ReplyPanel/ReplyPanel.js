@@ -2,6 +2,7 @@ import React from 'react';
 import { Segment, Form, Divider, Button } from 'semantic-ui-react';
 import { Field, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
+import AttachJobModal from 'components/AttachJobModal/AttachJobModal';
 import { DROP_MESSAGE } from 'store/loops';
 
 let MessageForm = props => {
@@ -24,7 +25,7 @@ const ReplyPanel = ({ submitMessage }) => {
       <MessageForm onSubmit={submitMessage} />
       <Divider horizontal>Or</Divider>
       <Button.Group fluid>
-        <Button>Attach a Job</Button>
+        <AttachJobModal />
         {/* <Button.Or /> */}
         <Button positive>Left my contact</Button>
       </Button.Group>

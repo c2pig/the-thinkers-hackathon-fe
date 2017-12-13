@@ -18,6 +18,8 @@ import { connect } from 'react-redux';
 import mockComments from 'common/mocks/comments';
 import { Link } from 'react-router-dom';
 
+import styles from './Loop.css';
+
 const Profile = ({ description, tags, headline }) => {
   return (
     <Item.Group>
@@ -167,7 +169,7 @@ class Loop extends React.Component {
           height: '100vh'
         }}
       >
-        <Container>
+        <Container className={styles.closeLoopContainer}>
           <Segment vertical>
             <CloseLoopModal />
           </Segment>
@@ -183,7 +185,7 @@ class Loop extends React.Component {
           </Segment>
           <UserComment comments={comments} />
         </Container>
-        <Container>
+        <Container className={styles.replyPanelContainer}>
           <ReplyPanel loopId={this.props.loop.id} />
         </Container>
       </div>

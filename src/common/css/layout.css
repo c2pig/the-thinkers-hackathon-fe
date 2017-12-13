@@ -35,6 +35,14 @@
             z-index: 999;            
         }
     }
+
+    --box-shadow-top {
+        box-shadow: 0 -5px 4px -6px #333;
+    }
+
+    --box-shadow-bottom {
+        box-shadow: 0 5px 4px -6px #333;
+    }
 }
 
 @keyframes spin {
