@@ -15,7 +15,7 @@ const options = [
 ];
 
 class CreateLoopModal extends React.Component {
-  propTypes = {
+  static propTypes = {
     children: PropTypes.node.isRequired,
     open: PropTypes.bool,
     onClose: PropTypes.func,

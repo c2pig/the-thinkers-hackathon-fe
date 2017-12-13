@@ -1,62 +1,14 @@
 @import 'css';
-
-.modalShow {
-    display: block;
+/* 5d93ff */
+.menuItem {
+    color: inherit !important;
+    background-color: #243862 !important;    
 }
-
-.modalBackdrop {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    background-color: #000;
-    opacity: 0.5;
+.menuItem:before {
+    background-color: #243862 !important;    
 }
-
-.closeSpan {
-    outline: 0;
-
-    &:focus {
-        outline: 0;
-    }
-}
-
-.link {
-    @apply --link;
-}
-
-.unfocusList {
-    display: inline-block;
-}
-
-input[type=search]:focus {
-    width: 342px !important;
-    background-color: #ffffff !important;
-    border-bottom: 2px solid #3ca597 !important;
-    box-shadow: 0 0 5px rgba(109, 207, 246, 0.5) !important;
-}
-
-@media (max-width: 768px) {
-    input[type=search] {
-        width: 180px !important;
-    }
-    input[type=search]:focus {
-        width: 180px !important;
-        background-color: #ffffff !important;
-        border-bottom: 2px solid #3ca597 !important;
-        box-shadow: 0 0 5px rgba(109, 207, 246, 0.5) !important;
-    }
-}
-
-@media (max-width: 320px) {
-    input[type=search] {
-        width: 150px !important;
-    }
-    input[type=search]:focus {
-        width: 150px !important;
-        background-color: #ffffff !important;
-        border-bottom: 2px solid #3ca597 !important;
-        box-shadow: 0 0 5px rgba(109, 207, 246, 0.5) !important;
-    }
+.menuItem:active, .menuItem:hover{
+    background-color: rgba(255,255,255,.2) !important;
+    border-radius: 2px;
+    /* border-bottom: 2px solid #ffffff !important; */
 }
