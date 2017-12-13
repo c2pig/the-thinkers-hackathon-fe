@@ -35,7 +35,6 @@ const ReplyPanel = ({ submitMessage }) => {
 const mapDispatchToProps = (dispatch, props) => {
   return {
     dropMessage: (data, state) => {
-      console.log(state);
       dispatch({
         type: DROP_MESSAGE,
         payload: {
