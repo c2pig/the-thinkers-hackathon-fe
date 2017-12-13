@@ -27,7 +27,7 @@
     align-items: center;
 }
 
-.searchContainer {
+.searchContainer{
     display: flex;
     width: 100%;
 }
@@ -41,7 +41,8 @@
         flex: 0 0 auto;
     }
 
-.cardsContainer {
+.cardsContainer,
+.noResultContainer {
     padding: 10px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -49,6 +50,11 @@
     margin-bottom: 20px;
 
     -webkit-overflow-scrolling: touch;
+}
+
+.noResultContainer {
+    display: flex;
+    align-items: center;
 }
 
 
