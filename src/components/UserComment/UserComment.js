@@ -44,7 +44,7 @@ const PostJD = ({ jobTitle, company, tags }) => {
   );
 };
 
-export default ({ comments, topicTags, parentContext}) => {
+export default ({ comments, topicTags, parentContext }) => {
   return (
     <Comment.Group size="small">
       {comments.map(
@@ -68,8 +68,8 @@ export default ({ comments, topicTags, parentContext}) => {
           );
 
           const userLike = parentContext.state.likes[username];
-          console.log(userLike);
-          const iconName = userLike && userLike.liked  ? "thumbs up" : "thumbs outline up";
+          const iconName =
+            userLike && userLike.liked ? 'thumbs up' : 'thumbs outline up';
           const newRating = userLike && userLike.liked ? rating + 1 : rating;
           return (
             <Comment key={'comment-i' + i}>
@@ -90,18 +90,27 @@ export default ({ comments, topicTags, parentContext}) => {
                 <Icon name="user" />
                 {totalHired} Hired
               </Label>
-              <Icon name={iconName} onClick={() => {
-                let obj = {};
-                if(userLike && userLike.liked)  {
-                  obj[username] = { liked: false };
-                  parentContext.state.likes = Object.assign(parentContext.state.likes, obj);
-                } else {
-                  obj[username] = { liked: true };
-                  parentContext.state.likes = Object.assign(parentContext.state.likes, obj);
-                }
-                console.log(parentContext.state.likes);
-                parentContext.setState({...parentContext.state});
-              }}/>
+              <Icon
+                name={iconName}
+                onClick={() => {
+                  let obj = {};
+                  if (userLike && userLike.liked) {
+                    obj[username] = { liked: false };
+                    parentContext.state.likes = Object.assign(
+                      parentContext.state.likes,
+                      obj
+                    );
+                  } else {
+                    obj[username] = { liked: true };
+                    parentContext.state.likes = Object.assign(
+                      parentContext.state.likes,
+                      obj
+                    );
+                  }
+                  console.log(parentContext.state.likes);
+                  parentContext.setState({ ...parentContext.state });
+                }}
+              />
               {postType === 'contact-me' && (
                 <ContactMe
                   headline={headline}
