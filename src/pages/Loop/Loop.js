@@ -150,7 +150,8 @@ class Loop extends React.Component {
   render() {
     const comments = [...mockComments, ...(this.props.loop.comments || [])];
 
-    const { tags } = this.props.loop;
+    const { user, loop } = this.props;
+    const { tags } = loop;
 
     const topic = {
       description: this.props.loop.description,
@@ -167,11 +168,14 @@ class Loop extends React.Component {
           height: '100vh'
         }}
       >
-        <Container>
-          <Segment vertical>
-            <CloseLoopModal />
-          </Segment>
-        </Container>
+        {user.username &&
+          user.username === loop.username && (
+            <Container>
+              <Segment vertical>
+                <CloseLoopModal />
+              </Segment>
+            </Container>
+          )}
         <Container
           style={{
             overflowY: 'auto',
@@ -193,7 +197,8 @@ class Loop extends React.Component {
 
 const mapStateToProps = (states, props) => {
   return {
-    loop: states.loops.data[props.match.params.loopId]
+    loop: states.loops.data[props.match.params.loopId],
+    user: states.user
   };
 };
 
