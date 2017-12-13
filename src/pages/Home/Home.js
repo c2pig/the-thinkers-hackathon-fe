@@ -92,8 +92,8 @@ class Home extends React.Component {
         <div className={styles.cardsContainer}>
           {loops.map(
             loop =>
-              loop.status === STATUS_OPEN &&
-              (!myTopic || loop.username === user.username) && (
+              ((!myTopic && loop.status === STATUS_OPEN) ||
+                loop.username === user.username) && (
                 <Topic key={loop.topic} {...loop} />
               )
           )}
