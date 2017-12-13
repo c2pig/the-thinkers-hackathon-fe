@@ -8,8 +8,17 @@
 
 .headerContainer,
 .footerContainer {
-    flex: 1 0 10%;
+    flex: 1 0 70px;
     padding: 0 10px;
+}
+
+.headerContainer {
+    @apply (--box-shadow-bottom);
+}
+
+.footerContainer {
+    padding-top: 10px;
+    @apply (--box-shadow-top);
 }
 
 .headerContainer {
@@ -18,7 +27,7 @@
     align-items: center;
 }
 
-.searchContainer {
+.searchContainer{
     display: flex;
     width: 100%;
 }
@@ -32,16 +41,25 @@
         flex: 0 0 auto;
     }
 
-.cardsContainer {
+.cardsContainer,
+.noResultContainer {
     padding: 10px;
     overflow-y: auto;
+    overflow-x: hidden;
     flex: 0 0 calc(90vh - 140px);
     margin-bottom: 20px;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.noResultContainer {
+    display: flex;
+    align-items: center;
 }
 
 
 .voteGroup {
-  margin-right: 20px;
+  margin-right: 10px;
   margin-top: 4%;
 }
 

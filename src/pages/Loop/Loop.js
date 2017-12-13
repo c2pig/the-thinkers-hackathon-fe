@@ -9,6 +9,7 @@ import {
   Icon,
   Card,
   Divider,
+  Message,
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
@@ -186,18 +187,23 @@ class Loop extends React.Component {
           height: '100%',
         }}
       >
-        <Container
+        <div
           className={styles.loopContainer}
-          style={{
-            overflowY: 'auto',
-            padding: '0 2px',
-          }}
+          style={
+            loop.status === STATUS_OPEN
+              ? {
+                  overflowY: 'auto',
+                  padding: '0 2px',
+                }
+              : {
+                  flex: '1 0 auto',
+                }
+          }
         >
           {user.username &&
             user.username === loop.username && (
               <Segment
                 vertical
-                textAlign="center"
                 className={styles.closeLoopContainer}
               >
                 {(loop.status === STATUS_OPEN && (
@@ -265,15 +271,22 @@ class Loop extends React.Component {
               </Card>
             )}
           </Segment>
-
-          <UserComment
-            comments={comments}
-            topicTags={topic.tags}
-            parentContext={_this}
-          />
-        </Container>
+          {
+            comments && comments.length > 0 ?
+            <UserComment
+              comments={comments}
+              topicTags={topic.tags}
+              parentContext={_this}
+          /> : 
+          <Message warning>
+            <Message.Header>No replies yet...</Message.Header>
+            <p>You can start leave your message or attach a job in this post through the comment panel below</p>
+          </Message>
+          }
+          
+        </div>
         {loop.status === STATUS_OPEN && (
-          <Container className={styles.replyPanelContainer}>
+          <div className={styles.replyPanelContainer}>
             <ReplyPanel
               loopId={this.props.loop.id}
               onAttachJobCard={this.handleOnAttachJobCard}
@@ -281,7 +294,7 @@ class Loop extends React.Component {
               onAttachContact={this.handleOnAttachContact}
               jobs={jobs}
             />
-          </Container>
+          </div>
         )}
       </div>
     );

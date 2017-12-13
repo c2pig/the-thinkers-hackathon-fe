@@ -11,6 +11,7 @@ import {
   Label,
   Card,
   Form,
+  Message,
 } from 'semantic-ui-react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -197,17 +198,29 @@ class Home extends React.Component {
             onClick={this.toggleMyTopic}
           />
         </div>
-        <div className={styles.cardsContainer}>
-          {loops.map(
-            loop =>
-              ((!myTopic && loop.status === STATUS_OPEN) ||
-                (myTopic && loop.username === user.username)) && (
-                <VoteTopic {...loop}>
-                  <Topic key={loop.topic} {...loop} />
-                </VoteTopic>
-              )
+          {loops && loops.length > 0 ? (
+            <div className={styles.cardsContainer}>
+              {loops.map(
+                loop =>
+                  ((!myTopic && loop.status === STATUS_OPEN) ||
+                    (myTopic && loop.username === user.username)) && (
+                    <VoteTopic {...loop}>
+                      <Topic key={loop.topic} {...loop} />
+                    </VoteTopic>
+                  )
+              )}
+            </div>
+          ) : (
+            <div className={styles.noResultContainer}>
+              <Message warning>
+                <Message.Header>No topics found</Message.Header>
+                <p>
+                  Cannot find what you want? Easily create a topic by clicking on the
+                  '+' button at the button.
+                </p>
+              </Message>
+            </div>
           )}
-        </div>
         <div className={styles.footerContainer}>
           <SearchForm
             isCreateTopicModalOpen={isCreateTopicModalOpen}

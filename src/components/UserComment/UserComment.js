@@ -11,6 +11,7 @@ import {
 } from 'semantic-ui-react';
 import JobDescriptionCard from 'components/JobDescriptionCard/JobDescriptionCard';
 import IconWithDescription from 'components/IconWithDescription/IconWithDescription';
+import JobDetailsModal from 'components/JobDetailsModal/JobDetailsModal';
 import styles from './UserComment.css';
 
 const ContactMe = ({ company, email, fullname, phone, position }) => {
@@ -135,7 +136,7 @@ export default ({ comments, topicTags, parentContext }) => {
               </Comment.Content>
               {postType === 'contact-me' && <ContactMe {...contact} />}
               {postType === 'drop-message' && <DropMessage msg={message} />}
-              {postType === 'post-jd' && <JobDescriptionCard {...job} />}
+              {postType === 'post-jd' && <JobDetailsModal job={job} /> }
               <Divider hidden />
             </Comment>
           );
