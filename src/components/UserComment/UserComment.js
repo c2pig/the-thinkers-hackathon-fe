@@ -8,7 +8,7 @@ import {
   Comment,
   Divider
 } from 'semantic-ui-react';
-import JobDescriptionCard from 'componnets/JobDescriptionCard/JobDescriptionCard';
+import JobDescriptionCard from 'components/JobDescriptionCard/JobDescriptionCard';
 
 const ContactMe = ({ headline, description, phone, email }) => {
   return (
