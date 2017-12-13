@@ -1,15 +1,11 @@
 import React from 'react';
 import { getHighestRatingTagName, getRelatedTag } from 'common/helpers';
 import {
-  Container,
   Message,
   Card,
   Icon,
   Label,
   Comment,
-  Item,
-  Segment,
-  Button,
   Divider
 } from 'semantic-ui-react';
 
@@ -70,8 +66,11 @@ export default ({ comments, topicTags, parentContext}) => {
             getRelatedTag(...tags, topicTags),
             topicTags
           );
-          const x = parentContext.state.likes[i];
-          const iconName = ( x && x.username === username && x.liked) ? "thumbs up" : "thumbs outline up";
+
+          const userLike = parentContext.state.likes[username];
+          console.log(userLike);
+          const iconName = userLike && userLike.liked  ? "thumbs up" : "thumbs outline up";
+          const newRating = userLike && userLike.liked ? rating + 1 : rating;
           return (
             <Comment key={'comment-i' + i}>
               <Comment.Avatar as="a" src={`/${username}.jpg`} />
@@ -84,7 +83,7 @@ export default ({ comments, topicTags, parentContext}) => {
               {tag && (
                 <Label>
                   {tag}
-                  <Label.Detail>{rating}</Label.Detail>
+                  <Label.Detail>{newRating}</Label.Detail>
                 </Label>
               )}
               <Label>
@@ -92,7 +91,15 @@ export default ({ comments, topicTags, parentContext}) => {
                 {totalHired} Hired
               </Label>
               <Icon name={iconName} onClick={() => {
-                parentContext.state.likes.push({ username, liked: true });
+                let obj = {};
+                if(userLike && userLike.liked)  {
+                  obj[username] = { liked: false };
+                  parentContext.state.likes = Object.assign(parentContext.state.likes, obj);
+                } else {
+                  obj[username] = { liked: true };
+                  parentContext.state.likes = Object.assign(parentContext.state.likes, obj);
+                }
+                console.log(parentContext.state.likes);
                 parentContext.setState({...parentContext.state});
               }}/>
               {postType === 'contact-me' && (

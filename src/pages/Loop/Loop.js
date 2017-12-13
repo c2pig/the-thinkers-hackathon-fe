@@ -2,21 +2,15 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   Container,
-  Message,
-  Card,
-  Icon,
   Label,
-  Comment,
   Item,
   Segment,
-  Divider
 } from 'semantic-ui-react';
 import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
 import CloseLoopModal from 'components/CloseLoopModal/CloseLoopModal';
 import { connect } from 'react-redux';
 import mockComments from 'common/mocks/comments';
 import mockJobs, { mockJobstreetJob } from 'common/mocks/jobs';
-import { Link } from 'react-router-dom';
 import { STATUS_OPEN } from 'store/loops';
 import UserComment from 'components/UserComment/UserComment';
 import { attachJobMessage } from 'store/loops';
@@ -55,7 +49,7 @@ class Loop extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = { open: false, jobs: mockJobs, likes: [] };
+    this.state = { open: false, jobs: mockJobs, likes: {} };
   }
 
   close = () => this.setState({ open: false });
@@ -79,7 +73,6 @@ class Loop extends React.Component {
     const { tags } = loop;
     const comments = [...mockComments, ...(this.props.loop.comments || [])];
     const _this = this;
-    console.log(_this);
     const responders = comments
       .map(comment => {
         return {
