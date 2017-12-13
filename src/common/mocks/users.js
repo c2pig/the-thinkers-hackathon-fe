@@ -3,7 +3,10 @@
 export default {
   jeannie: {
     avatar: '/molly.png',
-    username: 'Jeannie',
+    username: 'jeannie',
+    fullname: 'Jeannie Ng',
+    phone: '017-1234567',
+    email: 'jeannieng@axd.com',
     position: 'Software Engineer',
     company: 'AXD Company',
     yearsOfExperience: 3,
@@ -78,7 +81,10 @@ export default {
   },
   kong: {
     avatar: '/elliot.jpg',
-    username: 'Kong',
+    username: 'kong',
+    fullname: 'Kong Ka Weng',
+    phone: '018-12345678',
+    email: 'kaweng.kong@gdp.com',
     position: 'Full-Stack Engineer',
     company: 'GDD Company',
     yearsOfExperience: 3,
@@ -153,7 +159,9 @@ export default {
   },
   chew: {
     avatar: '/chew.jpg',
-    username: 'Chew',
+    username: 'chew',
+    phone: '018-8993346',
+    email: 'chewyong@gdd.com',
     position: 'Regional Manager',
     company: 'GDD Company',
     yearsOfExperience: 3,

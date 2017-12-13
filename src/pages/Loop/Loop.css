@@ -11,7 +11,7 @@
 .loopContainer {
   padding: 10px;
   overflow-y: auto;
-  flex: 0 0 calc(90vh - 140px);
+  flex: 0 0 calc(90vh - 120px);
 }
 
 .profileBtn {

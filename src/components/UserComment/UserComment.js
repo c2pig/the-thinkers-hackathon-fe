@@ -6,21 +6,37 @@ import {
   Icon,
   Label,
   Comment,
-  Divider
+  Divider,
+  Button,
 } from 'semantic-ui-react';
+import JobDescriptionCard from 'components/JobDescriptionCard/JobDescriptionCard';
+import IconWithDescription from 'components/IconWithDescription/IconWithDescription';
+import styles from './UserComment.css';
 
-const ContactMe = ({ headline, description, phone, email }) => {
+const ContactMe = ({ company, email, fullname, phone, position }) => {
   return (
     <Card fluid>
-      <Card.Content>
-        <Card.Meta>I am talent warrior</Card.Meta>
-        <Card.Description>asdfasdfasdf</Card.Description>
+      <Card.Content className={styles.contactMeCardContentContainer}>
+        <Card.Header style={{ textTransform: 'capitalize' }}>
+          {fullname}
+        </Card.Header>
+        <Card.Meta>{`${position}, ${company}`}</Card.Meta>
+        <Card.Description>
+          Hi, please find my contact as below:
+        </Card.Description>
+        <IconWithDescription description={email} icon="mail" />
+        <IconWithDescription description={phone} icon="phone" />
       </Card.Content>
-      <Card.Content>
-        <Icon name="mail outline" />
-        {email}
-        <Icon name="phone" />
-        {phone}
+      <Card.Content extra>
+        <div className="ui two buttons">
+          <Button as="a" href={`tel:${phone}`} color="blue">
+            Call me
+          </Button>
+          <Button.Or />
+          <Button as="a" href={`mailto:${email}`} basic color="blue">
+            Email me
+          </Button>
+        </div>
       </Card.Content>
     </Card>
   );
@@ -28,20 +44,6 @@ const ContactMe = ({ headline, description, phone, email }) => {
 
 const DropMessage = ({ msg }) => {
   return <Message>{msg}</Message>;
-};
-
-const PostJD = ({ jobTitle, company, tags }) => {
-  return (
-    <Card fluid>
-      <Card.Content>
-        <Card.Header>{jobTitle}</Card.Header>
-        <Card.Meta>{company}</Card.Meta>
-        {tags.map(({ tag }, i) => {
-          return <Label key={'label-' + i}>{tag}</Label>;
-        })}
-      </Card.Content>
-    </Card>
-  );
 };
 
 export default ({ comments, topicTags, parentContext }) => {
@@ -58,7 +60,9 @@ export default ({ comments, topicTags, parentContext }) => {
             headline,
             phone,
             email,
-            tags
+            tags,
+            job,
+            contact,
           },
           i
         ) => {
@@ -111,22 +115,9 @@ export default ({ comments, topicTags, parentContext }) => {
                   parentContext.setState({ ...parentContext.state });
                 }}
               />
-              {postType === 'contact-me' && (
-                <ContactMe
-                  headline={headline}
-                  description={message}
-                  phone={phone}
-                  email={email}
-                />
-              )}
+              {postType === 'contact-me' && <ContactMe {...contact} />}
               {postType === 'drop-message' && <DropMessage msg={message} />}
-              {postType === 'post-jd' && (
-                <PostJD
-                  jobTitle="Graphic Designer"
-                  company="abc co"
-                  tags={tags}
-                />
-              )}
+              {postType === 'post-jd' && <JobDescriptionCard {...job} />}
               <Divider hidden />
             </Comment>
           );

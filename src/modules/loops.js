@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { REHYDRATE } from 'redux-persist';
 import { ADD_LOOP } from './loopList';
+import { getCurrentUser, getUserDetailsWithUsername } from 'store/modules';
 import loopsMockData from 'common/mocks/loops';
 import { extractTagsByUserName } from 'common/helpers';
 
@@ -9,6 +10,7 @@ let loopsData = loopsMockData;
 export const DROP_MESSAGE = 'DROP_MESSAGE';
 export const CLOSE_TOPIC = 'CLOSE_TOPIC';
 export const DROP_JD_MESSAGE = 'DROP_JD_MESSAGE';
+export const DROP_CONTACT_MESSAGE = 'DROP_CONTACT_MESSAGE';
 export const STATUS_OPEN = 'open';
 export const STATUS_CLOSED = 'closed';
 export const UPVOTE = 'UPVOTE';
@@ -28,7 +30,7 @@ const data = (state = loopsData, action) => {
     case ADD_LOOP:
       loopsData = { ...loopsData, [action.data.id]: action.data };
       return loopsData;
-    case UPVOTE:
+    case UPVOTE: {
       let upVoteLoop = state[action.data.id];
       const upVoteRating = action.data.rating;
       const topicAfterUpvote = Object.assign({...upVoteLoop}, { rating: upVoteRating });
@@ -36,7 +38,9 @@ const data = (state = loopsData, action) => {
           ...state,
           [action.data.id]: topicAfterUpvote
       }
-    case DOWNVOTE:
+    }
+      
+    case DOWNVOTE: {
       let downVoteLoop = state[action.data.id];
       const downVoteRating = action.data.rating;
       const topicAfterDownvote = Object.assign({...downVoteLoop}, { rating: downVoteRating });
@@ -44,6 +48,19 @@ const data = (state = loopsData, action) => {
         ...state,
         [action.data.id]: topicAfterDownvote
       }
+    }
+
+    case CLOSE_TOPIC: {
+      let closedloop = state[action.payload.loopId];
+      closedloop.status = STATUS_CLOSED;
+      closedloop.closeTopicResponder = action.payload.closeTopicResponder;
+  
+      return {
+        ...state,
+        [action.payload.loopId]: { ...closedloop },
+      };
+    }
+      
     case DROP_MESSAGE: {
       let loop = state[action.payload.loopId];
       const comment = {
@@ -65,16 +82,6 @@ const data = (state = loopsData, action) => {
       };
     }
 
-    case CLOSE_TOPIC:
-      let closedloop = state[action.payload.loopId];
-      closedloop.status = STATUS_CLOSED;
-      closedloop.closeTopicResponder = action.payload.closeTopicResponder;
-
-      return {
-        ...state,
-        [action.payload.loopId]: { ...closedloop },
-      };
-
     case DROP_JD_MESSAGE: {
       let loop = state[action.payload.loopId];
       const comment = {
@@ -95,6 +102,28 @@ const data = (state = loopsData, action) => {
         [action.payload.loopId]: { ...loop, comments: [...loop.comments] },
       };
     }
+
+    case DROP_CONTACT_MESSAGE: {
+      let loop = state[action.payload.loopId];
+      const comment = {
+        postType: 'contact-me',
+        date: new Date().toString(),
+        rating: 1,
+        totalHired: 10,
+        headline: 'i am kong',
+        phone: '123',
+        email: 'kong@gmail.com',
+        tags: extractTagsByUserName('Kong'),
+        ...action.payload,
+      };
+      loop.comments.push(comment);
+
+      return {
+        ...state,
+        [action.payload.loopId]: { ...loop, comments: [...loop.comments] },
+      };
+    }
+
     default:
       return state;
   }
@@ -109,10 +138,31 @@ export const attachJobMessage = (loopId, job) => (dispatch, getState) => {
   const payload = {
     loopId,
     job,
-    username: state.user.username,
+    username: getCurrentUser(state),
   };
   dispatch({
     type: DROP_JD_MESSAGE,
+    payload,
+  });
+};
+
+export const attachContactMessage = (loopId) => (dispatch, getState) => {
+  const state = getState();
+  const username = getCurrentUser(state);
+  const commentUserDetails = getUserDetailsWithUsername(state)(username);
+  const payload = {
+    contact: {
+      company: commentUserDetails.company,
+      email: commentUserDetails.email,
+      fullname: commentUserDetails.fullname,
+      phone: commentUserDetails.phone,
+      position: commentUserDetails.position,
+    },
+    loopId,
+    username,
+  };
+  dispatch({
+    type: DROP_CONTACT_MESSAGE,
     payload,
   });
 };

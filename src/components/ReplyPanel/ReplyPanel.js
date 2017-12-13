@@ -11,8 +11,13 @@ let MessageForm = props => {
   return (
     <Form onSubmit={handleSubmit}>
       <Form.Input fluid>
-        <Field name="message" component="input" placeholder="leave a message" />
-        <Button color="teal" icon="arrow right" />
+        <Field
+          name="message"
+          component="input"
+          placeholder="Leave a quick message"
+          style={{ marginRight: '10px' }}
+        />
+        <Button color="blue" icon="arrow right" />
       </Form.Input>
     </Form>
   );
@@ -24,12 +29,14 @@ const ReplyPanel = ({
   submitMessage,
   onAttachJobCard,
   onAttachJobLink,
-  jobs
+  onAttachContact,
+  jobs,
 }) => {
   return (
     <Segment vertical textAlign="center">
-      <MessageForm onSubmit={submitMessage} />
-      <Divider horizontal>Or</Divider>
+      <div style={{ marginBottom: '15px' }}>
+        <MessageForm onSubmit={submitMessage} />
+      </div>
       <Button.Group fluid>
         <AttachJobModal
           onAttachJobCard={onAttachJobCard}
@@ -37,7 +44,9 @@ const ReplyPanel = ({
           jobs={jobs}
         />
         {/* <Button.Or /> */}
-        <Button positive>Left my contact</Button>
+        <Button positive onClick={onAttachContact}>
+          Leave my contact
+        </Button>
       </Button.Group>
     </Segment>
   );
@@ -52,8 +61,8 @@ const mapDispatchToProps = (dispatch, props) => {
           loopId: props.loopId,
           message: data.message,
           postType: 'drop-message',
-          username: state.user.username
-        }
+          username: state.user.username,
+        },
       });
       setTimeout(
         () =>
@@ -64,15 +73,15 @@ const mapDispatchToProps = (dispatch, props) => {
                 sender: state.user.username,
                 receiver: 'kong',
                 message: `${state.user.username} mentioned you in a topic`,
-                url: `/loop/${props.loopId}`
-              }
-            }
+                url: `/loop/${props.loopId}`,
+              },
+            },
           }),
         1000
       );
 
       dispatch(reset('dropMessageForm'));
-    }
+    },
   };
 };
 
@@ -81,13 +90,13 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     submitMessage: data => {
       dispatchProps.dropMessage(data, stateProps);
     },
-    ...ownProps
+    ...ownProps,
   };
 };
 
 const mapStateToProps = (state, props) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 

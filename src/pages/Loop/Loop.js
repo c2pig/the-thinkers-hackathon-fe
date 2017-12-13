@@ -10,15 +10,17 @@ import {
   Card,
   Divider,
 } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
 import CloseLoopModal from 'components/CloseLoopModal/CloseLoopModal';
-import { connect } from 'react-redux';
-import mockComments from 'common/mocks/comments';
-import mockJobs, { mockJobstreetJob } from 'common/mocks/jobs';
-import { STATUS_OPEN } from 'store/loops';
 import UserComment from 'components/UserComment/UserComment';
-import { attachJobMessage } from 'store/loops';
+import {
+  STATUS_OPEN,
+  attachJobMessage,
+  attachContactMessage,
+} from 'store/loops';
 import { getUsersData } from 'store/modules';
+import mockJobs, { mockJobstreetJob } from 'common/mocks/jobs';
 import styles from './Loop.css';
 
 const Topic = ({ description, tags, headline }) => {
@@ -48,6 +50,7 @@ const Tags = ({ tags }) => {
 class Loop extends React.Component {
   static propTypes = {
     attachJobMessage: PropTypes.func.isRequired,
+    attachContactMessage: PropTypes.func.isRequired,
     loop: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
     users: PropTypes.object.isRequired,
@@ -126,6 +129,7 @@ class Loop extends React.Component {
         return 'unknown';
     }
   };
+
   getWorkingExperience = questioner => {
     let diffCompany = this.getExperienceDetails('work', questioner.events);
     if (questioner.yearsOfExperience > 1) {
@@ -137,14 +141,15 @@ class Loop extends React.Component {
     }
   };
 
+  handleOnAttachContact = () => {
+    this.props.attachContactMessage(this.props.loop.id);
+  };
+
   render() {
     const { user, loop } = this.props;
     const { jobs, isViewProfileClicked } = this.state;
-    const { tags } = loop;
-
+    const { tags, comments } = loop;
     const questioner = this.getQuestioner();
-
-    const comments = [...mockComments, ...(this.props.loop.comments || [])];
     const _this = this;
     const responders = comments
       .map(comment => {
@@ -215,7 +220,7 @@ class Loop extends React.Component {
                 onClick={this.handleViewProfileOnClicked}
                 // className={styles.profileBtn}
               >
-                <Icon name='close'/>{' '}Close questioner's profile summary
+                <Icon name="close" /> Close questioner's profile summary
               </Button>
             )}
             {isViewProfileClicked && (
@@ -267,6 +272,7 @@ class Loop extends React.Component {
               loopId={this.props.loop.id}
               onAttachJobCard={this.handleOnAttachJobCard}
               onAttachJobLink={this.handleOnAttachJobLink}
+              onAttachContact={this.handleOnAttachContact}
               jobs={jobs}
             />
           </Container>
@@ -286,4 +292,5 @@ const mapStateToProps = (states, props) => {
 
 export default connect(mapStateToProps, {
   attachJobMessage,
+  attachContactMessage,
 })(Loop);

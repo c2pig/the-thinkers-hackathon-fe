@@ -1,0 +1,7 @@
+@import 'css';
+
+.contentContainer {
+    & * {
+        margin-bottom: 8px;
+    }
+}
