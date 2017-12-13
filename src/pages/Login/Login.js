@@ -35,11 +35,12 @@ let LoginForm = props => {
           fluid
           size="large"
           type="submit"
-          style={{
-            backgroundColor: '#33ccff',
-            borderColor: '#33ccff',
-            color: 'white'
-          }}
+          color="blue"
+          // style={{
+          //   backgroundColor: '#33ccff',
+          //   borderColor: '#33ccff',
+          //   color: 'white'
+          // }}
         >
           Login
         </Button>
@@ -75,10 +76,9 @@ const Login = ({ onSubmit }) => {
           <Header as="h2" textAlign="center" style={{ color: '#33ccff' }}>
             CrowdLoop
           </Header>
-            {/* Log-in to your account */}
           <LoginForm onSubmit={onSubmit} />
           <Message>
-            New to us? <a href="#" style={{ color: '#33ccff' }}>Sign Up</a>
+            New to us? <a color="blue">Sign Up</a>
           </Message>
         </Grid.Column>
       </Grid>

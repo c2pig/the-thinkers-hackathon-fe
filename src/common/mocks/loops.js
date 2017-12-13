@@ -1,12 +1,12 @@
 export default {
   '1': {
     id: '1',
-    username: 'chew',
+    username: 'kokboon',
     status: 'open',
-    topic: 'Any ABC Semiconductors fresh grad position available',
+    topic: 'Any FreeScale Semiconductors fresh graduate position available?',
     description:
-      'I browsed through their career website and I’m not sure if any of the jobs posted there are for fresh grads. Was hoping someone could direct me to applying to eh appropriate job or even tell me if ABC are even currently hiring fresh grads?',
-    tags: ['javascript', 'react', 'jsx'],
+      'I browsed through their career website and I’m not sure if any of the jobs posted there are for fresh grads. Was hoping someone could direct me to applying to eh appropriate job or even tell me if FreeScale are even currently hiring fresh grads?',
+    tags: ['EE', 'semiconductor', 'FreeScale'],
     comments: [],
     rating:11
   },

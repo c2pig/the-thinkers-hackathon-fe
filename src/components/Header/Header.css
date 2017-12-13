@@ -16,6 +16,7 @@
 .menuItem {
   color: inherit !important;
   background-color: #243862 !important;
+  text-transform: capitalize !important;
 }
 .menuItem:before {
   background-color: #243862 !important;

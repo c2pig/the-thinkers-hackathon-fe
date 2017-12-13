@@ -139,7 +139,7 @@ export default class Profile extends React.Component {
           </div>
           <br />
           <div style={{ margin: 'auto', textAlign: 'center' }}>
-            <p className={styles.miniFont}>I want to work with</p>
+            <p className={styles.miniFont}>I know</p>
             <Label.Group>
               {profile.skills.map((requirement, index) => (
                 <Label key={index} className={styles.tag} as="a">
