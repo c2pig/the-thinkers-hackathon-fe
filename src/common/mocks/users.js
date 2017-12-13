@@ -88,7 +88,7 @@ export default {
     position: 'HR',
     company: 'HR Sdn Bhd',
     yearsOfExperience: 1,
-    location: 'Setia Alam, Shah Alam, Selangor, Malaysia.',
+    location: 'Kajang, Selangor, Malaysia.',
     skills: [
       'payroll',
       'recruitment',
@@ -98,30 +98,30 @@ export default {
       title: 'Newbie',
       votesCount: 3,
     },
-    peopleHired: 6,
+    peopleHired: 2,
     events: [
       {
         type: 'work',
         period: 'Feb, 2016 - Current',
-        position: 'Software Engineer',
-        company: 'AXD Company',
+        position: 'HR Admin',
+        company: 'HR Sdn Bhd',
         desc:
           'Completed frontend project and currently, working on new project which involve machine learning.',
         tags: ['machine learning', 'react', 'AWS', 'IT', 'voice recognition'],
       },
       {
         type: 'certificate',
-        period: 'March, 2014 - June, 2014',
-        company: 'Certified Ethical Hacker',
-        position: 'CEH',
+        period: 'June, 2015 - December, 2015',
+        company: '@ eCornell',
+        position: 'HR Certification',
         image: '/ceh.png',
         desc:
-          'Master the advanced concepts on Ethical hacking such as corporate espionage, writing virus codes, exploit writing, and reverse engineering. You will understand advanced network packet analysis, securing IIS and Apache web servers, Windows system administration using PowerShell, Hacking SQL & Oracle database.',
-        tags: ['security', 'CEH'],
+          'Master the advanced concepts on human resource skills and knowledge.',
+        tags: ['eCornell', 'HRCertification2015'],
       },
       {
         type: 'education',
-        period: 'March, 2011 - March, 2014',
+        period: 'March, 2012 - March, 2015',
         position: 'Bachelor of Information Technology',
         company: 'Multimedia University',
         desc:

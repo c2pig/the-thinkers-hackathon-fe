@@ -48,5 +48,13 @@ export default [
       { tag: 'design', rating: 56 },
     ]
   },
+  {
+    userName: 'felicia',
+    tags: [
+      { tag: 'hr', rating: 20 },
+      { tag: 'recruitment', rating: 4 },
+      { tag: 'travel', rating: 13 },
+    ]
+  },
 
 ];

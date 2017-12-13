@@ -234,6 +234,51 @@ export default {
     ],
     rating: 23,
   },
+  '2a': {
+    id: '2a',
+    username: 'jeannie',
+    status: 'open',
+    topic:
+      'Digital/Email marketing expert, have 10 years of agency experience',
+    description:
+      "I have strong background and knowledge in email marketing/digital marketing. My strength is in searching for leads and conducting campaigns. Have been with several big companies in the industry like Lippincott, Braund Union, Future brands etc.",
+    tags: ['product', 'marketing', 'digital', 'email', 'project mgmt'],
+    comments: [
+      {
+        postType: 'drop-message',
+        date: new Date('2017-12-11').toString(),
+        totalHired: 0,
+        tags: [
+          [
+            { tag: 'project mgmt', rating: 145 },
+            { tag: 'people skill', rating: 57 },
+            { tag: 'general programming', rating: 157 },
+          ],
+        ],
+        loopId: '2a',
+        message:
+          'Do you mind to travel? I have a friend whose company may have such vacancy but they always have business at overseas.',
+        username: 'jerome',
+      },
+      {
+        postType: 'drop-message',
+        date: new Date('2017-12-11').toString(),
+        totalHired: 2,
+        tags: [
+          [
+            { tag: 'hr', rating: 20 },
+            { tag: 'recruitment', rating: 4 },
+            { tag: 'travel', rating: 13 },
+          ],
+        ],
+        loopId: '2a',
+        message:
+          'What kind of company structure you looking for? International global delivery or more to local?',
+        username: 'felicia',
+      },
+    ],
+    rating: 26,
+  },
   '3': {
     id: '3',
     username: 'jeannie',
@@ -241,8 +286,8 @@ export default {
     topic:
       'Flexible working environment with free lunch daily! In the hunt for awesome product managers!',
     description:
-      "Money is not the bottom line—people are. Our product managers take the time to understand customer needs and do what's necessary to delight them with our products. Work with engineering, design, marketing, and leadership to define and shape products that millions will use.",
-    tags: ['product', 'flexible working hour', 'free lunch'],
+      "Money is not the bottom line — people are. Our product managers take the time to understand customer needs and do what's necessary to delight them with our products. Work with engineering, design, marketing, and leadership to define and shape products that millions will use.",
+    tags: ['product', 'flexible working hour', 'free lunch', 'great culture'],
     comments: [
       {
         postType: 'contact-me',
