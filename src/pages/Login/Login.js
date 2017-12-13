@@ -7,7 +7,7 @@ import {
   Message,
   Segment,
   Icon,
-  Image,
+  Image
 } from 'semantic-ui-react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -38,7 +38,7 @@ let LoginForm = props => {
           style={{
             backgroundColor: '#33ccff',
             borderColor: '#33ccff',
-            color: 'white',
+            color: 'white'
           }}
         >
           Login
@@ -49,38 +49,38 @@ let LoginForm = props => {
 };
 
 LoginForm = reduxForm({
-  form: 'login',
+  form: 'login'
 })(LoginForm);
 
-const mapDispatchToProps = (dispatch, reactRouteDom) => {
+const mapDispatchToProps = (dispatch, props) => {
   return {
     onSubmit: data => {
-      dispatch({ type: LOGIN, payload: { ...data } });
-      reactRouteDom.history.push('/');
-    },
+      dispatch({ type: LOGIN, payload: { username: data.username } });
+      props.history.push('/');
+    }
   };
 };
 
 const Login = ({ onSubmit }) => {
   return (
-    <div className="login-form" style={{ paddingTop: '100px'}}>
-        <Image
-          size="small"
-          src="/LogoLoop_Transparent.png"
-          style={{ margin: 'auto' }}
-        />
-        <br/>
-        <Grid textAlign="center" verticalAlign="middle">
-          <Grid.Column style={{ maxWidth: 450 }}>
-            <Header as="h2" textAlign="center" style={{ color: '#33ccff' }}>
-              Log-in to your account
-            </Header>
-            <LoginForm onSubmit={onSubmit} />
-            <Message>
-              New to us? <a href="#">Sign Up</a>
-            </Message>
-          </Grid.Column>
-        </Grid>
+    <div className="login-form" style={{ paddingTop: '100px' }}>
+      <Image
+        size="small"
+        src="/LogoLoop_Transparent.png"
+        style={{ margin: 'auto' }}
+      />
+      <br />
+      <Grid textAlign="center" verticalAlign="middle">
+        <Grid.Column style={{ maxWidth: 450 }}>
+          <Header as="h2" textAlign="center" style={{ color: '#33ccff' }}>
+            Log-in to your account
+          </Header>
+          <LoginForm onSubmit={onSubmit} />
+          <Message>
+            New to us? <a href="#">Sign Up</a>
+          </Message>
+        </Grid.Column>
+      </Grid>
     </div>
   );
 };

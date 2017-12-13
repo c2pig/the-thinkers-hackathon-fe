@@ -13,12 +13,13 @@ import {
 } from 'semantic-ui-react';
 
 import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
+import CloseLoopModal from 'components/CloseLoopModal/CloseLoopModal';
 import { connect } from 'react-redux';
 import mockComments from 'common/mocks/comments';
 import { Link } from 'react-router-dom';
 import { getHighestRatingTagName, getRelatedTag } from 'common/helpers';
 
-const Profile = ({ description, tags, headline }) => {
+const Topic = ({ description, tags, headline }) => {
   return (
     <Item.Group>
       <Item style={{ margin: '0' }}>
@@ -63,7 +64,7 @@ const PostJD = ({ jobTitle, company, tags }) => {
       <Card.Content>
         <Card.Header>{jobTitle}</Card.Header>
         <Card.Meta>{company}</Card.Meta>
-        {tags.map(({tag}, i) => {
+        {tags.map(({ tag }, i) => {
           return <Label key={'label-' + i}>{tag}</Label>;
         })}
       </Card.Content>
@@ -77,14 +78,14 @@ const Tags = ({ tags }) => {
   );
 };
 
-const UserComment = ({ posts, topicTags }) => {
+const UserComment = ({ comments, topicTags }) => {
   return (
     <Comment.Group size="small">
-      {posts.map(
+      {comments.map(
         (
           {
             postType,
-            userName,
+            username,
             date,
             message,
             totalHired,
@@ -99,9 +100,9 @@ const UserComment = ({ posts, topicTags }) => {
           const { tag, rating } = getHighestRatingTagName(getRelatedTag(...tags, topicTags), topicTags);
           return (
             <Comment key={'comment-i' + i}>
-              <Comment.Avatar as="a" src="/kong.jpg" />
+              <Comment.Avatar as="a" src={`/${username}.jpg`} />
               <Comment.Content>
-                <Comment.Author as="a">{userName}</Comment.Author>
+                <Comment.Author as="a">{username}</Comment.Author>
                 <Comment.Metadata>
                   <span>{date}</span>
                 </Comment.Metadata>
@@ -111,7 +112,7 @@ const UserComment = ({ posts, topicTags }) => {
                   <Label.Detail>{rating}</Label.Detail>
                 </Label>
               }
-               <Label>
+              <Label>
                 <Icon name="user" />
                 {totalHired} Hired
               </Label>
@@ -150,8 +151,23 @@ class Loop extends React.Component {
   close = () => this.setState({ open: false });
 
   render() {
+    const { user, loop } = this.props;
+    const { tags } = loop;
     const comments = [...mockComments, ...(this.props.loop.comments || [])];
-    const { tags } = this.props.loop;
+    const responders = comments
+      .map(comment => {
+        return {
+          avatar: `/${comment.username}.jpg`,
+          username: comment.username
+        };
+      })
+      .filter((obj, pos, arr) => {
+        return (
+          (obj.username !== user.username &&
+            arr.map(mapObj => mapObj['username']).indexOf(obj['username'])) ===
+          pos
+        );
+      });
 
     const topic = {
       description: this.props.loop.description,
@@ -160,22 +176,34 @@ class Loop extends React.Component {
     };
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: '100vh'
+        }}
+      >
+        {user.username &&
+          user.username === loop.username && (
+            <Container>
+              <Segment vertical>
+                <CloseLoopModal responders={responders} loop={loop} />
+              </Segment>
+            </Container>
+          )}
         <Container
-          style={{ overflowY: 'auto', flexBasis: 'calc(100vh - 160px)' }}
+          style={{
+            overflowY: 'auto',
+            padding: '0 2px'
+          }}
         >
-          <Divider hidden />
-          <Link to="/">
-            <Button color="yellow" fluid>
-              Close Topic
-            </Button>
-          </Link>
           <Segment vertical>
-            <Profile {...topic} />
+            <Topic {...topic} />
           </Segment>
-          <UserComment posts={comments} topicTags={topic.tags} />
+          <UserComment comments={comments} topicTags={topic.tags} />
         </Container>
-        <Container style={{ flex: '0 0 auto' }}>
+        <Container>
           <ReplyPanel loopId={this.props.loop.id} />
         </Container>
       </div>
@@ -185,7 +213,8 @@ class Loop extends React.Component {
 
 const mapStateToProps = (states, props) => {
   return {
-    loop: states.loops.data[props.match.params.loopId]
+    loop: states.loops.data[props.match.params.loopId],
+    user: states.user
   };
 };
 

@@ -6,7 +6,8 @@ import { extractTagsByUserName } from 'common/helpers';
 
 let loopsData = loopsMockData;
 
-export const DROP_MESSAGE = 'drop message';
+export const DROP_MESSAGE = 'DROP_MESSAGE';
+export const CLOSE_TOPIC = 'CLOSE_TOPIC';
 
 // Reducer
 const data = (state = loopsData, action) => {
@@ -24,7 +25,6 @@ const data = (state = loopsData, action) => {
     case DROP_MESSAGE:
       let loop = state[action.payload.loopId];
       const comment = {
-        userName: 'Kong',
         postType: 'drop-message',
         date: new Date().toString(),
         rating: 1,
@@ -40,6 +40,16 @@ const data = (state = loopsData, action) => {
       return {
         ...state,
         [action.payload.loopId]: { ...loop, comments: [...loop.comments] }
+      };
+
+    case CLOSE_TOPIC:
+      let closedloop = state[action.payload.loopId];
+      closedloop.status = 'closed';
+      closedloop.closeTopicResponder = action.payload.closeTopicResponder;
+
+      return {
+        ...state,
+        [action.payload.loopId]: { ...closedloop }
       };
     default:
       return state;

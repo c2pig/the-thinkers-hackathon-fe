@@ -18,10 +18,10 @@ let MessageForm = props => {
 
 MessageForm = reduxForm({ form: 'dropMessageForm' })(MessageForm);
 
-const ReplyPanel = ({ dropMessage }) => {
+const ReplyPanel = ({ submitMessage }) => {
   return (
     <Segment vertical textAlign="center">
-      <MessageForm onSubmit={dropMessage} />
+      <MessageForm onSubmit={submitMessage} />
       <Divider horizontal>Or</Divider>
       <Button.Group fluid>
         <Button>Attach a Job</Button>
@@ -34,13 +34,14 @@ const ReplyPanel = ({ dropMessage }) => {
 
 const mapDispatchToProps = (dispatch, props) => {
   return {
-    dropMessage: data => {
+    dropMessage: (data, state) => {
       dispatch({
         type: DROP_MESSAGE,
         payload: {
           loopId: props.loopId,
           message: data.message,
-          postType: 'drop-message'
+          postType: 'drop-message',
+          username: state.user.username
         }
       });
       dispatch(reset('dropMessageForm'));
@@ -48,4 +49,20 @@ const mapDispatchToProps = (dispatch, props) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(ReplyPanel);
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+  return {
+    submitMessage: data => {
+      dispatchProps.dropMessage(data, stateProps);
+    }
+  };
+};
+
+const mapStateToProps = (state, props) => {
+  return {
+    user: state.user
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(
+  ReplyPanel
+);

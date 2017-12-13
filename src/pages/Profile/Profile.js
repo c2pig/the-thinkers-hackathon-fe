@@ -9,7 +9,7 @@ import {
   Message,
 } from 'semantic-ui-react';
 import { Timeline, TimelineEvent } from 'react-event-timeline';
-import profileMockData from 'common/mocks/profile';
+import usersMockData from 'common/mocks/users';
 import styles from './Profile.css';
 
 export default class Profile extends React.Component {
@@ -64,7 +64,7 @@ export default class Profile extends React.Component {
   render() {
     const { currentEventView } = this.state;
     const { match: { params } } = this.props;
-    const profile = profileMockData[params.username];
+    const profile = usersMockData[params.username];
     return (
       <div>
         <div className={styles.mainContainer}>
