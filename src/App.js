@@ -24,7 +24,7 @@ class App extends Component {
           <title>The Thinker Hack 2017</title>
         </Helmet>
         <Header />
-        <Container>
+        <Container style={{ height: 'calc(100vh - 60px)' }}>
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/loop/:loopId" component={Loop} />

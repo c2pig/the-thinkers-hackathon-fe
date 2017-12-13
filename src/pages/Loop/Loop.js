@@ -1,11 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Container,
-  Label,
-  Item,
-  Segment,
-} from 'semantic-ui-react';
+import { Container, Label, Item, Segment } from 'semantic-ui-react';
 import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
 import CloseLoopModal from 'components/CloseLoopModal/CloseLoopModal';
 import { connect } from 'react-redux';
@@ -99,22 +94,10 @@ class Loop extends React.Component {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          // justifyContent: 'space-between',
+          justifyContent: 'space-between',
           height: '100%'
         }}
       >
-        {user.username &&
-          user.username === loop.username && (
-            <Container className={styles.closeLoopContainer} textAlign="center">
-              <Segment vertical>
-                {(loop.status === STATUS_OPEN && (
-                  <CloseLoopModal responders={responders} loop={loop} />
-                )) || <strong>Topic Closed</strong>}
-              </Segment>
-            </Container>
-          )}
-        {/* overflowY: 'auto',
-            padding: '0 2px' */}
         <Container
           className={styles.loopContainer}
           style={{
@@ -122,6 +105,18 @@ class Loop extends React.Component {
             padding: '0 2px'
           }}
         >
+          {user.username &&
+            user.username === loop.username && (
+              <Segment
+                vertical
+                textAlign="center"
+                className={styles.closeLoopContainer}
+              >
+                {(loop.status === STATUS_OPEN && (
+                  <CloseLoopModal responders={responders} loop={loop} />
+                )) || <strong>Topic Closed</strong>}
+              </Segment>
+            )}
           <Segment vertical>
             <Topic {...topic} />
           </Segment>
