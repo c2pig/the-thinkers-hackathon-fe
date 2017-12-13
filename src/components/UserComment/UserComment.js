@@ -8,7 +8,7 @@ import styles from './UserComment.css';
 
 const ContactMe = ({ company, email, fullname, phone, position, message }) => {
   return (
-    <div>
+    <div style={{margin: '1em 0'}}>
       <DropMessage msg={message || 'Hi, please find my contact as below:'} />
       <Card fluid>
         <Card.Content className={styles.contactMeCardContentContainer}>

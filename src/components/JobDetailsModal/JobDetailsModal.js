@@ -5,7 +5,7 @@ import JobDescriptionCard from 'components/JobDescriptionCard/JobDescriptionCard
 import DropMessage from 'components/DropMessage/DropMessage';
 
 const ModalTriggerContainer = ({ job, message }) => (
-  <div>
+  <div style={{margin: '1em 0'}}>
     {message && <DropMessage msg={message} />}
     <JobDescriptionCard onClick={this.handleOpen} {...job} />
   </div>

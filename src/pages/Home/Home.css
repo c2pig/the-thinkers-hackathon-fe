@@ -8,7 +8,7 @@
 
 .headerContainer,
 .footerContainer {
-    flex: 1 0 70px;
+    flex: 1 0 10%;
     padding: 0 10px;
 }
 
