@@ -6,6 +6,7 @@ import { reducer as formReducer } from 'redux-form';
 import loops, * as fromLoops from './loops';
 import userReducer from './user';
 import loopList, * as fromLoopList from './loopList';
+import users, * as fromUsers from './users';
 
 const persistConfig = {
   key: 'root',
@@ -18,15 +19,18 @@ export default persistCombineReducers(persistConfig, {
   form: formReducer,
   user: userReducer,
   loops,
-  loopList
+  loopList,
+  users
 });
 
 export const getLoopsData = state => fromLoops.getData(state.loops);
 
 export const getLoopListSearchKeywords = state =>
-  fromLoopList.getSearchKeywords(state.loopList);
+fromLoopList.getSearchKeywords(state.loopList);
 export const getLoopListIds = state => fromLoopList.getIds(state.loopList);
 export const getLoopListData = state => {
   const loopsData = getLoopsData(state);
   return getLoopListIds(state).map(id => loopsData[id] || {});
 };
+
+export const getUsersData = state => fromUsers.getData(state.users);

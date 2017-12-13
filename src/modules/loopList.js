@@ -60,7 +60,6 @@ export const searchLoops = () => (dispatch, getState) => {
           loopsData[id].topic.toLowerCase().indexOf(keywords.toLowerCase()) > -1
       )
     : Object.keys(loopsData);
-  console.log(filteredLoopKeys);
   dispatch({
     type: SEARCH_LOOPS,
     data: filteredLoopKeys,

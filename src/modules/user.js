@@ -13,7 +13,6 @@ export const getUser = state => {
 export default (state = initialState, action) => {
   switch (action.type) {
     case REHYDRATE:
-      console.log(action);
       const rehydratedData =
         action.payload && action.payload.user && action.payload.user.data
           ? Object.keys(action.payload.user.data)

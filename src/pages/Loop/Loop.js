@@ -8,7 +8,6 @@ import {
   Comment,
   Item,
   Segment,
-  Button,
   Divider
 } from 'semantic-ui-react';
 
@@ -16,11 +15,10 @@ import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
 import CloseLoopModal from 'components/CloseLoopModal/CloseLoopModal';
 import { connect } from 'react-redux';
 import mockComments from 'common/mocks/comments';
-import { Link } from 'react-router-dom';
-
+import { getHighestRatingTagName, getRelatedTag } from 'common/helpers';
 import styles from './Loop.css';
 
-const Profile = ({ description, tags, headline }) => {
+const Topic = ({ description, tags, headline }) => {
   return (
     <Item.Group>
       <Item style={{ margin: '0' }}>
@@ -79,7 +77,7 @@ const Tags = ({ tags }) => {
   );
 };
 
-const UserComment = ({ comments }) => {
+const UserComment = ({ comments, topicTags }) => {
   return (
     <Comment.Group size="small">
       {comments.map(
@@ -89,7 +87,6 @@ const UserComment = ({ comments }) => {
             username,
             date,
             message,
-            rating,
             totalHired,
             headline,
             phone,
@@ -98,19 +95,22 @@ const UserComment = ({ comments }) => {
           },
           i
         ) => {
+
+          const { tag, rating } = getHighestRatingTagName(getRelatedTag(...tags, topicTags), topicTags);
           return (
             <Comment key={'comment-i' + i}>
-              <Comment.Avatar as="a" src="/kong.jpg" />
+              <Comment.Avatar as="a" src={`/${username}.jpg`} />
               <Comment.Content>
                 <Comment.Author as="a">{username}</Comment.Author>
                 <Comment.Metadata>
                   <span>{date}</span>
                 </Comment.Metadata>
               </Comment.Content>
-              <Label>
-                javascript
-                <Label.Detail>22</Label.Detail>
-              </Label>
+              { tag &&
+                <Label>{tag}
+                  <Label.Detail>{rating}</Label.Detail>
+                </Label>
+              }
               <Label>
                 <Icon name="user" />
                 {totalHired} Hired
@@ -150,9 +150,23 @@ class Loop extends React.Component {
   close = () => this.setState({ open: false });
 
   render() {
+    const { user, loop } = this.props;
+    const { tags } = loop;
     const comments = [...mockComments, ...(this.props.loop.comments || [])];
-
-    const { tags } = this.props.loop;
+    const responders = comments
+      .map(comment => {
+        return {
+          avatar: `/${comment.username}.jpg`,
+          username: comment.username
+        };
+      })
+      .filter((obj, pos, arr) => {
+        return (
+          (obj.username !== user.username &&
+            arr.map(mapObj => mapObj['username']).indexOf(obj['username'])) ===
+          pos
+        );
+      });
 
     const topic = {
       description: this.props.loop.description,
@@ -169,11 +183,14 @@ class Loop extends React.Component {
           height: '100vh'
         }}
       >
-        <Container className={styles.closeLoopContainer}>
-          <Segment vertical>
-            <CloseLoopModal />
-          </Segment>
-        </Container>
+        {user.username &&
+          user.username === loop.username && (
+            <Container className={styles.closeLoopContainer}>
+              <Segment vertical>
+                <CloseLoopModal responders={responders} loop={loop} />
+              </Segment>
+            </Container>
+          )}
         <Container
           style={{
             overflowY: 'auto',
@@ -181,9 +198,9 @@ class Loop extends React.Component {
           }}
         >
           <Segment vertical>
-            <Profile {...topic} />
+            <Topic {...topic} />
           </Segment>
-          <UserComment comments={comments} />
+          <UserComment comments={comments} topicTags={topic.tags} />
         </Container>
         <Container className={styles.replyPanelContainer}>
           <ReplyPanel loopId={this.props.loop.id} />
@@ -195,7 +212,8 @@ class Loop extends React.Component {
 
 const mapStateToProps = (states, props) => {
   return {
-    loop: states.loops.data[props.match.params.loopId]
+    loop: states.loops.data[props.match.params.loopId],
+    user: states.user
   };
 };
 
