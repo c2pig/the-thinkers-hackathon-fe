@@ -18,7 +18,7 @@ import { connect } from 'react-redux';
 import mockComments from 'common/mocks/comments';
 import { Link } from 'react-router-dom';
 
-const Profile = ({ description, tags, headline }) => {
+const Topic = ({ description, tags, headline }) => {
   return (
     <Item.Group>
       <Item style={{ margin: '0' }}>
@@ -98,7 +98,7 @@ const UserComment = ({ comments }) => {
         ) => {
           return (
             <Comment key={'comment-i' + i}>
-              <Comment.Avatar as="a" src="/kong.jpg" />
+              <Comment.Avatar as="a" src={`/${username}.jpg`} />
               <Comment.Content>
                 <Comment.Author as="a">{username}</Comment.Author>
                 <Comment.Metadata>
@@ -148,10 +148,24 @@ class Loop extends React.Component {
   close = () => this.setState({ open: false });
 
   render() {
-    const comments = [...mockComments, ...(this.props.loop.comments || [])];
-
     const { user, loop } = this.props;
     const { tags } = loop;
+    const comments = [...mockComments, ...(this.props.loop.comments || [])];
+
+    const responders = comments
+      .map(comment => {
+        return {
+          avatar: `/${comment.username}.jpg`,
+          username: comment.username
+        };
+      })
+      .filter((obj, pos, arr) => {
+        return (
+          (obj.username !== user.username &&
+            arr.map(mapObj => mapObj['username']).indexOf(obj['username'])) ===
+          pos
+        );
+      });
 
     const topic = {
       description: this.props.loop.description,
@@ -172,7 +186,7 @@ class Loop extends React.Component {
           user.username === loop.username && (
             <Container>
               <Segment vertical>
-                <CloseLoopModal />
+                <CloseLoopModal responders={responders} loop={loop} />
               </Segment>
             </Container>
           )}
@@ -183,7 +197,7 @@ class Loop extends React.Component {
           }}
         >
           <Segment vertical>
-            <Profile {...topic} />
+            <Topic {...topic} />
           </Segment>
           <UserComment comments={comments} />
         </Container>
