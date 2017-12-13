@@ -8,6 +8,7 @@ import {
   Comment,
   Divider
 } from 'semantic-ui-react';
+import JobDescriptionCard from 'componnets/JobDescriptionCard/JobDescriptionCard';
 
 const ContactMe = ({ headline, description, phone, email }) => {
   return (
@@ -28,20 +29,6 @@ const ContactMe = ({ headline, description, phone, email }) => {
 
 const DropMessage = ({ msg }) => {
   return <Message>{msg}</Message>;
-};
-
-const PostJD = ({ jobTitle, company, tags }) => {
-  return (
-    <Card fluid>
-      <Card.Content>
-        <Card.Header>{jobTitle}</Card.Header>
-        <Card.Meta>{company}</Card.Meta>
-        {tags.map((tag, i) => {
-          return <Label key={'label-' + i}>{tag}</Label>;
-        })}
-      </Card.Content>
-    </Card>
-  );
 };
 
 export default ({ comments, topicTags, parentContext }) => {
@@ -122,7 +109,7 @@ export default ({ comments, topicTags, parentContext }) => {
               )}
               {postType === 'drop-message' && <DropMessage msg={message} />}
               {postType === 'post-jd' && (
-                <PostJD
+                <JobDescriptionCard
                   {...job}
                 />
               )}
