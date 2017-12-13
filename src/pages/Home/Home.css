@@ -35,6 +35,7 @@
 .cardsContainer {
     padding: 10px;
     overflow-y: auto;
+    overflow-x: hidden;
     flex: 0 0 calc(90vh - 140px);
     margin-bottom: 20px;
 }
