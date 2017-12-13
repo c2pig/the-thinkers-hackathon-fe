@@ -13,3 +13,24 @@
   overflow-y: auto;
   flex: 0 0 calc(90vh - 140px);
 }
+
+.profileBtn {
+  color: #33ccff !important;
+  border: 1px solid #33ccff !important;
+  box-shadow: 0 0 0 1px #33ccff inset !important;
+}
+
+.tag {
+  /* 243862 */
+  /* background-color: #33ccff !important; */
+  /* color: white !important; */
+}
+
+.profileContainer {
+  margin: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  & * {
+    margin-bottom: 5px !important;
+  }
+}

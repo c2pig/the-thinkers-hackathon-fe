@@ -51,19 +51,14 @@ class Header extends Component {
     const { activeItem } = this.state;
     return (
       <Menu
-        style={{
-          height: '4rem',
-          backgroundColor: '#243862',
-          color: 'white',
-          borderRadius: '1px'
-        }}
+        className={styles.headerBar}
       >
         <Menu.Item
           header
           name="home"
           active={activeItem === 'home'}
           onClick={this.handleItemClick}
-          className={styles.menuItem}
+          className={styles.logoMenu}
         >
           <Image src="/LogoLoop_White.png" alt="logo" size="tiny" avatar />
         </Menu.Item>
