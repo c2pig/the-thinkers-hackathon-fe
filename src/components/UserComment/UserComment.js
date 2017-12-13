@@ -11,17 +11,18 @@ import {
 } from 'semantic-ui-react';
 import JobDescriptionCard from 'components/JobDescriptionCard/JobDescriptionCard';
 import IconWithDescription from 'components/IconWithDescription/IconWithDescription';
+import styles from './UserComment.css';
 
 const ContactMe = ({ company, email, fullname, phone, position }) => {
   return (
     <Card fluid>
-      <Card.Content>
+      <Card.Content className={styles.contactMeCardContentContainer}>
         <Card.Header style={{ textTransform: 'capitalize' }}>
           {fullname}
         </Card.Header>
         <Card.Meta>{`${position}, ${company}`}</Card.Meta>
         <Card.Description>
-          Hi, please find my contact as follow:
+          Hi, please find my contact as below:
         </Card.Description>
         <IconWithDescription description={email} icon="mail" />
         <IconWithDescription description={phone} icon="phone" />

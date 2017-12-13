@@ -1,0 +1,7 @@
+@import 'css';
+
+.contactMeCardContentContainer {
+    & * {
+        margin-bottom: 8px;
+    }
+}
