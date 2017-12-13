@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Checkbox, Button, Label, Card, Form } from 'semantic-ui-react';
+import { Statistic, Divider, Icon, Grid, Checkbox, Button, Label, Card, Form } from 'semantic-ui-react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getLoopListData } from 'store/modules';
@@ -10,9 +10,27 @@ import { STATUS_CLOSED, STATUS_OPEN } from 'store/loops';
 
 import styles from './Home.css';
 
+const VoteTopic = ({children}) => {
+  return <Grid>
+  <Grid.Column width='1'>
+    <Grid.Row><Icon name='chevron up'/></Grid.Row>
+    <Grid.Row><Icon name='chevron down'/></Grid.Row>
+    <Divider hidden />
+    <Grid.Row>
+    <Statistic size="mini">
+      <Statistic.Value>22</Statistic.Value>
+    </Statistic>
+    </Grid.Row>
+  </Grid.Column>
+  <Grid.Column width='14'>
+    {children}
+  </Grid.Column>
+  </Grid>
+}
+
 const Topic = ({ topic, tags, id, status }) => {
   const url = `/loop/${id}`;
-  return (
+  return (<VoteTopic>
     <Card fluid style={{ position: 'relative' }}>
       <Link
         to={url}
@@ -30,6 +48,7 @@ const Topic = ({ topic, tags, id, status }) => {
         </Label.Group>
       </Card.Content>
     </Card>
+    </VoteTopic>
   );
 };
 
