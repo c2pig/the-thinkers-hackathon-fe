@@ -41,11 +41,7 @@ class CloseLoopModal extends React.Component {
           <Button
             onClick={this.handleOpen}
             fluid
-            style={{
-              backgroundColor: '#5d93ff',
-              borderColor: '#5d93ff',
-              color: 'white'
-            }}
+            color="blue"
           >
             Close Topic
           </Button>
