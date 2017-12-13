@@ -36,7 +36,7 @@ const PostJD = ({ jobTitle, company, tags }) => {
       <Card.Content>
         <Card.Header>{jobTitle}</Card.Header>
         <Card.Meta>{company}</Card.Meta>
-        {tags.map(({ tag }, i) => {
+        {tags.map((tag, i) => {
           return <Label key={'label-' + i}>{tag}</Label>;
         })}
       </Card.Content>
@@ -58,7 +58,8 @@ export default ({ comments, topicTags, parentContext }) => {
             headline,
             phone,
             email,
-            tags
+            tags,
+            job
           },
           i
         ) => {
@@ -122,9 +123,7 @@ export default ({ comments, topicTags, parentContext }) => {
               {postType === 'drop-message' && <DropMessage msg={message} />}
               {postType === 'post-jd' && (
                 <PostJD
-                  jobTitle="Graphic Designer"
-                  company="abc co"
-                  tags={tags}
+                  {...job}
                 />
               )}
               <Divider hidden />

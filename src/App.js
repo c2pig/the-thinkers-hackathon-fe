@@ -4,6 +4,7 @@ import Helmet from 'react-helmet';
 import { Container } from 'semantic-ui-react';
 
 import Header from 'components/Header/Header';
+import Notification from 'components/Notification/Notification';
 import Home from 'pages/Home/Home';
 import Loop from 'pages/Loop/Loop';
 import Login from 'pages/Login/Login';
@@ -31,6 +32,7 @@ class App extends Component {
             <Route exact path="/login" component={Login} />
             <Route exact path="/profile/:username" component={Profile} />
           </Switch>
+          <Notification />
         </Container>
       </div>
     );
