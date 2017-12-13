@@ -16,6 +16,7 @@ import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
 import { connect } from 'react-redux';
 import mockComments from 'common/mocks/comments';
 import { Link } from 'react-router-dom';
+import { getHighestRatingTagName, getRelatedTag } from 'common/helpers';
 
 const Profile = ({ description, tags, headline }) => {
   return (
@@ -76,7 +77,7 @@ const Tags = ({ tags }) => {
   );
 };
 
-const UserComment = ({ posts }) => {
+const UserComment = ({ posts, topicTags }) => {
   return (
     <Comment.Group size="small">
       {posts.map(
@@ -86,7 +87,6 @@ const UserComment = ({ posts }) => {
             userName,
             date,
             message,
-            rating,
             totalHired,
             headline,
             phone,
@@ -95,6 +95,8 @@ const UserComment = ({ posts }) => {
           },
           i
         ) => {
+
+          const { tag, rating } = getHighestRatingTagName(getRelatedTag(...tags, topicTags), topicTags);
           return (
             <Comment key={'comment-i' + i}>
               <Comment.Avatar as="a" src="/kong.jpg" />
@@ -104,9 +106,11 @@ const UserComment = ({ posts }) => {
                   <span>{date}</span>
                 </Comment.Metadata>
               </Comment.Content>
-              <Label>javascript
-              <Label.Detail>22</Label.Detail>
-              </Label>
+              { tag &&
+                <Label>{tag}
+                  <Label.Detail>{rating}</Label.Detail>
+                </Label>
+              }
                <Label>
                 <Icon name="user" />
                 {totalHired} Hired
@@ -147,7 +151,6 @@ class Loop extends React.Component {
 
   render() {
     const comments = [...mockComments, ...(this.props.loop.comments || [])];
-
     const { tags } = this.props.loop;
 
     const topic = {
@@ -170,7 +173,7 @@ class Loop extends React.Component {
           <Segment vertical>
             <Profile {...topic} />
           </Segment>
-          <UserComment posts={comments} />
+          <UserComment posts={comments} topicTags={topic.tags} />
         </Container>
         <Container style={{ flex: '0 0 auto' }}>
           <ReplyPanel loopId={this.props.loop.id} />

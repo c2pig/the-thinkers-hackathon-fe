@@ -66,7 +66,6 @@ export default class CloseLoopModal extends React.Component {
     }
 
     handlePeopleOnClick(id) {
-        console.log(id);
         this.handleClose();
     }
 
