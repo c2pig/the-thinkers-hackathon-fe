@@ -48,8 +48,7 @@ const PostJD = ({ jobTitle, company, tags }) => {
   );
 };
 
-export default ({ comments, topicTags, parentState }) => {
-  console.log(parentState);
+export default ({ comments, topicTags, parentContext}) => {
   return (
     <Comment.Group size="small">
       {comments.map(
@@ -71,7 +70,8 @@ export default ({ comments, topicTags, parentState }) => {
             getRelatedTag(...tags, topicTags),
             topicTags
           );
-
+          const x = parentContext.state.likes[i];
+          const iconName = ( x && x.username === username && x.liked) ? "thumbs up" : "thumbs outline up";
           return (
             <Comment key={'comment-i' + i}>
               <Comment.Avatar as="a" src={`/${username}.jpg`} />
@@ -91,8 +91,9 @@ export default ({ comments, topicTags, parentState }) => {
                 <Icon name="user" />
                 {totalHired} Hired
               </Label>
-              <Icon name="thumbs outline up" onClick={() => {
-                parentState.likes.push({ username, liked: true });
+              <Icon name={iconName} onClick={() => {
+                parentContext.state.likes.push({ username, liked: true });
+                parentContext.setState({...parentContext.state});
               }}/>
               {postType === 'contact-me' && (
                 <ContactMe
