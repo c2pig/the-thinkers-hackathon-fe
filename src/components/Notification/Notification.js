@@ -39,7 +39,7 @@ const Notification = ({ handleClose, notification }) => {
 const getUserNotification = (notifications, username) => {
   const item = notifications
     .filter(item => {
-      return item.status == STATUS_UNREAD;
+      return item.status === STATUS_UNREAD;
     })
     .filter((item, index, arr) => {
       return (
