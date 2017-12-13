@@ -2,10 +2,12 @@
 
 .replyPanelContainer {
   @apply (--box-shadow-top);
+  padding: 10px;
 }
 
 .closeLoopContainer {
   @apply (--box-shadow-bottom);
+  padding: 10px;
 }
 
 .loopContainer {

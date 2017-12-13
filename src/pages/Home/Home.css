@@ -8,8 +8,17 @@
 
 .headerContainer,
 .footerContainer {
-    flex: 1 0 10%;
+    flex: 1 0 70px;
     padding: 0 10px;
+}
+
+.headerContainer {
+    @apply (--box-shadow-bottom);
+}
+
+.footerContainer {
+    padding-top: 10px;
+    @apply (--box-shadow-top);
 }
 
 .headerContainer {
@@ -38,11 +47,13 @@
     overflow-x: hidden;
     flex: 0 0 calc(90vh - 140px);
     margin-bottom: 20px;
+
+    -webkit-overflow-scrolling: touch;
 }
 
 
 .voteGroup {
-  margin-right: 20px;
+  margin-right: 10px;
   margin-top: 4%;
 }
 

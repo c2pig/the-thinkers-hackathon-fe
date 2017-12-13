@@ -180,7 +180,7 @@ class Loop extends React.Component {
           height: '100%',
         }}
       >
-        <Container
+        <div
           className={styles.loopContainer}
           style={{
             overflowY: 'auto',
@@ -265,9 +265,9 @@ class Loop extends React.Component {
             topicTags={topic.tags}
             parentContext={_this}
           />
-        </Container>
+        </div>
         {loop.status === STATUS_OPEN && (
-          <Container className={styles.replyPanelContainer}>
+          <div className={styles.replyPanelContainer}>
             <ReplyPanel
               loopId={this.props.loop.id}
               onAttachJobCard={this.handleOnAttachJobCard}
@@ -275,7 +275,7 @@ class Loop extends React.Component {
               onAttachContact={this.handleOnAttachContact}
               jobs={jobs}
             />
-          </Container>
+          </div>
         )}
       </div>
     );
