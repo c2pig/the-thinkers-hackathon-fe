@@ -1,11 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  Container,
-  Label,
-  Item,
-  Segment,
-} from 'semantic-ui-react';
+import { Container, Label, Item, Segment } from 'semantic-ui-react';
 import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
 import CloseLoopModal from 'components/CloseLoopModal/CloseLoopModal';
 import { connect } from 'react-redux';
@@ -99,7 +94,8 @@ class Loop extends React.Component {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          // justifyContent: 'space-between',
+          justifyContent:
+            loop.status === STATUS_OPEN ? 'space-between' : 'flex-start ',
           height: '100%'
         }}
       >
@@ -113,13 +109,12 @@ class Loop extends React.Component {
               </Segment>
             </Container>
           )}
-        {/* overflowY: 'auto',
-            padding: '0 2px' */}
         <Container
           className={styles.loopContainer}
           style={{
             overflowY: 'auto',
-            padding: '0 2px'
+            padding: '0 2px',
+            flexBasis: loop.status === STATUS_OPEN ? '460px' : '600px'
           }}
         >
           <Segment vertical>
