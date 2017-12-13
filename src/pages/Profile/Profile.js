@@ -141,7 +141,7 @@ export default class Profile extends React.Component {
           <div style={{ margin: 'auto', textAlign: 'center' }}>
             <p className={styles.miniFont}>I want to work with</p>
             <Label.Group>
-              {profile.requirements.map((requirement, index) => (
+              {profile.skills.map((requirement, index) => (
                 <Label key={index} className={styles.tag} as="a">
                   {requirement}
                 </Label>
