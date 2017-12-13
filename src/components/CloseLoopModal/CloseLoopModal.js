@@ -3,50 +3,10 @@ import { Button, Image, Modal, List } from 'semantic-ui-react';
 import shakeHand from './assets/shake-hand.jpg';
 import styles from './CloseLoopModal.css';
 
-const mPeople = [
-  {
-    avatar: '/jeannie.jpg',
-    username: 'Helen',
-    position: 'Graphic Designer',
-    company: 'Linker Co.'
-  },
-  {
-    avatar: '/kong.jpg',
-    username: 'Christian',
-    position: 'Graphic Designer',
-    company: 'ABD Sdn Bhd'
-  },
-  {
-    avatar: '/jeannie.jpg',
-    username: 'Helen',
-    position: 'Developer',
-    company: 'Linker Co.'
-  },
-  {
-    avatar: '/jeannie.jpg',
-    username: 'Helen',
-    position: 'Architect',
-    company: 'Linker Co.'
-  },
-  {
-    avatar: '/jeannie.jpg',
-    username: 'Daniel',
-    position: 'HR Manager',
-    company: 'Asterine Co.'
-  },
-  {
-    avatar: '/jeannie.jpg',
-    username: 'Helen',
-    position: 'Quality Expert',
-    company: 'Linker Co.'
-  }
-];
-
 export default class CloseLoopModal extends React.Component {
   constructor() {
     super();
     this.state = {
-      people: mPeople,
       isModalOpen: false
     };
     this.handleOpen = this.handleOpen.bind(this);
@@ -71,7 +31,14 @@ export default class CloseLoopModal extends React.Component {
   }
 
   render() {
-    const { people, isModalOpen } = this.state;
+    const { isModalOpen } = this.state;
+    const responders = this.props.responders.map(responder => {
+      return {
+        ...responder,
+        position: 'Graphic Designer',
+        company: 'Linker Co.'
+      };
+    });
     return (
       <Modal
         trigger={
@@ -100,7 +67,7 @@ export default class CloseLoopModal extends React.Component {
               verticalAlign="middle"
               className={styles.scrollDesc}
             >
-              {people.map((person, index) => (
+              {responders.map((person, index) => (
                 <List.Item
                   key={index}
                   onClick={() => this.handlePeopleOnClick(index)}
