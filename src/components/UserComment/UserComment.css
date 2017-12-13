@@ -5,3 +5,10 @@
         margin-bottom: 8px;
     }
 }
+
+.smallDetail {
+    display: flex;
+    justify-content: space-between;
+    vertical-align: middle;
+    align-items: center;
+}

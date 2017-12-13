@@ -78,44 +78,62 @@ export default ({ comments, topicTags, parentContext }) => {
           const newRating = userLike && userLike.liked ? rating + 1 : rating;
           return (
             <Comment key={'comment-i' + i}>
-              <Comment.Avatar as="a" src={`/${username}.jpg`} />
-              <Comment.Content>
-                <Comment.Author as="a">{username}</Comment.Author>
+              <Comment.Avatar
+                as="a"
+                src={`/${username}.jpg`}
+                style={{ width: '3.8em' }}
+                href={'/profile/' + username}
+              />
+              <Comment.Content style={{ marginLeft: '4.2em' }}>
+                <Comment.Author as="a" href={'/profile/' + username}>{username}</Comment.Author>{' '}
                 <Comment.Metadata>
-                  <span>{date}</span>
+                  {tag && (
+                    <Label>
+                      {tag}
+                      <Label.Detail>{newRating}</Label.Detail>
+                    </Label>
+                  )}
+                  <Comment.Text>
+                    <Label>
+                      <Icon name="user" />
+                      {totalHired} Hired
+                    </Label>
+                  </Comment.Text>
                 </Comment.Metadata>
               </Comment.Content>
-              {tag && (
-                <Label>
-                  {tag}
-                  <Label.Detail>{newRating}</Label.Detail>
-                </Label>
-              )}
-              <Label>
-                <Icon name="user" />
-                {totalHired} Hired
-              </Label>
-              <Icon
-                name={iconName}
-                onClick={() => {
-                  let obj = {};
-                  if (userLike && userLike.liked) {
-                    obj[username] = { liked: false };
-                    parentContext.state.likes = Object.assign(
-                      parentContext.state.likes,
-                      obj
-                    );
-                  } else {
-                    obj[username] = { liked: true };
-                    parentContext.state.likes = Object.assign(
-                      parentContext.state.likes,
-                      obj
-                    );
-                  }
-                  console.log(parentContext.state.likes);
-                  parentContext.setState({ ...parentContext.state });
-                }}
-              />
+              <Comment.Content>
+                <div className={styles.smallDetail}>
+                  <Comment.Metadata>
+                    <span>{date}</span>
+                  </Comment.Metadata>
+                  <Comment.Action>
+                    <Icon
+                      style={{ float: 'right' }}
+                      color="blue"
+                      size="big"
+                      name={iconName}
+                      onClick={() => {
+                        let obj = {};
+                        if (userLike && userLike.liked) {
+                          obj[username] = { liked: false };
+                          parentContext.state.likes = Object.assign(
+                            parentContext.state.likes,
+                            obj
+                          );
+                        } else {
+                          obj[username] = { liked: true };
+                          parentContext.state.likes = Object.assign(
+                            parentContext.state.likes,
+                            obj
+                          );
+                        }
+                        console.log(parentContext.state.likes);
+                        parentContext.setState({ ...parentContext.state });
+                      }}
+                    />
+                  </Comment.Action>
+                </div>
+              </Comment.Content>
               {postType === 'contact-me' && <ContactMe {...contact} />}
               {postType === 'drop-message' && <DropMessage msg={message} />}
               {postType === 'post-jd' && <JobDetailsModal job={job} /> }

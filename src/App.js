@@ -17,7 +17,6 @@ class App extends Component {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          // justifyContent: 'space-between',
           height: '100vh'
         }}
       >
@@ -25,7 +24,7 @@ class App extends Component {
           <title>The Thinker Hack 2017</title>
         </Helmet>
         <Header />
-        <Container style={{ height: 'calc(100vh - 60px)' }}>
+        <Container style={{ height: 'calc(100vh - 60px)', paddingTop: '1rem'}}>
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/loop/:loopId" component={Loop} />

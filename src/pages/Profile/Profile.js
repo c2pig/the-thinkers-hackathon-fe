@@ -148,20 +148,22 @@ export default class Profile extends React.Component {
               ))}
             </Label.Group>
           </div>
-          <Message
-            style={{
-              textAlign: 'center',
-              backgroundColor: 'rgba(255,255,255,.7)',
-            }}
-          >
-            <p style={{ textAlign: 'left' }}>
-              <Icon name="quote left" size="small" />
-            </p>
-            <p className={styles.quote}>{profile.quote}</p>
-            <p style={{ textAlign: 'right' }}>
-              <Icon name="quote right" size="small" />
-            </p>
-          </Message>
+          {profile.quote && (
+            <Message
+              style={{
+                textAlign: 'center',
+                backgroundColor: 'rgba(255,255,255,.7)',
+              }}
+            >
+              <p style={{ textAlign: 'left' }}>
+                <Icon name="quote left" size="small" />
+              </p>
+              <p className={styles.quote}>{profile.quote}</p>
+              <p style={{ textAlign: 'right' }}>
+                <Icon name="quote right" size="small" />
+              </p>
+            </Message>
+          )}
         </div>
 
         <Timeline>

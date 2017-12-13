@@ -44,7 +44,7 @@ const ReplyPanel = ({
           jobs={jobs}
         />
         {/* <Button.Or /> */}
-        <Button positive onClick={onAttachContact}>
+        <Button color="blue" onClick={onAttachContact}>
           Leave my contact
         </Button>
       </Button.Group>
