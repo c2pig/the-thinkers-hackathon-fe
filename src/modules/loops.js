@@ -23,7 +23,6 @@ const data = (state = loopsData, action) => {
     case DROP_MESSAGE:
       let loop = state[action.payload.loopId];
       const comment = {
-        userName: 'Kong',
         date: new Date().toString(),
         rating: 1,
         totalHired: 10,

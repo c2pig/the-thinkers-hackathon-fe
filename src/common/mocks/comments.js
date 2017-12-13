@@ -1,7 +1,7 @@
 export default [
   {
     postType: 'contact-me',
-    cuserName: 'Kong1',
+    username: 'kong',
     date: 'Today at 5:42PM',
     message: 'Hello',
     rating: 2,
@@ -12,7 +12,7 @@ export default [
   },
   {
     postType: 'post-jd',
-    userName: 'Kong2',
+    username: 'jeannie',
     date: 'Today at 5:42PM',
     message: 'Hello',
     rating: 4,

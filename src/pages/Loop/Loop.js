@@ -14,6 +14,7 @@ import {
 } from 'semantic-ui-react';
 
 import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
+import CloseLoopModal from 'components/CloseLoopModal/CloseLoopModal';
 import { connect } from 'react-redux';
 import mockComments from 'common/mocks/comments';
 
@@ -97,14 +98,14 @@ const Tags = ({ tags }) => {
   );
 };
 
-const UserComment = ({ posts }) => {
+const UserComment = ({ comments }) => {
   return (
     <Comment.Group size="small">
-      {posts.map(
+      {comments.map(
         (
           {
             postType,
-            userName,
+            username,
             date,
             message,
             rating,
@@ -120,7 +121,7 @@ const UserComment = ({ posts }) => {
             <Comment key={'comment-i' + i}>
               <Comment.Avatar as="a" src="/kong.jpg" />
               <Comment.Content>
-                <Comment.Author as="a">{userName}</Comment.Author>
+                <Comment.Author as="a">{username}</Comment.Author>
                 <Comment.Metadata>
                   <span>{date}</span>
                 </Comment.Metadata>
@@ -166,6 +167,13 @@ class Loop extends React.Component {
   render() {
     const comments = [...mockComments, ...(this.props.loop.comments || [])];
 
+    const responders = comments.map(comment => {
+      return {
+        avatar: `/${comment.username}.jpg`,
+        username: comment.username
+      };
+    });
+
     const { id, tags, title } = this.props.loop;
 
     const topic = {
@@ -175,22 +183,31 @@ class Loop extends React.Component {
     };
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column' }}>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: '100vh'
+        }}
+      >
+        <Container>
+          <Segment vertical>
+            <CloseLoopModal />
+          </Segment>
+        </Container>
         <Container
-          style={{ overflowY: 'auto', flexBasis: 'calc(100vh - 160px)' }}
+          style={{
+            overflowY: 'auto',
+            padding: '0 2px'
+          }}
         >
-          <Divider hidden />
-          <Link to="/">
-            <Button color="yellow" fluid>
-              Close Topic
-            </Button>
-          </Link>
           <Segment vertical>
             <Profile {...topic} />
           </Segment>
-          <UserComment posts={comments} />
+          <UserComment comments={comments} />
         </Container>
-        <Container style={{ flex: '0 0 auto' }}>
+        <Container>
           <ReplyPanel loopId={this.props.loop.id} />
         </Container>
       </div>
