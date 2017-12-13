@@ -186,7 +186,7 @@ class Loop extends React.Component {
           user.username === loop.username && (
             <Container>
               <Segment vertical>
-                <CloseLoopModal responders={responders} />
+                <CloseLoopModal responders={responders} loop={loop} />
               </Segment>
             </Container>
           )}

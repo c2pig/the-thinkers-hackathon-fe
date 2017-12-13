@@ -2,8 +2,10 @@ import React from 'react';
 import { Button, Image, Modal, List } from 'semantic-ui-react';
 import shakeHand from './assets/shake-hand.jpg';
 import styles from './CloseLoopModal.css';
+import { connect } from 'react-redux';
+import { CLOSE_TOPIC } from 'store/loops';
 
-export default class CloseLoopModal extends React.Component {
+class CloseLoopModal extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -25,8 +27,8 @@ export default class CloseLoopModal extends React.Component {
     });
   }
 
-  handlePeopleOnClick(id) {
-    console.log(id);
+  handleOnClickResponder(responderUsername) {
+    this.props.closeTopic(responderUsername);
     this.handleClose();
   }
 
@@ -67,17 +69,19 @@ export default class CloseLoopModal extends React.Component {
               verticalAlign="middle"
               className={styles.scrollDesc}
             >
-              {responders.map((person, index) => (
+              {responders.map((responder, index) => (
                 <List.Item
                   key={index}
-                  onClick={() => this.handlePeopleOnClick(index)}
+                  onClick={() =>
+                    this.handleOnClickResponder(responder.username)
+                  }
                 >
-                  <Image avatar src={person.avatar} />
+                  <Image avatar src={responder.avatar} />
                   <List.Content>
-                    <List.Header>{person.username}</List.Header>
-                    {person.position}
+                    <List.Header>{responder.username}</List.Header>
+                    {responder.position}
                     <br />
-                    <div className={styles.miniFont}>{person.company}</div>
+                    <div className={styles.miniFont}>{responder.company}</div>
                   </List.Content>
                 </List.Item>
               ))}
@@ -92,3 +96,19 @@ export default class CloseLoopModal extends React.Component {
     );
   }
 }
+
+const mapDispatchToProps = (dispatch, props) => {
+  return {
+    closeTopic: responder => {
+      dispatch({
+        type: CLOSE_TOPIC,
+        payload: {
+          loopId: props.loop.id,
+          closeTopicResponder: responder
+        }
+      });
+    }
+  };
+};
+
+export default connect(null, mapDispatchToProps)(CloseLoopModal);
