@@ -34,13 +34,7 @@ class CloseLoopModal extends React.Component {
 
   render() {
     const { isModalOpen } = this.state;
-    const responders = this.props.responders.map(responder => {
-      return {
-        ...responder,
-        position: 'Graphic Designer',
-        company: 'Linker Co.'
-      };
-    });
+    const { responders } = this.props;
     return (
       <Modal
         trigger={
