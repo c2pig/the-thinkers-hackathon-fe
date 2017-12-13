@@ -11,9 +11,14 @@ const JobDescriptionCard = ({
   tags,
   yearsOfExperience,
   location,
+  onClick
 }) => {
   return (
-    <Card fluid>
+    <Card fluid style={{position: 'relative'}}>
+    {
+      onClick &&
+      <div className={styles.onClickContainer} onClick={onClick} />
+    }
       <Card.Content className={styles.contentContainer}>
         <Card.Header>{jobTitle}</Card.Header>
         <Card.Meta>{company}</Card.Meta>
