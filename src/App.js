@@ -12,11 +12,18 @@ import Profile from 'pages/Profile/Profile';
 class App extends Component {
   render() {
     return (
-      <div>
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          // justifyContent: 'space-between',
+          height: '100vh'
+        }}
+      >
         <Helmet>
           <title>The Thinker Hack 2017</title>
         </Helmet>
-        <Header/>
+        <Header />
         <Container>
           <Switch>
             <Route exact path="/" component={Home} />
