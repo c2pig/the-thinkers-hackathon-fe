@@ -42,13 +42,18 @@ let SearchForm = ({
           </Form.Input>
         </div>
         <div className={styles.inputButtonContainer}>
-          <Button icon="search" type="submit" onClick={handleSubmit} />
+          <Button
+            icon="search"
+            type="submit"
+            onClick={handleSubmit}
+            color="blue"
+          />
           <CreateLoopModal
             onSubmit={onCreateTopicSubmit}
             open={isCreateTopicModalOpen}
             onClose={onCreateLoopModalClose}
           >
-            <Button icon="plus" onClick={onLoopModalOpen} />
+            <Button color="blue" basic icon="plus" onClick={onLoopModalOpen} />
           </CreateLoopModal>
         </div>
       </div>
@@ -74,7 +79,14 @@ const Topic = ({ topic, tags, id, status, description, rating }) => {
           {topic}
         </h3>
         <Label.Group>
-          {tags.map(tag => <Label key={tag}>{tag}</Label>)}
+          {tags.map(tag => (
+            <Label
+              key={tag}
+              style={{ backgroundColor: '#5d93ff', color: 'white' }}
+            >
+              {tag}
+            </Label>
+          ))}
         </Label.Group>
         <div
           style={{
@@ -177,7 +189,7 @@ class Home extends React.Component {
     return (
       <div className={styles.rootContainer}>
         <div className={styles.headerContainer}>
-          <h1>Loop List</h1>
+          <h1><Icon name="fire"/>{' '}Loops</h1>
           <Checkbox
             toggle
             label="My topic"

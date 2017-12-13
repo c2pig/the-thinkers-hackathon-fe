@@ -2,7 +2,7 @@
 
 export default {
   jeannie: {
-    avatar: '/molly.png',
+    avatar: '/jeannie.jpg',
     username: 'jeannie',
     fullname: 'Jeannie Ng',
     phone: '017-1234567',
@@ -80,7 +80,7 @@ export default {
     ],
   },
   kong: {
-    avatar: '/elliot.jpg',
+    avatar: '/kong.jpg',
     username: 'kong',
     fullname: 'Kong Ka Weng',
     phone: '018-12345678',
@@ -94,7 +94,6 @@ export default {
       'react',
       'node js',
     ],
-    quote: 'Coding is my life. I eat, live, and breathe codes.',
     rank: {
       title: 'IT Maniac',
       votesCount: 104,

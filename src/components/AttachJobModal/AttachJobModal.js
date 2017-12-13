@@ -35,7 +35,11 @@ class AttachJobModal extends React.Component {
         closeIcon
         open={isModalOpen}
         onClose={this.handleClose}
-        trigger={<Button onClick={this.handleOpen}>Attach a Job</Button>}
+        trigger={
+          <Button basic color="blue" onClick={this.handleOpen}>
+            Attach a Job
+          </Button>
+        }
       >
         <Modal.Header>Please select a job to attach</Modal.Header>
         <Modal.Content>
@@ -67,11 +71,12 @@ class AttachJobModal extends React.Component {
                 </div>
                 <div className={styles.addNewJobButtonContainer}>
                   <Button
+                    color="blue"
                     icon="linkify"
                     type="submit"
                     onClick={onAttachJobLink}
                   />
-                  <Button icon="plus" />
+                  <Button basic color="blue" icon="plus" />
                 </div>
               </Form>
             </div>

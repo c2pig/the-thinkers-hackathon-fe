@@ -29,7 +29,14 @@ const JobDescriptionCard = ({
         />
         <div className={styles.tagContainer}>
           {tags.map((tag, i) => {
-            return <Label key={'label-' + i}>{tag}</Label>;
+            return (
+              <Label
+                key={'label-' + i}
+                style={{ backgroundColor: '#5d93ff', color: 'white' }}
+              >
+                {tag}
+              </Label>
+            );
           })}
         </div>
       </Card.Content>

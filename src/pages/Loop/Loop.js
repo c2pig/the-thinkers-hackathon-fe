@@ -29,11 +29,11 @@ const Topic = ({ description, tags, headline }) => {
       <Item style={{ margin: '0' }}>
         <Item.Content>
           <Item.Header as="a" style={{ marginBottom: '10px' }}>
-            {headline}
+            <h2>{headline}</h2>
           </Item.Header>
           <Tags tags={tags} />
           <Item.Description>
-            <p>{description}</p>
+            <p style={{ fontSize: '1.15rem' }}>{description}</p>
           </Item.Description>
         </Item.Content>
       </Item>
@@ -43,7 +43,13 @@ const Topic = ({ description, tags, headline }) => {
 
 const Tags = ({ tags }) => {
   return (
-    <Label.Group>{tags.map((x, i) => <Label key={i}>{x}</Label>)}</Label.Group>
+    <Label.Group>
+      {tags.map((x, i) => (
+        <Label key={i} size="small" style={{ backgroundColor: '#5d93ff', color: 'white' }}>
+          {x}
+        </Label>
+      ))}
+    </Label.Group>
   );
 };
 
@@ -249,9 +255,9 @@ class Loop extends React.Component {
                   </Card.Meta>
                   <Card.Description>Requirements</Card.Description>
                   <Card.Meta>
-                    {questioner.skills.map((req, index) => (
+                    {questioner.skills.map((skill, index) => (
                       <Label key={index} size="small" color="blue">
-                        {req}
+                        {skill}
                       </Label>
                     ))}
                   </Card.Meta>

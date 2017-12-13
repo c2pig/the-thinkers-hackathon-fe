@@ -93,7 +93,7 @@ class CreateLoopModal extends React.Component {
                 error={error}
               />
             </Form.Field>
-            <Button type="submit" onClick={this.handleOnSubmit}>
+            <Button color="blue" type="submit" onClick={this.handleOnSubmit}>
               Submit
             </Button>
           </Form>
