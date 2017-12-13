@@ -10,7 +10,7 @@ import { STATUS_CLOSED, STATUS_OPEN } from 'store/loops';
 
 import styles from './Home.css';
 
-const Topic = ({ topic, tags, id, status }) => {
+const Topic = ({ topic, tags, id, status, description }) => {
   const url = `/loop/${id}`;
   return (
     <Card fluid style={{ position: 'relative' }}>
@@ -28,6 +28,17 @@ const Topic = ({ topic, tags, id, status }) => {
         <Label.Group>
           {tags.map(tag => <Label key={tag}>{tag}</Label>)}
         </Label.Group>
+        <div
+          style={{
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            display: '-webkit-box',
+            WebkitLineClamp: '2',
+            WebkitBoxOrient: 'vertical'
+          }}
+        >
+          {description}
+        </div>
       </Card.Content>
     </Card>
   );
