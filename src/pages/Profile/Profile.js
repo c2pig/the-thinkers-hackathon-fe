@@ -74,7 +74,6 @@ export default class Profile extends React.Component {
             circular
             style={{
               borderRadius: '50%',
-              // border: '2px solid #dbdbdb',
               padding: '5px',
               margin: 'auto',
             }}
@@ -94,7 +93,7 @@ export default class Profile extends React.Component {
                 color="teal"
                 style={{
                   fontSize: '10px',
-                  backgroundColor: '#33ccff',
+                  backgroundColor: '#5d93ff',
                 }}
               >
                 <Icon name="diamond" style={{ fontSize: '12px' }} />
@@ -106,8 +105,8 @@ export default class Profile extends React.Component {
                 pointing="left"
                 style={{
                   fontSize: '10px',
-                  border: '1px solid #33ccff',
-                  color: '#33ccff',
+                  border: '1px solid #5d93ff',
+                  color: '#5d93ff',
                 }}
               >
                 {profile.rank.votesCount} votes
@@ -142,7 +141,7 @@ export default class Profile extends React.Component {
           <div style={{ margin: 'auto', textAlign: 'center' }}>
             <p className={styles.miniFont}>I want to work with</p>
             <Label.Group>
-              {profile.requirements.map((requirement, index) => (
+              {profile.skills.map((requirement, index) => (
                 <Label key={index} className={styles.tag} as="a">
                   {requirement}
                 </Label>
