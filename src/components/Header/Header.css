@@ -1,7 +1,11 @@
 @import 'css';
-
+/* 5d93ff */
 .menuItem {
     color: inherit !important;
+    background-color: #243862 !important;    
+}
+.menuItem:before {
+    background-color: #243862 !important;    
 }
 .menuItem:active, .menuItem:hover{
     background-color: rgba(255,255,255,.2) !important;

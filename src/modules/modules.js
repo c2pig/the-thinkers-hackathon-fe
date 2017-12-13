@@ -4,7 +4,7 @@ import localForage from 'localforage';
 import { reducer as formReducer } from 'redux-form';
 
 import loops, * as fromLoops from './loops';
-import userReducer from './user';
+import userReducer, * as fromUser from './user';
 import loopList, * as fromLoopList from './loopList';
 import users, * as fromUsers from './users';
 
@@ -35,4 +35,4 @@ export const getLoopListData = state => {
 
 export const getUsersData = state => fromUsers.getData(state.users);
 
-// export const getData = state => state.data;
+export const getCurrentUser = state => fromUser.getCurrentUser(state.user);
