@@ -9,7 +9,7 @@ import {
   Comment,
   Item,
   Segment,
-  Divider,
+  Divider
 } from 'semantic-ui-react';
 
 import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
@@ -97,7 +97,7 @@ const UserComment = ({ comments, topicTags }) => {
             phone,
             email,
             tags,
-            job,
+            job
           },
           i
         ) => {
@@ -134,11 +134,7 @@ const UserComment = ({ comments, topicTags }) => {
                 />
               )}
               {postType === 'drop-message' && <DropMessage msg={message} />}
-              {postType === 'post-jd' && (
-                <PostJD
-                  {...job}
-                />
-              )}
+              {postType === 'post-jd' && <PostJD {...job} />}
               <Divider hidden />
             </Comment>
           );
@@ -152,7 +148,7 @@ class Loop extends React.Component {
   static propTypes = {
     attachJobMessage: PropTypes.func.isRequired,
     loop: PropTypes.object.isRequired,
-    user: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -165,7 +161,7 @@ class Loop extends React.Component {
   handleOnAttachJobLink = e => {
     e.preventDefault();
     this.setState({
-      jobs: [...this.state.jobs, mockJobstreetJob],
+      jobs: [...this.state.jobs, mockJobstreetJob]
     });
   };
 
@@ -184,7 +180,7 @@ class Loop extends React.Component {
       .map(comment => {
         return {
           avatar: `/${comment.username}.jpg`,
-          username: comment.username,
+          username: comment.username
         };
       })
       .filter((obj, pos, arr) => {
@@ -198,7 +194,7 @@ class Loop extends React.Component {
     const topic = {
       description: this.props.loop.description,
       tags: tags,
-      headline: this.props.loop.topic,
+      headline: this.props.loop.topic
     };
 
     return (
@@ -207,7 +203,7 @@ class Loop extends React.Component {
           display: 'flex',
           flexDirection: 'column',
           // justifyContent: 'space-between',
-          height: '100vh'
+          height: '100%'
         }}
       >
         {user.username &&
@@ -220,13 +216,13 @@ class Loop extends React.Component {
               </Segment>
             </Container>
           )}
-            {/* overflowY: 'auto',
+        {/* overflowY: 'auto',
             padding: '0 2px' */}
         <Container
           className={styles.loopContainer}
           style={{
             overflowY: 'auto',
-            padding: '0 2px',
+            padding: '0 2px'
           }}
         >
           <Segment vertical>
@@ -234,14 +230,16 @@ class Loop extends React.Component {
           </Segment>
           <UserComment comments={comments} topicTags={topic.tags} />
         </Container>
-        <Container className={styles.replyPanelContainer}>
-          <ReplyPanel
-            loopId={this.props.loop.id}
-            onAttachJobCard={this.handleOnAttachJobCard}
-            onAttachJobLink={this.handleOnAttachJobLink}
-            jobs={jobs}
-          />
-        </Container>
+        {loop.status === STATUS_OPEN && (
+          <Container className={styles.replyPanelContainer}>
+            <ReplyPanel
+              loopId={this.props.loop.id}
+              onAttachJobCard={this.handleOnAttachJobCard}
+              onAttachJobLink={this.handleOnAttachJobLink}
+              jobs={jobs}
+            />
+          </Container>
+        )}
       </div>
     );
   }
@@ -250,7 +248,7 @@ class Loop extends React.Component {
 const mapStateToProps = (states, props) => {
   return {
     loop: states.loops.data[props.match.params.loopId],
-    user: states.user,
+    user: states.user
   };
 };
 

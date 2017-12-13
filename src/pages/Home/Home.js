@@ -93,7 +93,7 @@ class Home extends React.Component {
           {loops.map(
             loop =>
               ((!myTopic && loop.status === STATUS_OPEN) ||
-                loop.username === user.username) && (
+                (myTopic && loop.username === user.username)) && (
                 <Topic key={loop.topic} {...loop} />
               )
           )}
