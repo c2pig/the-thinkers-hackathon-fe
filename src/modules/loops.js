@@ -11,6 +11,8 @@ export const CLOSE_TOPIC = 'CLOSE_TOPIC';
 export const DROP_JD_MESSAGE = 'DROP_JD_MESSAGE';
 export const STATUS_OPEN = 'open';
 export const STATUS_CLOSED = 'closed';
+export const UPVOTE = 'UPVOTE';
+export const DOWNVOTE = 'DOWNVOTE';
 
 // Reducer
 const data = (state = loopsData, action) => {
@@ -26,7 +28,22 @@ const data = (state = loopsData, action) => {
     case ADD_LOOP:
       loopsData = { ...loopsData, [action.data.id]: action.data };
       return loopsData;
-
+    case UPVOTE:
+      let upVoteLoop = state[action.data.id];
+      const upVoteRating = action.data.rating;
+      const topicAfterUpvote = Object.assign({...upVoteLoop}, { rating: upVoteRating });
+      return {
+          ...state,
+          [action.data.id]: topicAfterUpvote
+      }
+    case DOWNVOTE:
+      let downVoteLoop = state[action.data.id];
+      const downVoteRating = action.data.rating;
+      const topicAfterDownvote = Object.assign({...downVoteLoop}, { rating: downVoteRating });
+      return {
+        ...state,
+        [action.data.id]: topicAfterDownvote
+      }
     case DROP_MESSAGE: {
       let loop = state[action.payload.loopId];
       const comment = {
@@ -97,6 +114,32 @@ export const attachJobMessage = (loopId, job) => (dispatch, getState) => {
   dispatch({
     type: DROP_JD_MESSAGE,
     payload,
+  });
+};
+
+export const upVote = ({ id, rating, username }) => (
+  dispatch,
+  getState
+) => {
+  dispatch({
+    type: UPVOTE,
+    data: {
+      id,
+      rating: rating + 1
+    }
+  });
+};
+
+export const downVote = ({ id, rating, username }) => (
+  dispatch,
+  getState
+) => {
+  dispatch({
+    type: DOWNVOTE,
+    data: {
+      id,
+      rating: rating - 1
+    }
   });
 };
 

@@ -5,32 +5,15 @@ import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getLoopListData } from 'store/modules';
 import { searchLoops, updateSearchKeywords, addLoop } from 'store/loopList';
+import { upVote, downVote } from 'store/loops';
 import CreateLoopModal from 'components/CreateLoopModal/CreateLoopModal';
 import { STATUS_CLOSED, STATUS_OPEN } from 'store/loops';
 
 import styles from './Home.css';
 
-const VoteTopic = ({children}) => {
-  return <Grid>
-  <Grid.Column width='1'>
-    <Grid.Row><Icon name='chevron up'/></Grid.Row>
-    <Grid.Row><Icon name='chevron down'/></Grid.Row>
-    <Divider hidden />
-    <Grid.Row>
-    <Statistic size="mini">
-      <Statistic.Value>22</Statistic.Value>
-    </Statistic>
-    </Grid.Row>
-  </Grid.Column>
-  <Grid.Column width='14'>
-    {children}
-  </Grid.Column>
-  </Grid>
-}
-
-const Topic = ({ topic, tags, id, status, description }) => {
+const Topic = ({ topic, tags, id, status, description, rating }) => {
   const url = `/loop/${id}`;
-  return (<VoteTopic>
+  return (
     <Card fluid style={{ position: 'relative' }}>
       <Link
         to={url}
@@ -59,7 +42,6 @@ const Topic = ({ topic, tags, id, status, description }) => {
         </div>
       </Card.Content>
     </Card>
-    </VoteTopic>
   );
 };
 
@@ -93,6 +75,7 @@ class Home extends React.Component {
     this.props.addLoop({ ...payload, username: this.props.user.username });
   };
 
+
   showCreateLoopModal = () => {
     this.setState({
       isCreateTopicModalOpen: true
@@ -105,9 +88,36 @@ class Home extends React.Component {
     });
   };
 
+  whenUpVote = payload => {
+    this.props.upVote({ ...payload, username: this.props.user.username });
+  };
+
+  whenDownVote = payload => {
+    this.props.downVote({ ...payload, username: this.props.user.username });
+  };
+
+  VoteTopic = ({children, rating, id}) => {
+    return <Grid>
+    <Grid.Column width='1'>
+      <Grid.Row><Icon name='chevron up' onClick={() => {this.whenUpVote({rating, id})}}/></Grid.Row>
+      <Grid.Row><Icon name='chevron down' onClick={() => {this.whenDownVote({rating, id})}}/></Grid.Row>
+      <Divider hidden />
+      <Grid.Row>
+      <Statistic size='mini' floated='left'>
+        <Statistic.Value>{rating}</Statistic.Value>
+      </Statistic>
+      </Grid.Row>
+    </Grid.Column>
+    <Grid.Column width='14'>
+      {children}
+    </Grid.Column>
+    </Grid>
+  }
+
   render() {
     const { loops, updateSearchKeywords, user } = this.props;
     const { isCreateTopicModalOpen, myTopic } = this.state;
+    const VoteTopic = this.VoteTopic;
     return (
       <div className={styles.rootContainer}>
         <div className={styles.headerContainer}>
@@ -124,7 +134,9 @@ class Home extends React.Component {
             loop =>
               ((!myTopic && loop.status === STATUS_OPEN) ||
                 (myTopic && loop.username === user.username)) && (
-                <Topic key={loop.topic} {...loop} />
+                <VoteTopic {...loop} >
+                  <Topic key={loop.topic} {...loop} />
+                </VoteTopic>
               )
           )}
         </div>
@@ -170,7 +182,9 @@ export default withRouter(
     {
       searchLoops,
       updateSearchKeywords,
-      addLoop
+      addLoop,
+      upVote,
+      downVote
     }
   )(Home)
 );
