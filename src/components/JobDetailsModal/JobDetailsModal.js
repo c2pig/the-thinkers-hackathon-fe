@@ -1,13 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button, Modal, Form, List, Header } from 'semantic-ui-react';
+import { Modal, Header } from 'semantic-ui-react';
 import JobDescriptionCard from 'components/JobDescriptionCard/JobDescriptionCard';
-import styles from './JobDetailsModal.css';
+import DropMessage from 'components/DropMessage/DropMessage';
+
+const ModalTriggerContainer = ({ job, message, onModalOpen }) => (
+  <div style={{margin: '1em 0'}}>
+    {message && <DropMessage msg={message} />}
+    <JobDescriptionCard onClick={onModalOpen} {...job} />
+  </div>
+);
 
 class JobDetailsModal extends React.Component {
   static propTypes = {
     job: PropTypes.object.isRequired,
-    trigger: PropTypes.node.isRequired,
+    message: PropTypes.string,
   };
 
   state = {
@@ -27,19 +34,21 @@ class JobDetailsModal extends React.Component {
   };
 
   render() {
-    const { job } = this.props;
+    const { job, message } = this.props;
     const { isModalOpen } = this.state;
     return (
       <Modal
         closeIcon
         open={isModalOpen}
         onClose={this.handleClose}
-        trigger={<JobDescriptionCard onClick={this.handleOpen} {...job} />}
+        trigger={<ModalTriggerContainer job={job} message={message} onModalOpen={this.handleOpen} />}
       >
         <Modal.Header>{job.jobTitle}</Modal.Header>
         <Modal.Content>
           <Header as="h2">Job Description</Header>
-          <Modal.Description dangerouslySetInnerHTML={{__html: job.description}}></Modal.Description>
+          <Modal.Description
+            dangerouslySetInnerHTML={{ __html: job.description }}
+          />
         </Modal.Content>
       </Modal>
     );

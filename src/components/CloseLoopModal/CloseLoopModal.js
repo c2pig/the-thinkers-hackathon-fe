@@ -34,24 +34,14 @@ class CloseLoopModal extends React.Component {
 
   render() {
     const { isModalOpen } = this.state;
-    const responders = this.props.responders.map(responder => {
-      return {
-        ...responder,
-        position: 'Graphic Designer',
-        company: 'Linker Co.'
-      };
-    });
+    const { responders } = this.props;
     return (
       <Modal
         trigger={
           <Button
             onClick={this.handleOpen}
             fluid
-            style={{
-              backgroundColor: '#5d93ff',
-              borderColor: '#5d93ff',
-              color: 'white'
-            }}
+            color="blue"
           >
             Close Topic
           </Button>

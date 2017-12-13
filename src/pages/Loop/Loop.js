@@ -46,7 +46,11 @@ const Tags = ({ tags }) => {
   return (
     <Label.Group>
       {tags.map((x, i) => (
-        <Label key={i} size="small" style={{ backgroundColor: '#5d93ff', color: 'white' }}>
+        <Label
+          key={i}
+          size="small"
+          style={{ backgroundColor: '#5d93ff', color: 'white' }}
+        >
           {x}
         </Label>
       ))}
@@ -153,17 +157,22 @@ class Loop extends React.Component {
   };
 
   render() {
-    const { user, loop } = this.props;
+    const { user, loop, users } = this.props;
     const { jobs, isViewProfileClicked } = this.state;
     const { tags, comments } = loop;
     const questioner = this.getQuestioner();
     const _this = this;
     const responders = comments
       .map(comment => {
-        return {
-          avatar: `/${comment.username}.jpg`,
-          username: comment.username,
-        };
+        const currentUserDetails = users[comment.username];
+        return currentUserDetails
+          ? {
+              avatar: `/${comment.username}.jpg`,
+              username: comment.username,
+              position: currentUserDetails.position,
+              company: currentUserDetails.company,
+            }
+          : {};
       })
       .filter((obj, pos, arr) => {
         return (
@@ -202,10 +211,7 @@ class Loop extends React.Component {
         >
           {user.username &&
             user.username === loop.username && (
-              <Segment
-                vertical
-                className={styles.closeLoopContainer}
-              >
+              <Segment vertical className={styles.closeLoopContainer}>
                 {(loop.status === STATUS_OPEN && (
                   <CloseLoopModal responders={responders} loop={loop} />
                 )) || <strong>Topic Closed</strong>}
@@ -269,19 +275,21 @@ class Loop extends React.Component {
               </Card>
             )}
           </Segment>
-          {
-            comments && comments.length > 0 ?
+          {comments && comments.length > 0 ? (
             <UserComment
               comments={comments}
               topicTags={topic.tags}
               parentContext={_this}
-          /> : 
-          <Message warning>
-            <Message.Header>No replies yet...</Message.Header>
-            <p>You can start leave your message or attach a job in this post through the comment panel below</p>
-          </Message>
-          }
-          
+            />
+          ) : (
+            <Message warning>
+              <Message.Header>No replies yet...</Message.Header>
+              <p>
+                You can start leave your message or attach a job in this post
+                through the comment panel below
+              </p>
+            </Message>
+          )}
         </div>
         {loop.status === STATUS_OPEN && (
           <div className={styles.replyPanelContainer}>
