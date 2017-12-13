@@ -182,8 +182,6 @@ class Loop extends React.Component {
         );
       });
 
-      console.log(responders);
-
     const topic = {
       description: this.props.loop.description,
       tags: tags,
