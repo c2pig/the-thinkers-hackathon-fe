@@ -11,13 +11,13 @@ import styles from './Header.css';
 class Header extends Component {
   static propTypes = {
     currentUserName: PropTypes.string.isRequired,
-    logoutUser: PropTypes.func.isRequired,
+    logoutUser: PropTypes.func.isRequired
   };
 
   constructor() {
     super();
     this.state = {
-      activeItem: '',
+      activeItem: ''
     };
 
     this.handleItemClick = this.handleItemClick.bind(this);
@@ -55,7 +55,7 @@ class Header extends Component {
           height: '4rem',
           backgroundColor: '#243862',
           color: 'white',
-          borderRadius: '1px',
+          borderRadius: '1px'
         }}
       >
         <Menu.Item
@@ -100,7 +100,11 @@ class Header extends Component {
           </Menu.Menu>
         ) : (
           <Menu.Menu position="right">
-            <Menu.Item header className={styles.menuItem}>
+            <Menu.Item
+              header
+              className={styles.menuItem}
+              onClick={this.handleItemClick}
+            >
               <Icon name="user circle" size="large" />Login
             </Menu.Item>
           </Menu.Menu>
@@ -113,7 +117,7 @@ class Header extends Component {
 export default withRouter(
   connect(
     state => ({
-      currentUserName: getCurrentUser(state),
+      currentUserName: getCurrentUser(state)
     }),
     { logoutUser }
   )(Header)
