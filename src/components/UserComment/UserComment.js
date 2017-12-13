@@ -1,50 +1,38 @@
 import React from 'react';
 import { getHighestRatingTagName, getRelatedTag } from 'common/helpers';
-import {
-  Message,
-  Card,
-  Icon,
-  Label,
-  Comment,
-  Divider,
-  Button,
-} from 'semantic-ui-react';
-import JobDescriptionCard from 'components/JobDescriptionCard/JobDescriptionCard';
+import { Card, Icon, Label, Comment, Divider, Button } from 'semantic-ui-react';
+import DropMessage from 'components/DropMessage/DropMessage';
 import IconWithDescription from 'components/IconWithDescription/IconWithDescription';
 import JobDetailsModal from 'components/JobDetailsModal/JobDetailsModal';
 import styles from './UserComment.css';
 
-const ContactMe = ({ company, email, fullname, phone, position }) => {
+const ContactMe = ({ company, email, fullname, phone, position, message }) => {
   return (
-    <Card fluid>
-      <Card.Content className={styles.contactMeCardContentContainer}>
-        <Card.Header style={{ textTransform: 'capitalize' }}>
-          {fullname}
-        </Card.Header>
-        <Card.Meta>{`${position}, ${company}`}</Card.Meta>
-        <Card.Description>
-          Hi, please find my contact as below:
-        </Card.Description>
-        <IconWithDescription description={email} icon="mail" />
-        <IconWithDescription description={phone} icon="phone" />
-      </Card.Content>
-      <Card.Content extra>
-        <div className="ui two buttons">
-          <Button as="a" href={`tel:${phone}`} color="blue">
-            Call me
-          </Button>
-          <Button.Or />
-          <Button as="a" href={`mailto:${email}`} basic color="blue">
-            Email me
-          </Button>
-        </div>
-      </Card.Content>
-    </Card>
+    <div>
+      <DropMessage msg={message || 'Hi, please find my contact as below:'} />
+      <Card fluid>
+        <Card.Content className={styles.contactMeCardContentContainer}>
+          <Card.Header style={{ textTransform: 'capitalize' }}>
+            {fullname}
+          </Card.Header>
+          <Card.Meta>{`${position}, ${company}`}</Card.Meta>
+          <IconWithDescription description={email} icon="mail" />
+          <IconWithDescription description={phone} icon="phone" />
+        </Card.Content>
+        <Card.Content extra>
+          <div className="ui two buttons">
+            <Button as="a" href={`tel:${phone}`} color="blue">
+              Call me
+            </Button>
+            <Button.Or />
+            <Button as="a" href={`mailto:${email}`} basic color="blue">
+              Email me
+            </Button>
+          </div>
+        </Card.Content>
+      </Card>
+    </div>
   );
-};
-
-const DropMessage = ({ msg }) => {
-  return <Message>{msg}</Message>;
 };
 
 export default ({ comments, topicTags, parentContext }) => {
@@ -85,7 +73,9 @@ export default ({ comments, topicTags, parentContext }) => {
                 href={'/profile/' + username}
               />
               <Comment.Content style={{ marginLeft: '4.2em' }}>
-                <Comment.Author as="a" href={'/profile/' + username}>{username}</Comment.Author>{' '}
+                <Comment.Author as="a" href={'/profile/' + username}>
+                  {username}
+                </Comment.Author>{' '}
                 <Comment.Metadata>
                   {tag && (
                     <Label>
@@ -136,7 +126,9 @@ export default ({ comments, topicTags, parentContext }) => {
               </Comment.Content>
               {postType === 'contact-me' && <ContactMe {...contact} />}
               {postType === 'drop-message' && <DropMessage msg={message} />}
-              {postType === 'post-jd' && <JobDetailsModal job={job} /> }
+              {postType === 'post-jd' && (
+                <JobDetailsModal job={job} message={message} />
+              )}
               <Divider hidden />
             </Comment>
           );
