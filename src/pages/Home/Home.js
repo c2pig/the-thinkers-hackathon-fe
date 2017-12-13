@@ -73,12 +73,12 @@ const Topic = ({ topic, tags, id, status, description, rating }) => {
         style={{ position: 'absolute', width: '100%', height: '100%' }}
       />
       <Card.Content>
-        <h3>
-          {status === STATUS_CLOSED && (
-            <Label color="red">{STATUS_CLOSED}</Label>
-          )}
-          {topic}
-        </h3>
+        {status === STATUS_CLOSED && (
+          <Label as="a" color="red">
+            {STATUS_CLOSED}
+          </Label>
+        )}
+        <h3>{topic}</h3>
         <Label.Group>
           {tags.map(tag => (
             <Label
@@ -192,7 +192,9 @@ class Home extends React.Component {
     return (
       <div className={styles.rootContainer}>
         <div className={styles.headerContainer}>
-          <h1><Icon name="fire"/>{' '}Loops</h1>
+          <h1>
+            <Icon name="fire" /> Loops
+          </h1>
           <Checkbox
             toggle
             label="My topic"
@@ -200,29 +202,29 @@ class Home extends React.Component {
             onClick={this.toggleMyTopic}
           />
         </div>
-          {loops && loops.length > 0 ? (
-            <div className={styles.cardsContainer}>
-              {loops.map(
-                loop =>
-                  ((!myTopic && loop.status === STATUS_OPEN) ||
-                    (myTopic && loop.username === user.username)) && (
-                    <VoteTopic {...loop}>
-                      <Topic key={loop.topic} {...loop} />
-                    </VoteTopic>
-                  )
-              )}
-            </div>
-          ) : (
-            <div className={styles.noResultContainer}>
-              <Message warning>
-                <Message.Header>No topics found</Message.Header>
-                <p>
-                  Cannot find what you want? Easily create a topic by clicking on the
-                  '+' button at the button.
-                </p>
-              </Message>
-            </div>
-          )}
+        {loops && loops.length > 0 ? (
+          <div className={styles.cardsContainer}>
+            {loops.map(
+              loop =>
+                ((!myTopic && loop.status === STATUS_OPEN) ||
+                  (myTopic && loop.username === user.username)) && (
+                  <VoteTopic {...loop}>
+                    <Topic key={loop.topic} {...loop} />
+                  </VoteTopic>
+                )
+            )}
+          </div>
+        ) : (
+          <div className={styles.noResultContainer}>
+            <Message warning>
+              <Message.Header>No topics found</Message.Header>
+              <p>
+                Cannot find what you want? Easily create a topic by clicking on
+                the '+' button at the button.
+              </p>
+            </Message>
+          </div>
+        )}
         <div className={styles.footerContainer}>
           <SearchForm
             isCreateTopicModalOpen={isCreateTopicModalOpen}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Image, Modal, List } from 'semantic-ui-react';
+import { Button, Image, Modal, List, Icon } from 'semantic-ui-react';
 import shakeHand from './assets/shake-hand.jpg';
 import styles from './CloseLoopModal.css';
 import { connect } from 'react-redux';
@@ -89,11 +89,12 @@ class CloseLoopModal extends React.Component {
             </List>
             <Button
               fluid
+              color="blue"
               onClick={() => {
                 this.handleOnClickResponder();
               }}
             >
-              None :(
+              None
             </Button>
           </Modal.Description>
         </Modal.Content>

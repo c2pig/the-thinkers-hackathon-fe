@@ -220,9 +220,8 @@ class Loop extends React.Component {
                 fluid
                 color="blue"
                 onClick={this.handleViewProfileOnClicked}
-                // className={styles.profileBtn}
               >
-                View questioner's profile summary
+                View user profile summary
               </Button>
             )}
             {isViewProfileClicked && (
@@ -230,9 +229,8 @@ class Loop extends React.Component {
                 fluid
                 color="blue"
                 onClick={this.handleViewProfileOnClicked}
-                // className={styles.profileBtn}
               >
-                <Icon name="close" /> Close questioner's profile summary
+                <Icon name="close" /> Close user profile summary
               </Button>
             )}
             {isViewProfileClicked && (
@@ -244,7 +242,7 @@ class Loop extends React.Component {
                   <Card.Meta>{questioner.position}</Card.Meta>
                   <Card.Description>Working Experience</Card.Description>
                   <Card.Meta>{this.getWorkingExperience(questioner)}</Card.Meta>
-                  <Card.Description>Extra</Card.Description>
+                  <Card.Description>Awarded</Card.Description>
                   <Card.Meta>
                     <Icon name="trophy" />{' '}
                     {this.getExperienceDetails(
