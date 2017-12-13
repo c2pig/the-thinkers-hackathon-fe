@@ -7,6 +7,8 @@ let loopsData = loopsMockData;
 
 export const DROP_MESSAGE = 'DROP_MESSAGE';
 export const CLOSE_TOPIC = 'CLOSE_TOPIC';
+export const STATUS_OPEN = 'open';
+export const STATUS_CLOSED = 'closed';
 
 // Reducer
 const data = (state = loopsData, action) => {
@@ -41,7 +43,7 @@ const data = (state = loopsData, action) => {
 
     case CLOSE_TOPIC:
       let closedloop = state[action.payload.loopId];
-      closedloop.status = 'closed';
+      closedloop.status = STATUS_CLOSED;
       closedloop.closeTopicResponder = action.payload.closeTopicResponder;
 
       return {

@@ -17,6 +17,7 @@ import CloseLoopModal from 'components/CloseLoopModal/CloseLoopModal';
 import { connect } from 'react-redux';
 import mockComments from 'common/mocks/comments';
 import { Link } from 'react-router-dom';
+import { STATUS_OPEN } from 'store/loops';
 
 const Topic = ({ description, tags, headline }) => {
   return (
@@ -184,9 +185,11 @@ class Loop extends React.Component {
       >
         {user.username &&
           user.username === loop.username && (
-            <Container>
+            <Container textAlign="center">
               <Segment vertical>
-                <CloseLoopModal responders={responders} loop={loop} />
+                {(loop.status === STATUS_OPEN && (
+                  <CloseLoopModal responders={responders} loop={loop} />
+                )) || <div center>Topic Closed</div>}
               </Segment>
             </Container>
           )}
