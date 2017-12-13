@@ -156,6 +156,7 @@ class Home extends React.Component {
           <Grid.Row className={styles.voteButton}>
             <Icon
               size="large"
+              color="green"
               name="chevron up"
               onClick={() => {
                 this.whenUpVote({ rating, id });
@@ -165,6 +166,7 @@ class Home extends React.Component {
           <Grid.Row>
             <Icon
               size="large"
+              color="red"
               name="chevron down"
               onClick={() => {
                 this.whenDownVote({ rating, id });
