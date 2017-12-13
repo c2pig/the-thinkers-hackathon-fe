@@ -104,7 +104,6 @@ const UserComment = ({ posts }) => {
                   <span>{date}</span>
                 </Comment.Metadata>
               </Comment.Content>
-              {/* <Rating icon="star" defaultRating={rating} maxRating={5} /> */}
               <Label>javascript
               <Label.Detail>22</Label.Detail>
               </Label>

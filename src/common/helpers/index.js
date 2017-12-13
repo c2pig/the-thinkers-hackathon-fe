@@ -16,10 +16,8 @@ export const getHighestRatingTagName = (tags) => {
     if(Object.keys(acc) === 0) {
       return tag;
     }
-
     if(tag.rating > acc.rating) {
       return tag;
     }
-
   }, {});
 }
