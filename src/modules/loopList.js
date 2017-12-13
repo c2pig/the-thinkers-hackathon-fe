@@ -6,6 +6,8 @@ import loopsMockData from 'common/mocks/loops';
 
 import { getLoopsData } from './modules';
 
+import { STATUS_OPEN } from 'store/loops';
+
 let loopsData = Object.keys(loopsMockData);
 
 // Actions
@@ -71,7 +73,7 @@ export const searchLoops = () => (dispatch, getState) => {
   });
 };
 
-export const addLoop = ({ topic, description, tags }) => (
+export const addLoop = ({ topic, description, tags, username }) => (
   dispatch,
   getState
 ) => {
@@ -82,7 +84,9 @@ export const addLoop = ({ topic, description, tags }) => (
       topic,
       description,
       tags,
-      comments: []
+      comments: [],
+      status: STATUS_OPEN,
+      username
     }
   });
 };

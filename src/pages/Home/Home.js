@@ -60,7 +60,7 @@ class Home extends React.Component {
     this.setState({
       isCreateTopicModalOpen: false
     });
-    this.props.addLoop(payload);
+    this.props.addLoop({ ...payload, username: this.props.user.username });
   };
 
   showCreateLoopModal = () => {
