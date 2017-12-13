@@ -4,6 +4,11 @@ import { Field, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import AttachJobModal from 'components/AttachJobModal/AttachJobModal';
 import { DROP_MESSAGE } from 'store/loops';
+import {
+  getCurrentUser,
+  getUserDetailsWithUsername
+} from 'store/modules';
+import { extractTagsByUserName } from 'common/helpers';
 import { QUEUE_NOTIFICATION } from 'store/notification';
 
 let MessageForm = props => {
@@ -55,13 +60,18 @@ const ReplyPanel = ({
 const mapDispatchToProps = (dispatch, props) => {
   return {
     dropMessage: (data, state) => {
+      const username = getCurrentUser(state.reduxState);
+      const commentUserDetails = getUserDetailsWithUsername(state.reduxState)(username);
       dispatch({
         type: DROP_MESSAGE,
         payload: {
           loopId: props.loopId,
           message: data.message,
           postType: 'drop-message',
-          username: state.user.username,
+          username,
+          date: new Date().toString(),
+          totalHired: commentUserDetails.peopleHired,
+          tags: extractTagsByUserName(username),
         },
       });
       setTimeout(
@@ -97,6 +107,7 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
 const mapStateToProps = (state, props) => {
   return {
     user: state.user,
+    reduxState: state,
   };
 };
 

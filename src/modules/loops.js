@@ -82,30 +82,10 @@ const data = (state = loopsData, action) => {
       };
     }
 
-    case DROP_JD_MESSAGE: {
-      let loop = state[action.payload.loopId];
-      const comment = {
-        ...action.payload,
-      };
-      loop.comments.push(comment);
-
-      return {
-        ...state,
-        [action.payload.loopId]: { ...loop, comments: [...loop.comments] },
-      };
-    }
-
+    case DROP_JD_MESSAGE:
     case DROP_CONTACT_MESSAGE: {
       let loop = state[action.payload.loopId];
       const comment = {
-        postType: 'contact-me',
-        date: new Date().toString(),
-        rating: 1,
-        totalHired: 10,
-        headline: 'i am kong',
-        phone: '123',
-        email: 'kong@gmail.com',
-        tags: extractTagsByUserName('Kong'),
         ...action.payload,
       };
       loop.comments.push(comment);
@@ -149,6 +129,10 @@ export const attachContactMessage = (loopId) => (dispatch, getState) => {
   const username = getCurrentUser(state);
   const commentUserDetails = getUserDetailsWithUsername(state)(username);
   const payload = {
+    postType: 'contact-me',
+    date: new Date().toString(),
+    totalHired: commentUserDetails.peopleHired,
+    tags: extractTagsByUserName(username),
     contact: {
       company: commentUserDetails.company,
       email: commentUserDetails.email,
