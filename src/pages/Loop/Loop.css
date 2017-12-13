@@ -1,0 +1,5 @@
+.loopContainer {
+    padding: 10px;
+    overflow-y: auto;
+    flex: 0 0 calc(90vh - 140px);
+}

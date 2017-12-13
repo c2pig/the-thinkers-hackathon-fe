@@ -20,6 +20,8 @@ import { Link } from 'react-router-dom';
 import { STATUS_OPEN } from 'store/loops';
 import { getHighestRatingTagName, getRelatedTag } from 'common/helpers';
 
+import styles from './Loop.css';
+
 const Topic = ({ description, tags, headline }) => {
   return (
     <Item.Group>
@@ -184,7 +186,7 @@ class Loop extends React.Component {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          justifyContent: 'space-between',
+          // justifyContent: 'space-between',
           height: '100vh'
         }}
       >
@@ -198,11 +200,10 @@ class Loop extends React.Component {
               </Segment>
             </Container>
           )}
+            {/* overflowY: 'auto',
+            padding: '0 2px' */}
         <Container
-          style={{
-            overflowY: 'auto',
-            padding: '0 2px'
-          }}
+          className={styles.loopContainer}
         >
           <Segment vertical>
             <Topic {...topic} />
