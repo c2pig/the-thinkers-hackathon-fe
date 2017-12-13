@@ -148,6 +148,8 @@ class Loop extends React.Component {
   close = () => this.setState({ open: false });
 
   render() {
+    const { user, loop } = this.props;
+    const { tags } = loop;
     const comments = [...mockComments, ...(this.props.loop.comments || [])];
 
     const responders = comments
@@ -159,12 +161,11 @@ class Loop extends React.Component {
       })
       .filter((obj, pos, arr) => {
         return (
-          arr.map(mapObj => mapObj['username']).indexOf(obj['username']) === pos
+          (obj.username !== user.username &&
+            arr.map(mapObj => mapObj['username']).indexOf(obj['username'])) ===
+          pos
         );
       });
-
-    const { user, loop } = this.props;
-    const { tags } = loop;
 
     const topic = {
       description: this.props.loop.description,
