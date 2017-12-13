@@ -64,7 +64,6 @@ export default class Profile extends React.Component {
   render() {
     const { currentEventView } = this.state;
     const { match: { params } } = this.props;
-    console.log(params.username);
     const profile = usersMockData[params.username];
     return (
       <div>

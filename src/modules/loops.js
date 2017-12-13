@@ -2,11 +2,14 @@ import { combineReducers } from 'redux';
 import { REHYDRATE } from 'redux-persist';
 import { ADD_LOOP } from './loopList';
 import loopsMockData from 'common/mocks/loops';
+import { extractTagsByUserName } from 'common/helpers';
 
 let loopsData = loopsMockData;
 
 export const DROP_MESSAGE = 'DROP_MESSAGE';
 export const CLOSE_TOPIC = 'CLOSE_TOPIC';
+export const STATUS_OPEN = 'open';
+export const STATUS_CLOSED = 'closed';
 
 // Reducer
 const data = (state = loopsData, action) => {
@@ -24,12 +27,14 @@ const data = (state = loopsData, action) => {
     case DROP_MESSAGE:
       let loop = state[action.payload.loopId];
       const comment = {
+        postType: 'drop-message',
         date: new Date().toString(),
         rating: 1,
         totalHired: 10,
         headline: 'i am kong',
         phone: '123',
         email: 'kong@gmail.com',
+        tags: extractTagsByUserName('Kong'),
         ...action.payload
       };
       loop.comments.push(comment);
@@ -41,7 +46,7 @@ const data = (state = loopsData, action) => {
 
     case CLOSE_TOPIC:
       let closedloop = state[action.payload.loopId];
-      closedloop.status = 'closed';
+      closedloop.status = STATUS_CLOSED;
       closedloop.closeTopicResponder = action.payload.closeTopicResponder;
 
       return {

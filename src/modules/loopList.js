@@ -42,28 +42,32 @@ const ids = (state = loopsData, action) => {
 
 export default combineReducers({
   searchKeywords,
-  ids,
+  ids
 });
 
 // Action Creators
 export const updateSearchKeywords = keywords => ({
   type: UPDATE_SEARCH_KEYWORDS,
-  keywords,
+  keywords
 });
 export const searchLoops = () => (dispatch, getState) => {
   const state = getState();
   const keywords = getSearchKeywords(state.loopList);
   const loopsData = getLoopsData(state);
   const filteredLoopKeys = keywords
-    ? Object.keys(loopsData).filter(
-        id =>
-          loopsData[id].topic.toLowerCase().indexOf(keywords.toLowerCase()) > -1
-      )
+    ? Object.keys(loopsData).filter(id => {
+        const loop = loopsData[id];
+        return (
+          loop.topic.toLowerCase().indexOf(keywords.toLowerCase()) > -1 ||
+          loop.tags.filter(
+            tag => tag.toLowerCase().indexOf(keywords.toLowerCase()) > -1
+          ).length > 0
+        );
+      })
     : Object.keys(loopsData);
-  console.log(filteredLoopKeys);
   dispatch({
     type: SEARCH_LOOPS,
-    data: filteredLoopKeys,
+    data: filteredLoopKeys
   });
 };
 
@@ -78,8 +82,8 @@ export const addLoop = ({ topic, description, tags }) => (
       topic,
       description,
       tags,
-      comments: [],
-    },
+      comments: []
+    }
   });
 };
 
