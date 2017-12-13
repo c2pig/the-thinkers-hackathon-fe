@@ -94,29 +94,29 @@ class Loop extends React.Component {
         style={{
           display: 'flex',
           flexDirection: 'column',
-          justifyContent:
-            loop.status === STATUS_OPEN ? 'space-between' : 'flex-start ',
+          justifyContent: 'space-between',
           height: '100%'
         }}
       >
-        {user.username &&
-          user.username === loop.username && (
-            <Container className={styles.closeLoopContainer} textAlign="center">
-              <Segment vertical>
-                {(loop.status === STATUS_OPEN && (
-                  <CloseLoopModal responders={responders} loop={loop} />
-                )) || <strong>Topic Closed</strong>}
-              </Segment>
-            </Container>
-          )}
         <Container
           className={styles.loopContainer}
           style={{
             overflowY: 'auto',
-            padding: '0 2px',
-            flexBasis: loop.status === STATUS_OPEN ? '460px' : '600px'
+            padding: '0 2px'
           }}
         >
+          {user.username &&
+            user.username === loop.username && (
+              <Segment
+                vertical
+                textAlign="center"
+                className={styles.closeLoopContainer}
+              >
+                {(loop.status === STATUS_OPEN && (
+                  <CloseLoopModal responders={responders} loop={loop} />
+                )) || <strong>Topic Closed</strong>}
+              </Segment>
+            )}
           <Segment vertical>
             <Topic {...topic} />
           </Segment>
