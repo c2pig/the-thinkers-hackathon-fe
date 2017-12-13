@@ -99,8 +99,9 @@ class Home extends React.Component {
   VoteTopic = ({children, rating, id}) => {
     return <Grid>
     <Grid.Column width='1'>
-      <Grid.Row><Icon name='chevron up' onClick={() => {this.whenUpVote({rating, id})}}/></Grid.Row>
-      <Grid.Row><Icon name='chevron down' onClick={() => {this.whenDownVote({rating, id})}}/></Grid.Row>
+      <Grid.Row verticalAlign='top'><Icon size='large' name='chevron up' onClick={() => {this.whenUpVote({rating, id})}}/></Grid.Row>
+      <div />
+      <Grid.Row verticalAlign='bottom'><Icon size='large' name='chevron down' onClick={() => {this.whenDownVote({rating, id})}}/></Grid.Row>
       <Divider hidden />
       <Grid.Row>
       <Statistic size='mini' floated='left'>
