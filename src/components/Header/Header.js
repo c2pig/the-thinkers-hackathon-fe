@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Menu, Icon, Image } from 'semantic-ui-react';
+import { getCurrentUser } from 'store/modules';
 
 import styles from './Header.css';
 
-export default class Header extends Component {
+class Header extends Component {
   constructor() {
     super();
     this.state = {
@@ -16,7 +17,7 @@ export default class Header extends Component {
 
   render() {
     const { activeItem } = this.state;
-
+console.log(this.props.currentUserName);
     return (
       <Menu
         style={{ height: '4rem', backgroundColor: '#243862', color: 'white' }}
@@ -46,8 +47,8 @@ export default class Header extends Component {
   }
 }
 
-// export default withRouter(connect(
-//   state => {
-//     currentUserName: get
-//   }
-// )(Header));
+export default withRouter(connect(
+  state => {
+    currentUserName: getCurrentUser(state);
+  }
+)(Header));
