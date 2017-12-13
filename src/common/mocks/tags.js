@@ -5,6 +5,7 @@ export default [
       { tag: 'Java', rating: 98 },
       { tag: 'C++', rating: 57 },
       { tag: 'nodeJS', rating: 43 },
+      { tag: 'JavaScript', rating: 99 },
     ]
   },
   {

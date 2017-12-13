@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 import mockComments from 'common/mocks/comments';
 import { Link } from 'react-router-dom';
 import { STATUS_OPEN } from 'store/loops';
+import { getHighestRatingTagName, getRelatedTag } from 'common/helpers';
 
 const Topic = ({ description, tags, headline }) => {
   return (
@@ -78,7 +79,7 @@ const Tags = ({ tags }) => {
   );
 };
 
-const UserComment = ({ comments }) => {
+const UserComment = ({ comments, topicTags }) => {
   return (
     <Comment.Group size="small">
       {comments.map(
@@ -88,7 +89,6 @@ const UserComment = ({ comments }) => {
             username,
             date,
             message,
-            rating,
             totalHired,
             headline,
             phone,
@@ -97,6 +97,10 @@ const UserComment = ({ comments }) => {
           },
           i
         ) => {
+          const { tag, rating } = getHighestRatingTagName(
+            getRelatedTag(...tags, topicTags),
+            topicTags
+          );
           return (
             <Comment key={'comment-i' + i}>
               <Comment.Avatar as="a" src={`/${username}.jpg`} />
@@ -106,10 +110,12 @@ const UserComment = ({ comments }) => {
                   <span>{date}</span>
                 </Comment.Metadata>
               </Comment.Content>
-              <Label>
-                javascript
-                <Label.Detail>22</Label.Detail>
-              </Label>
+              {tag && (
+                <Label>
+                  {tag}
+                  <Label.Detail>{rating}</Label.Detail>
+                </Label>
+              )}
               <Label>
                 <Icon name="user" />
                 {totalHired} Hired
@@ -152,7 +158,6 @@ class Loop extends React.Component {
     const { user, loop } = this.props;
     const { tags } = loop;
     const comments = [...mockComments, ...(this.props.loop.comments || [])];
-
     const responders = comments
       .map(comment => {
         return {
@@ -202,7 +207,7 @@ class Loop extends React.Component {
           <Segment vertical>
             <Topic {...topic} />
           </Segment>
-          <UserComment comments={comments} />
+          <UserComment comments={comments} topicTags={topic.tags} />
         </Container>
         <Container>
           <ReplyPanel loopId={this.props.loop.id} />

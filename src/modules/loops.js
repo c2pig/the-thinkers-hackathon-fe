@@ -2,6 +2,7 @@ import { combineReducers } from 'redux';
 import { REHYDRATE } from 'redux-persist';
 import { ADD_LOOP } from './loopList';
 import loopsMockData from 'common/mocks/loops';
+import { extractTagsByUserName } from 'common/helpers';
 
 let loopsData = loopsMockData;
 
@@ -26,12 +27,14 @@ const data = (state = loopsData, action) => {
     case DROP_MESSAGE:
       let loop = state[action.payload.loopId];
       const comment = {
+        postType: 'drop-message',
         date: new Date().toString(),
         rating: 1,
         totalHired: 10,
         headline: 'i am kong',
         phone: '123',
         email: 'kong@gmail.com',
+        tags: extractTagsByUserName('Kong'),
         ...action.payload
       };
       loop.comments.push(comment);
