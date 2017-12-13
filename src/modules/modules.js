@@ -5,19 +5,21 @@ import { reducer as formReducer } from 'redux-form';
 
 import loops, * as fromLoops from './loops';
 import userReducer, * as fromUser from './user';
+import notificationReducer from './notification';
 import loopList, * as fromLoopList from './loopList';
 import users, * as fromUsers from './users';
 
 const persistConfig = {
   key: 'root',
   storage: localForage,
-  whitelist: ['loops', 'user']
+  whitelist: ['loops', 'user', 'notification']
 };
 
 export default persistCombineReducers(persistConfig, {
   routing: routerReducer,
   form: formReducer,
   user: userReducer,
+  notification: notificationReducer,
   loops,
   loopList,
   users

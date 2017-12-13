@@ -4,6 +4,7 @@ import { Field, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import AttachJobModal from 'components/AttachJobModal/AttachJobModal';
 import { DROP_MESSAGE } from 'store/loops';
+import { QUEUE_NOTIFICATION } from 'store/notification';
 
 let MessageForm = props => {
   const { handleSubmit } = props;
@@ -23,7 +24,7 @@ const ReplyPanel = ({
   submitMessage,
   onAttachJobCard,
   onAttachJobLink,
-  jobs,
+  jobs
 }) => {
   return (
     <Segment vertical textAlign="center">
@@ -51,11 +52,27 @@ const mapDispatchToProps = (dispatch, props) => {
           loopId: props.loopId,
           message: data.message,
           postType: 'drop-message',
-          username: state.user.username,
-        },
+          username: state.user.username
+        }
       });
+      setTimeout(
+        () =>
+          dispatch({
+            type: QUEUE_NOTIFICATION,
+            payload: {
+              notification: {
+                sender: state.user.username,
+                receiver: 'kong',
+                message: `${state.user.username} mentioned you in a topic`,
+                url: `/loop/${props.loopId}`
+              }
+            }
+          }),
+        1000
+      );
+
       dispatch(reset('dropMessageForm'));
-    },
+    }
   };
 };
 
@@ -64,13 +81,13 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     submitMessage: data => {
       dispatchProps.dropMessage(data, stateProps);
     },
-    ...ownProps,
+    ...ownProps
   };
 };
 
 const mapStateToProps = (state, props) => {
   return {
-    user: state.user,
+    user: state.user
   };
 };
 
