@@ -1,3 +1,5 @@
+import { extractTagsByUserName } from '../helpers';
+
 export default [
   {
     postType: 'contact-me',
@@ -6,9 +8,10 @@ export default [
     message: 'Hello',
     rating: 2,
     totalHired: 99,
-    headline: 'i am king kong',
+    headline: 'thinking in code',
     phone: '123',
-    email: 'kong1@gmail.com'
+    email: 'kong1@gmail.com',
+    tags: extractTagsByUserName('Kong')
   },
   {
     postType: 'post-jd',
@@ -17,9 +20,9 @@ export default [
     message: 'Hello',
     rating: 4,
     totalHired: 5,
-    headline: 'i am kong king',
+    headline: 'I am a Project Manager',
     phone: '123',
-    email: 'kong2@gmail.com',
-    tags: ['Java', 'NodeJs', 'FrontEnd']
+    email: 'kaweng@gmail.com',
+    tags: extractTagsByUserName('KaWeng')
   }
 ];
