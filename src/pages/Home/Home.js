@@ -34,7 +34,7 @@ const Topic = ({ topic, tags, id, status }) => {
 };
 
 class Home extends React.Component {
-  propTypes = {
+  static propTypes = {
     loops: PropTypes.array.isRequired,
     searchLoops: PropTypes.func.isRequired,
     updateSearchKeywords: PropTypes.func.isRequired

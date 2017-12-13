@@ -2,6 +2,7 @@ import React from 'react';
 import { Segment, Form, Divider, Button } from 'semantic-ui-react';
 import { Field, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
+import AttachJobModal from 'components/AttachJobModal/AttachJobModal';
 import { DROP_MESSAGE } from 'store/loops';
 
 let MessageForm = props => {
@@ -18,13 +19,22 @@ let MessageForm = props => {
 
 MessageForm = reduxForm({ form: 'dropMessageForm' })(MessageForm);
 
-const ReplyPanel = ({ submitMessage }) => {
+const ReplyPanel = ({
+  submitMessage,
+  onAttachJobCard,
+  onAttachJobLink,
+  jobs,
+}) => {
   return (
     <Segment vertical textAlign="center">
       <MessageForm onSubmit={submitMessage} />
       <Divider horizontal>Or</Divider>
       <Button.Group fluid>
-        <Button>Attach a Job</Button>
+        <AttachJobModal
+          onAttachJobCard={onAttachJobCard}
+          onAttachJobLink={onAttachJobLink}
+          jobs={jobs}
+        />
         {/* <Button.Or /> */}
         <Button positive>Left my contact</Button>
       </Button.Group>
@@ -41,11 +51,11 @@ const mapDispatchToProps = (dispatch, props) => {
           loopId: props.loopId,
           message: data.message,
           postType: 'drop-message',
-          username: state.user.username
-        }
+          username: state.user.username,
+        },
       });
       dispatch(reset('dropMessageForm'));
-    }
+    },
   };
 };
 
@@ -53,13 +63,14 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
   return {
     submitMessage: data => {
       dispatchProps.dropMessage(data, stateProps);
-    }
+    },
+    ...ownProps,
   };
 };
 
 const mapStateToProps = (state, props) => {
   return {
-    user: state.user
+    user: state.user,
   };
 };
 

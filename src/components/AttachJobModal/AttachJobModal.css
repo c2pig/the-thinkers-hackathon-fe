@@ -1,0 +1,21 @@
+@import 'css';
+
+.scrollDesc {
+    max-height: calc(70vh - 150px);
+    overflow: auto;
+}
+
+.newJobForm {
+    @apply(--box-shadow-top);
+    display: flex;
+    padding-top: 10px;
+}
+
+    .jobLinkInputContainer {
+        flex: 1 0 auto;
+        margin-right: 10px; 
+    }
+
+    .addNewJobButtonContainer {
+        flex: 0 0 auto;
+    }

@@ -3,6 +3,7 @@ import { Route, withRouter, Switch } from 'react-router-dom';
 import Helmet from 'react-helmet';
 import { Container } from 'semantic-ui-react';
 
+import Header from 'components/Header/Header';
 import Home from 'pages/Home/Home';
 import Loop from 'pages/Loop/Loop';
 import Login from 'pages/Login/Login';
@@ -15,6 +16,7 @@ class App extends Component {
         <Helmet>
           <title>The Thinker Hack 2017</title>
         </Helmet>
+        <Header/>
         <Container>
           <Switch>
             <Route exact path="/" component={Home} />
