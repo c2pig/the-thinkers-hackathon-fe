@@ -1,15 +1,62 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Statistic, Divider, Icon, Grid, Checkbox, Button, Label, Card, Form } from 'semantic-ui-react';
+import { Field, reduxForm } from 'redux-form';
+import {
+  Statistic,
+  Divider,
+  Icon,
+  Grid,
+  Checkbox,
+  Button,
+  Label,
+  Card,
+  Form,
+} from 'semantic-ui-react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getLoopListData } from 'store/modules';
-import { searchLoops, updateSearchKeywords, addLoop } from 'store/loopList';
+import { searchLoops, addLoop } from 'store/loopList';
 import { upVote, downVote } from 'store/loops';
 import CreateLoopModal from 'components/CreateLoopModal/CreateLoopModal';
 import { STATUS_CLOSED, STATUS_OPEN } from 'store/loops';
 
 import styles from './Home.css';
+
+let SearchForm = ({
+  isCreateTopicModalOpen,
+  onCreateTopicSubmit,
+  onCreateLoopModalClose,
+  onLoopModalOpen,
+  handleSubmit,
+}) => {
+  return (
+    <Form onSubmit={handleSubmit}>
+      <div className={styles.searchContainer}>
+        <div className={styles.inputContainer}>
+          <Form.Input fluid>
+            <Field
+              name="searchKeywords"
+              component="input"
+              placeholder="Search or add a loop title here"
+            />
+          </Form.Input>
+        </div>
+        <div className={styles.inputButtonContainer}>
+          <Button icon="search" type="submit" onClick={handleSubmit} />
+          <CreateLoopModal
+            onSubmit={onCreateTopicSubmit}
+            open={isCreateTopicModalOpen}
+            onClose={onCreateLoopModalClose}
+          >
+            <Button icon="plus" onClick={onLoopModalOpen} />
+          </CreateLoopModal>
+        </div>
+      </div>
+    </Form>
+  );
+};
+
+SearchForm = reduxForm({ form: 'searchList' })(SearchForm);
 
 const Topic = ({ topic, tags, id, status, description, rating }) => {
   const url = `/loop/${id}`;
@@ -35,7 +82,7 @@ const Topic = ({ topic, tags, id, status, description, rating }) => {
             textOverflow: 'ellipsis',
             display: '-webkit-box',
             WebkitLineClamp: '2',
-            WebkitBoxOrient: 'vertical'
+            WebkitBoxOrient: 'vertical',
           }}
         >
           {description}
@@ -49,42 +96,35 @@ class Home extends React.Component {
   static propTypes = {
     loops: PropTypes.array.isRequired,
     searchLoops: PropTypes.func.isRequired,
-    updateSearchKeywords: PropTypes.func.isRequired
   };
 
   state = {
     isCreateTopicModalOpen: false,
-    myTopic: false
+    myTopic: false,
   };
 
   toggleMyTopic = () => {
     this.setState({
-      myTopic: !this.state.myTopic
+      myTopic: !this.state.myTopic,
     });
-  };
-
-  handleOnSearch = e => {
-    e.preventDefault();
-    this.props.searchLoops();
   };
 
   handleOnCreateTopicSubmit = payload => {
     this.setState({
-      isCreateTopicModalOpen: false
+      isCreateTopicModalOpen: false,
     });
     this.props.addLoop({ ...payload, username: this.props.user.username });
   };
 
-
   showCreateLoopModal = () => {
     this.setState({
-      isCreateTopicModalOpen: true
+      isCreateTopicModalOpen: true,
     });
   };
 
   hideCreateLoopModal = () => {
     this.setState({
-      isCreateTopicModalOpen: false
+      isCreateTopicModalOpen: false,
     });
   };
 
@@ -96,26 +136,42 @@ class Home extends React.Component {
     this.props.downVote({ ...payload, username: this.props.user.username });
   };
 
-  VoteTopic = ({children, rating, id}) => {
-    return <Grid>
-    <Grid.Column width='1' className={styles.voteGroup}>
-      <Grid.Row className={styles.voteButton}><Icon size='large' name='chevron up' onClick={() => {this.whenUpVote({rating, id})}}/></Grid.Row>
-      <Grid.Row><Icon size='large' name='chevron down' onClick={() => {this.whenDownVote({rating, id})}}/></Grid.Row>
-      <Divider hidden />
-      <Grid.Row>
-      <Statistic size='mini' floated='left'>
-        <Statistic.Value>{rating}</Statistic.Value>
-      </Statistic>
-      </Grid.Row>
-    </Grid.Column>
-    <Grid.Column width='14'>
-      {children}
-    </Grid.Column>
-    </Grid>
-  }
+  VoteTopic = ({ children, rating, id }) => {
+    return (
+      <Grid>
+        <Grid.Column width="1" className={styles.voteGroup}>
+          <Grid.Row className={styles.voteButton}>
+            <Icon
+              size="large"
+              name="chevron up"
+              onClick={() => {
+                this.whenUpVote({ rating, id });
+              }}
+            />
+          </Grid.Row>
+          <Grid.Row>
+            <Icon
+              size="large"
+              name="chevron down"
+              onClick={() => {
+                this.whenDownVote({ rating, id });
+              }}
+            />
+          </Grid.Row>
+          <Divider hidden />
+          <Grid.Row>
+            <Statistic size="mini" floated="left">
+              <Statistic.Value>{rating}</Statistic.Value>
+            </Statistic>
+          </Grid.Row>
+        </Grid.Column>
+        <Grid.Column width="14">{children}</Grid.Column>
+      </Grid>
+    );
+  };
 
   render() {
-    const { loops, updateSearchKeywords, user } = this.props;
+    const { loops, user, searchLoops } = this.props;
     const { isCreateTopicModalOpen, myTopic } = this.state;
     const VoteTopic = this.VoteTopic;
     return (
@@ -134,39 +190,20 @@ class Home extends React.Component {
             loop =>
               ((!myTopic && loop.status === STATUS_OPEN) ||
                 (myTopic && loop.username === user.username)) && (
-                <VoteTopic {...loop} >
+                <VoteTopic {...loop}>
                   <Topic key={loop.topic} {...loop} />
                 </VoteTopic>
               )
           )}
         </div>
         <div className={styles.footerContainer}>
-          <Form onSubmit={this.handleOnSearch}>
-            <div className={styles.searchContainer}>
-              <div className={styles.inputContainer}>
-                <Form.Input
-                  placeholder="Search or add a loop title here"
-                  type="text"
-                  fluid
-                  onChange={event => updateSearchKeywords(event.target.value)}
-                />
-              </div>
-              <div className={styles.inputButtonContainer}>
-                <Button
-                  icon="search"
-                  type="submit"
-                  onClick={this.handleOnSearch}
-                />
-                <CreateLoopModal
-                  onSubmit={this.handleOnCreateTopicSubmit}
-                  open={isCreateTopicModalOpen}
-                  onClose={this.hideCreateLoopModal}
-                >
-                  <Button icon="plus" onClick={this.showCreateLoopModal} />
-                </CreateLoopModal>
-              </div>
-            </div>
-          </Form>
+          <SearchForm
+            isCreateTopicModalOpen={isCreateTopicModalOpen}
+            onCreateTopicSubmit={this.handleOnCreateTopicSubmit}
+            onCreateLoopModalClose={this.hideCreateLoopModal}
+            onLoopModalOpen={this.showCreateLoopModal}
+            onSubmit={searchLoops}
+          />
         </div>
       </div>
     );
@@ -177,14 +214,13 @@ export default withRouter(
   connect(
     state => ({
       loops: getLoopListData(state),
-      user: state.user
+      user: state.user,
     }),
     {
       searchLoops,
-      updateSearchKeywords,
       addLoop,
       upVote,
-      downVote
+      downVote,
     }
   )(Home)
 );

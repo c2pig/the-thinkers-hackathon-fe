@@ -11,20 +11,10 @@ import { STATUS_OPEN } from 'store/loops';
 let loopsData = Object.keys(loopsMockData);
 
 // Actions
-const UPDATE_SEARCH_KEYWORDS = 'UPDATE_SEARCH_KEYWORDS';
 const SEARCH_LOOPS = 'SEARCH_LOOPS';
 export const ADD_LOOP = 'ADD_LOOP';
 
 // Reducer
-const searchKeywords = (state = '', action) => {
-  switch (action.type) {
-    case UPDATE_SEARCH_KEYWORDS:
-      return action.keywords;
-    default:
-      return state;
-  }
-};
-
 const ids = (state = loopsData, action) => {
   switch (action.type) {
     case SEARCH_LOOPS:
@@ -43,18 +33,13 @@ const ids = (state = loopsData, action) => {
 };
 
 export default combineReducers({
-  searchKeywords,
   ids
 });
 
 // Action Creators
-export const updateSearchKeywords = keywords => ({
-  type: UPDATE_SEARCH_KEYWORDS,
-  keywords
-});
-export const searchLoops = () => (dispatch, getState) => {
+export const searchLoops = (data) => (dispatch, getState) => {
   const state = getState();
-  const keywords = getSearchKeywords(state.loopList);
+  const keywords = data.searchKeywords;
   const loopsData = getLoopsData(state);
   const filteredLoopKeys = keywords
     ? Object.keys(loopsData).filter(id => {
