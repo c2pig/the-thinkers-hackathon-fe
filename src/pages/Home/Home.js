@@ -11,7 +11,7 @@ import {
   Label,
   Card,
   Form,
-  Message,
+  Message
 } from 'semantic-ui-react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -28,7 +28,7 @@ let SearchForm = ({
   onCreateTopicSubmit,
   onCreateLoopModalClose,
   onLoopModalOpen,
-  handleSubmit,
+  handleSubmit
 }) => {
   return (
     <Form onSubmit={handleSubmit}>
@@ -95,7 +95,7 @@ const Topic = ({ topic, tags, id, status, description, rating }) => {
             textOverflow: 'ellipsis',
             display: '-webkit-box',
             WebkitLineClamp: '2',
-            WebkitBoxOrient: 'vertical',
+            WebkitBoxOrient: 'vertical'
           }}
         >
           {description}
@@ -108,36 +108,36 @@ const Topic = ({ topic, tags, id, status, description, rating }) => {
 class Home extends React.Component {
   static propTypes = {
     loops: PropTypes.array.isRequired,
-    searchLoops: PropTypes.func.isRequired,
+    searchLoops: PropTypes.func.isRequired
   };
 
   state = {
     isCreateTopicModalOpen: false,
-    myTopic: false,
+    myTopic: false
   };
 
   toggleMyTopic = () => {
     this.setState({
-      myTopic: !this.state.myTopic,
+      myTopic: !this.state.myTopic
     });
   };
 
   handleOnCreateTopicSubmit = payload => {
     this.setState({
-      isCreateTopicModalOpen: false,
+      isCreateTopicModalOpen: false
     });
     this.props.addLoop({ ...payload, username: this.props.user.username });
   };
 
   showCreateLoopModal = () => {
     this.setState({
-      isCreateTopicModalOpen: true,
+      isCreateTopicModalOpen: true
     });
   };
 
   hideCreateLoopModal = () => {
     this.setState({
-      isCreateTopicModalOpen: false,
+      isCreateTopicModalOpen: false
     });
   };
 
@@ -195,12 +195,16 @@ class Home extends React.Component {
           <h1>
             <Icon name="fire" /> Loops
           </h1>
-          <Checkbox
-            toggle
-            label="My topic"
-            checked={myTopic}
-            onClick={this.toggleMyTopic}
-          />
+          <div>
+            {user.username && (
+              <Checkbox
+                toggle
+                label="My topic"
+                checked={myTopic}
+                onClick={this.toggleMyTopic}
+              />
+            )}
+          </div>
         </div>
         {loops && loops.length > 0 ? (
           <div className={styles.cardsContainer}>
@@ -243,13 +247,13 @@ export default withRouter(
   connect(
     state => ({
       loops: getLoopListData(state),
-      user: state.user,
+      user: state.user
     }),
     {
       searchLoops,
       addLoop,
       upVote,
-      downVote,
+      downVote
     }
   )(Home)
 );

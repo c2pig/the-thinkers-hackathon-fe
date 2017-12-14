@@ -9,7 +9,7 @@ import {
   Icon,
   Card,
   Divider,
-  Message,
+  Message
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import ReplyPanel from 'components/ReplyPanel/ReplyPanel';
@@ -18,7 +18,7 @@ import UserComment from 'components/UserComment/UserComment';
 import {
   STATUS_OPEN,
   attachJobMessage,
-  attachContactMessage,
+  attachContactMessage
 } from 'store/loops';
 import { getUsersData } from 'store/modules';
 import mockJobs, { mockJobstreetJob } from 'common/mocks/jobs';
@@ -64,7 +64,7 @@ class Loop extends React.Component {
     attachContactMessage: PropTypes.func.isRequired,
     loop: PropTypes.object.isRequired,
     user: PropTypes.object.isRequired,
-    users: PropTypes.object.isRequired,
+    users: PropTypes.object.isRequired
   };
 
   constructor(props) {
@@ -73,7 +73,7 @@ class Loop extends React.Component {
       open: false,
       jobs: mockJobs,
       likes: {},
-      isViewProfileClicked: false,
+      isViewProfileClicked: false
     };
   }
 
@@ -82,7 +82,7 @@ class Loop extends React.Component {
   handleOnAttachJobLink = e => {
     e.preventDefault();
     this.setState({
-      jobs: [...this.state.jobs, mockJobstreetJob],
+      jobs: [...this.state.jobs, mockJobstreetJob]
     });
   };
 
@@ -95,7 +95,7 @@ class Loop extends React.Component {
   handleViewProfileOnClicked = () => {
     const { isViewProfileClicked } = this.state;
     this.setState({
-      isViewProfileClicked: !isViewProfileClicked,
+      isViewProfileClicked: !isViewProfileClicked
     });
   };
 
@@ -170,7 +170,7 @@ class Loop extends React.Component {
               avatar: `/${comment.username}.jpg`,
               username: comment.username,
               position: currentUserDetails.position,
-              company: currentUserDetails.company,
+              company: currentUserDetails.company
             }
           : {};
       })
@@ -185,7 +185,7 @@ class Loop extends React.Component {
     const topic = {
       description: this.props.loop.description,
       tags: tags,
-      headline: this.props.loop.topic,
+      headline: this.props.loop.topic
     };
     return (
       <div
@@ -193,19 +193,20 @@ class Loop extends React.Component {
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'space-between',
-          height: '100%',
+          height: '100%'
         }}
       >
         <div
           className={styles.loopContainer}
           style={
-            loop.status === STATUS_OPEN
+            loop.status === STATUS_OPEN && user.username
               ? {
                   overflowY: 'auto',
                   padding: '0 2px',
+                  flex: '0 0 calc(90vh - 140px)'
                 }
               : {
-                  flex: '1 0 auto',
+                  flex: '1 0 auto'
                 }
           }
         >
@@ -282,26 +283,29 @@ class Loop extends React.Component {
               parentContext={_this}
             />
           ) : (
-            <Message warning>
-              <Message.Header>No replies yet...</Message.Header>
-              <p>
-                You can start leave your message or attach a job in this post
-                through the comment panel below
-              </p>
-            </Message>
+            loop.status === STATUS_OPEN && (
+              <Message warning>
+                <Message.Header>No replies yet...</Message.Header>
+                <p>
+                  You can start leave your message or attach a job in this post
+                  through the comment panel below
+                </p>
+              </Message>
+            )
           )}
         </div>
-        {loop.status === STATUS_OPEN && (
-          <div className={styles.replyPanelContainer}>
-            <ReplyPanel
-              loopId={this.props.loop.id}
-              onAttachJobCard={this.handleOnAttachJobCard}
-              onAttachJobLink={this.handleOnAttachJobLink}
-              onAttachContact={this.handleOnAttachContact}
-              jobs={jobs}
-            />
-          </div>
-        )}
+        {loop.status === STATUS_OPEN &&
+          user.username && (
+            <div className={styles.replyPanelContainer}>
+              <ReplyPanel
+                loopId={this.props.loop.id}
+                onAttachJobCard={this.handleOnAttachJobCard}
+                onAttachJobLink={this.handleOnAttachJobLink}
+                onAttachContact={this.handleOnAttachContact}
+                jobs={jobs}
+              />
+            </div>
+          )}
       </div>
     );
   }
@@ -311,11 +315,11 @@ const mapStateToProps = (states, props) => {
   return {
     loop: states.loops.data[props.match.params.loopId],
     user: states.user,
-    users: getUsersData(states),
+    users: getUsersData(states)
   };
 };
 
 export default connect(mapStateToProps, {
   attachJobMessage,
-  attachContactMessage,
+  attachContactMessage
 })(Loop);
