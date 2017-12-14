@@ -4,10 +4,7 @@ import { Field, reduxForm, reset } from 'redux-form';
 import { connect } from 'react-redux';
 import AttachJobModal from 'components/AttachJobModal/AttachJobModal';
 import { DROP_MESSAGE } from 'store/loops';
-import {
-  getCurrentUser,
-  getUserDetailsWithUsername
-} from 'store/modules';
+import { getCurrentUser, getUserDetailsWithUsername } from 'store/modules';
 import { extractTagsByUserName } from 'common/helpers';
 import { QUEUE_NOTIFICATION } from 'store/notification';
 
@@ -35,7 +32,7 @@ const ReplyPanel = ({
   onAttachJobCard,
   onAttachJobLink,
   onAttachContact,
-  jobs,
+  jobs
 }) => {
   return (
     <Segment vertical textAlign="center">
@@ -60,8 +57,22 @@ const ReplyPanel = ({
 const mapDispatchToProps = (dispatch, props) => {
   return {
     dropMessage: (data, state) => {
+      const regex = /@(.+?)(?:\s|$)/g;
+      const mentioned = [];
+      let m;
+      while ((m = regex.exec(data.message)) !== null) {
+        // This is necessary to avoid infinite loops with zero-width matches
+        if (m.index === regex.lastIndex) {
+          regex.lastIndex++;
+        }
+
+        // The result can be accessed through the `m`-variable.
+        mentioned.push(m[1]);
+      }
       const username = getCurrentUser(state.reduxState);
-      const commentUserDetails = getUserDetailsWithUsername(state.reduxState)(username);
+      const commentUserDetails = getUserDetailsWithUsername(state.reduxState)(
+        username
+      );
       dispatch({
         type: DROP_MESSAGE,
         payload: {
@@ -71,27 +82,29 @@ const mapDispatchToProps = (dispatch, props) => {
           username,
           date: new Date().toString(),
           totalHired: commentUserDetails.peopleHired,
-          tags: extractTagsByUserName(username),
-        },
+          tags: extractTagsByUserName(username)
+        }
       });
-      setTimeout(
-        () =>
-          dispatch({
-            type: QUEUE_NOTIFICATION,
-            payload: {
-              notification: {
-                sender: state.user.username,
-                receiver: 'kong',
-                message: `${state.user.username} mentioned you in a topic`,
-                url: `/loop/${props.loopId}`,
-              },
-            },
-          }),
-        1000
-      );
+      mentioned.forEach(mentionedUser => {
+        setTimeout(
+          () =>
+            dispatch({
+              type: QUEUE_NOTIFICATION,
+              payload: {
+                notification: {
+                  sender: state.user.username,
+                  receiver: mentionedUser,
+                  message: `${state.user.username} mentioned you in a topic`,
+                  url: `/loop/${props.loopId}`
+                }
+              }
+            }),
+          1000
+        );
+      });
 
       dispatch(reset('dropMessageForm'));
-    },
+    }
   };
 };
 
@@ -100,14 +113,14 @@ const mergeProps = (stateProps, dispatchProps, ownProps) => {
     submitMessage: data => {
       dispatchProps.dropMessage(data, stateProps);
     },
-    ...ownProps,
+    ...ownProps
   };
 };
 
 const mapStateToProps = (state, props) => {
   return {
     user: state.user,
-    reduxState: state,
+    reduxState: state
   };
 };
 
